@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noodp"/>
+    <meta name="author" content="Yiming">
+    <meta name="description" content="Yiming`s Blog">
+    
+    
+    <link rel="prev" href="https://ymingliu.github.io/2021/sql-basic/" />
+    
+    <link rel="canonical" href="https://ymingliu.github.io/2021/sql-basic-practice/" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+    <title>
+        
+        
+            数据库及SQL/MySQL基础练习题 | Yiming`s Blog
+        
+    </title>
+    <meta name="title" content="数据库及SQL/MySQL基础练习题 | Yiming`s Blog">
+    
+<link rel="stylesheet" href="/css/main.min.css">
+
+
+    
+    
+ 
+
+<script type="application/ld+json">
+{
+    "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/ymingliu.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "数据库及SQL\/MySQL基础练习题",
+    "headline" : "数据库及SQL\/MySQL基础练习题",
+    "description" : "课程参考 阿里云开发者社区——数据库学习路线 数据库及SQL\/MySQL基础练习题 1、查询出部门编号为30的所有员工，注意只要是说查询员工，或者",
+    "inLanguage" : "zh-cn",
+    "author" : "Yiming",
+    "creator" : "Yiming",
+    "publisher": "Yiming",
+    "accountablePerson" : "Yiming",
+    "copyrightHolder" : "Yiming",
+    "copyrightYear" : "2021",
+    "datePublished": "2021-03-09 11:36:52 \x2b0800 CST",
+    "dateModified" : "2021-03-09 11:36:52 \x2b0800 CST",
+    "url" : "https:\/\/ymingliu.github.io\/2021\/sql-basic-practice\/",
+    "wordCount" : "694",
+    "keywords" : [  "Yiming`s Blog"]
+}
+</script>
+
+  </head>
+    <body class="">
+        <div class="wrapper">
+            <nav class="navbar">
+    
+        <progress class="content_progress" max="0" value="0"></progress>
+    
+    <div class="container">
+        
+            <div class="navbar-header header-back2home-logo">
+                <span class="logo_mark" >>$</span>
+                <a href="https://ymingliu.github.io">
+                    <span class="logo_text" >cd /home/</span>
+                    <span class="logo_cursor" ></span>
+                </a>
+            </div>
+        
+        <div class="navbar-right">
+                
+                <span class="menu">
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+                <span class="divide"></span>
+                <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-dark-mode"></i></a>
+                </span>
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+    
+        <progress class="content_progress" max="0" value="0"></progress>
+    
+     <div class="container">
+        <div class="navbar">
+            <div class="navbar-header header-logo">
+                    <a href="https://ymingliu.github.io">Yiming`s Blog</a>
+            </div>
+            <div class="navbar-right">
+                <div><a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-dark-mode"></i></a></div>
+                <div class="menu-toggle">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                <nav class="mb-md">
+                    
+                    
+                        <a class="menu-item" href="/posts/" title="">
+                            <h3>Blog</h3>
+                            <div class="menu-active"></div>
+                        </a>
+                    
+                        <a class="menu-item" href="/categories/" title="">
+                            <h3>Categories</h3>
+                            <div class="menu-active"></div>
+                        </a>
+                    
+                        <a class="menu-item" href="/tags/" title="">
+                            <h3>Tags</h3>
+                            <div class="menu-active"></div>
+                        </a>
+                    
+                        <a class="menu-item" href="/about/" title="">
+                            <h3>About</h3>
+                            <div class="menu-active"></div>
+                        </a>
+                    
+                </nav>
+        </div>
+    </div>
+</nav>
+            <main class="main">
+                <div class="container">
+                    
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">数据库及SQL/MySQL基础练习题</h1>
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://ymingliu.github.io" rel="author">Yiming</a> with ♥
+                <span class="post-time">
+                on <time datetime=2021-03-09 itemprop="datePublished">March 9, 2021</time>
+                </span>
+                in
+                
+                <span class="post-word-count">694 words</span>
+        </div>
+    </header>
+
+    <div class="post-content">
+        
+
+        
+        
+
+        
+        
+        
+        
+        
+
+        
+        
+        
+
+        <h2 id="课程参考">课程参考</h2>
+<p><a href="https://developer.aliyun.com/learning/roadmap/database?spm=5176.12901015.0.i12901015.4ea8525cMC1llR">阿里云开发者社区——数据库学习路线</a></p>
+<h2 id="数据库及sqlmysql基础练习题">数据库及SQL/MySQL基础练习题</h2>
+<p>1、查询出部门编号为30的所有员工，注意只要是说查询员工，或者所有员工，要 select *</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">FROM</span> <span style="color:#a6e22e">emp</span> <span style="color:#a6e22e">WHERE</span> <span style="color:#a6e22e">deptno</span><span style="color:#f92672">=</span><span style="color:#ae81ff">30</span>;
+</code></pre></div><p>2、查询所有销售员的姓名、编号和部门编号</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">SELECT</span> <span style="color:#a6e22e">ename</span>, <span style="color:#a6e22e">empno</span>, <span style="color:#a6e22e">deptno</span> <span style="color:#a6e22e">FROM</span> <span style="color:#a6e22e">emp</span> <span style="color:#a6e22e">WHERE</span> <span style="color:#a6e22e">job</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#39;销售员&#39;</span>;
+</code></pre></div><p>3、找出奖金大于工资的员工</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">FROM</span> <span style="color:#a6e22e">emp</span> <span style="color:#a6e22e">WHERE</span> <span style="color:#a6e22e">comm</span><span style="color:#f92672">&gt;</span><span style="color:#a6e22e">sal</span>;
+</code></pre></div><p>4、查询奖金高于工资60%的员工</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">FROM</span> <span style="color:#a6e22e">emp</span> <span style="color:#a6e22e">WHERE</span> <span style="color:#a6e22e">comm</span><span style="color:#f92672">&gt;</span><span style="color:#a6e22e">sal</span><span style="color:#f92672">*</span><span style="color:#ae81ff">0.6</span>;
+</code></pre></div><p>5、部门编号为10中所有经理，和部门编号为20中所有销售员的详细资料（注意不加圆括号也可，也注意<code>OR</code>和<code>AND</code>的区别）</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">FROM</span> <span style="color:#a6e22e">emp</span> <span style="color:#a6e22e">WHERE</span> (<span style="color:#a6e22e">deptno</span><span style="color:#f92672">=</span><span style="color:#ae81ff">10</span> <span style="color:#a6e22e">AND</span> <span style="color:#a6e22e">job</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#39;经理&#39;</span>) <span style="color:#a6e22e">OR</span> (<span style="color:#a6e22e">deptno</span><span style="color:#f92672">=</span><span style="color:#ae81ff">20</span> <span style="color:#a6e22e">AND</span> <span style="color:#a6e22e">job</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#39;销售员&#39;</span>);
+</code></pre></div><p>6、部门编号为10中所有经理，和部门编号为20中所有销售员，还有既不是经理也不是销售员但工资大于等于20000的所有员工的详细资料（注意<code>NOT IN</code>用法）</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">FROM</span> <span style="color:#a6e22e">emp</span> <span style="color:#a6e22e">WHERE</span> (<span style="color:#a6e22e">deptno</span><span style="color:#f92672">=</span><span style="color:#ae81ff">10</span> <span style="color:#a6e22e">AND</span> <span style="color:#a6e22e">job</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#39;经理&#39;</span>) <span style="color:#a6e22e">OR</span> (<span style="color:#a6e22e">deptno</span><span style="color:#f92672">=</span><span style="color:#ae81ff">20</span> <span style="color:#a6e22e">AND</span> <span style="color:#a6e22e">job</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#39;销售员&#39;</span>) <span style="color:#a6e22e">OR</span> (<span style="color:#a6e22e">job</span> <span style="color:#a6e22e">NOT</span> <span style="color:#a6e22e">IN</span> (<span style="color:#e6db74">&#39;经理&#39;</span>,<span style="color:#e6db74">&#39;销售员&#39;</span>) <span style="color:#a6e22e">AND</span> <span style="color:#a6e22e">sal</span><span style="color:#f92672">&gt;=</span><span style="color:#ae81ff">20000</span>);
+</code></pre></div><p>7、无奖金或奖金低于1000的员工（注意<code>NULL</code>在判断语句中都为<code>FALSE</code>）</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">FROM</span> <span style="color:#a6e22e">emp</span> <span style="color:#a6e22e">WHERE</span> <span style="color:#a6e22e">comm</span> <span style="color:#a6e22e">IS</span> <span style="color:#a6e22e">NULL</span> <span style="color:#a6e22e">OR</span> <span style="color:#a6e22e">comm</span><span style="color:#f92672">&lt;</span><span style="color:#ae81ff">1000</span>;
+</code></pre></div><p>以下语句错误</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">FROM</span> <span style="color:#a6e22e">emp</span> <span style="color:#a6e22e">WHERE</span> <span style="color:#a6e22e">comm</span><span style="color:#f92672">&lt;</span><span style="color:#ae81ff">1000</span>;
+</code></pre></div><p>8、查询名字是三个字组成的员工</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">FROM</span> <span style="color:#a6e22e">emp</span> <span style="color:#a6e22e">WHERE</span> <span style="color:#a6e22e">ename</span> <span style="color:#a6e22e">LIKE</span> <span style="color:#e6db74">&#39;___&#39;</span>;
+</code></pre></div><p>9、查询2000年入职的员工</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">FROM</span> <span style="color:#a6e22e">emp</span> <span style="color:#a6e22e">WHERE</span> <span style="color:#a6e22e">hiredate</span> <span style="color:#a6e22e">LIKE</span> <span style="color:#e6db74">&#39;2000-%&#39;</span>;
+</code></pre></div><p>10、查询所有员工详细信息，用编号升序排序</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">select</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">from</span> <span style="color:#a6e22e">emp</span> <span style="color:#a6e22e">order</span> <span style="color:#a6e22e">by</span> <span style="color:#a6e22e">empno</span> <span style="color:#a6e22e">asc</span>;
+</code></pre></div><p>11、查询所有员工详细信息，用工资降序，如果工资相同，用入职日期升序排序</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">FROM</span> <span style="color:#a6e22e">emp</span> <span style="color:#a6e22e">ORDER</span> <span style="color:#a6e22e">BY</span> <span style="color:#a6e22e">sal</span> <span style="color:#a6e22e">DESC</span>, <span style="color:#a6e22e">hiredate</span> <span style="color:#a6e22e">ASC</span>;
+</code></pre></div><p>12、查询每个部门的平均工资</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">SELECT</span> <span style="color:#a6e22e">deptno</span>, <span style="color:#a6e22e">AVG</span>(<span style="color:#a6e22e">sal</span>) <span style="color:#a6e22e">FROM</span> <span style="color:#a6e22e">emp</span> <span style="color:#a6e22e">GROUP</span> <span style="color:#a6e22e">BY</span> <span style="color:#a6e22e">deptno</span>;
+</code></pre></div><p>13、查询每个部门的员工数量</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">SELECT</span> <span style="color:#a6e22e">deptno</span>, <span style="color:#a6e22e">COUNT</span>(<span style="color:#f92672">*</span>) <span style="color:#a6e22e">FROM</span> <span style="color:#a6e22e">emp</span> <span style="color:#a6e22e">GROUP</span> <span style="color:#a6e22e">BY</span> <span style="color:#a6e22e">deptno</span>;
+</code></pre></div><p>14、每种工作最高最低工资，人数</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">SELECT</span> <span style="color:#a6e22e">job</span>, <span style="color:#a6e22e">MAX</span>(<span style="color:#a6e22e">sal</span>), <span style="color:#a6e22e">MIN</span>(<span style="color:#a6e22e">sal</span>), <span style="color:#a6e22e">COUNT</span>(<span style="color:#f92672">*</span>) <span style="color:#a6e22e">FROM</span> <span style="color:#a6e22e">emp</span> <span style="color:#a6e22e">GROUP</span> <span style="color:#a6e22e">BY</span> <span style="color:#a6e22e">job</span>;
+</code></pre></div>
+    </div>
+
+    <div class="post-copyright">
+            
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>Yiming </span>
+                </p>
+            
+
+            
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://ymingliu.github.io/2021/sql-basic-practice/>https://ymingliu.github.io/2021/sql-basic-practice/</span>
+            </p>
+            
+            
+    </div>
+
+
+    <div class="post-tags">
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> ·
+                <span><a href="https://ymingliu.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://ymingliu.github.io/2021/sql-basic/" class="prev" rel="prev" title="数据库及SQL/MySQL基础"><i class="iconfont icon-left"></i>&nbsp;数据库及SQL/MySQL基础</a>
+        
+        
+    </div>
+
+    <div class="post-comment">
+        
+            
+                <div id="gitalk-container"></div>
+<link rel="stylesheet" href="https://cdn.bootcss.com/gitalk/1.5.2/gitalk.css">
+<script src="https://cdn.bootcss.com/gitalk/1.5.2/gitalk.min.js"></script>
+<script>
+    const gitalk = new Gitalk({
+
+        clientID: '',
+        clientSecret: '',
+        repo: '',
+        owner: 'ymingliu',
+        admin: ['ymingliu'],
+        id: location.pathname, 
+        distractionFreeMode: false 
+    });
+    (function () {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('gitalk-container').innerHTML = 'Gitalk comments not available by default when the website is previewed locally.';
+            return;
+        }
+        gitalk.render('gitalk-container');
+    })();
+</script>
+
+            
+        
+    </div>
+</article>
+                </div>
+            </main>
+            <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span itemprop="copyrightYear">2021 - 2021</span>
+        
+        <span class="with-love">
+    	 <i class="iconfont icon-love"></i>
+         </span>
+         
+            <span class="author" itemprop="copyrightHolder"><a href="https://ymingliu.github.io">Yiming</a> | </span>
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/Mogeko/Mogege" target="_blank" rel="external nofollow">Mogege</a></span>
+    </div>
+</footer>
+
+
+
+
+
+
+<script defer src="/js/vendor_main.min.js"></script>
+
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script> pangu.spacingPage();</script>
+
+
+
+
+
+        </div>
+    </body>
+</html>

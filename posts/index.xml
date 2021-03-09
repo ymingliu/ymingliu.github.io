@@ -6,10 +6,19 @@
     <description>Recent content in Posts on Yiming`s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Tue, 09 Mar 2021 10:25:45 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 09 Mar 2021 11:36:52 +0800</lastBuildDate>
     
 	<atom:link href="https://ymingliu.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>数据库及SQL/MySQL基础练习题</title>
+      <link>https://ymingliu.github.io/2021/sql-basic-practice/</link>
+      <pubDate>Tue, 09 Mar 2021 11:36:52 +0800</pubDate>
+      
+      <guid>https://ymingliu.github.io/2021/sql-basic-practice/</guid>
+      <description>课程参考 阿里云开发者社区——数据库学习路线 数据库及SQL/MySQL基础练习题 1、查询出部门编号为30的所有员工，注意只要是说查询员工，或者</description>
+    </item>
     
     <item>
       <title>数据库及SQL/MySQL基础</title>

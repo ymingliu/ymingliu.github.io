@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noodp"/>
+    <meta name="author" content="Yiming">
+    <meta name="description" content="Yiming`s Blog">
+    
+    
+    <link rel="prev" href="https://ymingliu.github.io/2021/sql-basic-practice/" />
+    
+    <link rel="canonical" href="https://ymingliu.github.io/2021/sql-advanced/" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+    <title>
+        
+        
+            数据库及SQL/MySQL进阶 | Yiming`s Blog
+        
+    </title>
+    <meta name="title" content="数据库及SQL/MySQL进阶 | Yiming`s Blog">
+    
+<link rel="stylesheet" href="/css/main.min.css">
+
+
+    
+    
+ 
+
+<script type="application/ld+json">
+{
+    "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/ymingliu.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "数据库及SQL\/MySQL进阶",
+    "headline" : "数据库及SQL\/MySQL进阶",
+    "description" : "课程参考 阿里云开发者社区——数据库学习路线 mysql编码问题 1、查看MySQL数据库编码 mysql\x26gt; show variables like \x26#39;char%\x26#39;; Variable_name Value character_set_client utf8mb4 character_set_connection utf8mb4 character_set_database utf8 character_set_filesystem binary character_set_results utf8mb4 character_set_server utf8mb4 character_set_system utf8 character_sets_dir \/usr\/local\/mysql-8.0.20-macos10.15-x86_64\/share\/charsets\/ cha",
+    "inLanguage" : "zh-cn",
+    "author" : "Yiming",
+    "creator" : "Yiming",
+    "publisher": "Yiming",
+    "accountablePerson" : "Yiming",
+    "copyrightHolder" : "Yiming",
+    "copyrightYear" : "2021",
+    "datePublished": "2021-03-10 09:38:20 \x2b0800 CST",
+    "dateModified" : "2021-03-10 09:38:20 \x2b0800 CST",
+    "url" : "https:\/\/ymingliu.github.io\/2021\/sql-advanced\/",
+    "wordCount" : "3183",
+    "keywords" : [  "Yiming`s Blog"]
+}
+</script>
+
+  </head>
+    <body class="">
+        <div class="wrapper">
+            <nav class="navbar">
+    
+        <progress class="content_progress" max="0" value="0"></progress>
+    
+    <div class="container">
+        
+            <div class="navbar-header header-back2home-logo">
+                <span class="logo_mark" >>$</span>
+                <a href="https://ymingliu.github.io">
+                    <span class="logo_text" >cd /home/</span>
+                    <span class="logo_cursor" ></span>
+                </a>
+            </div>
+        
+        <div class="navbar-right">
+                
+                <span class="menu">
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+                <span class="divide"></span>
+                <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-dark-mode"></i></a>
+                </span>
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+    
+        <progress class="content_progress" max="0" value="0"></progress>
+    
+     <div class="container">
+        <div class="navbar">
+            <div class="navbar-header header-logo">
+                    <a href="https://ymingliu.github.io">Yiming`s Blog</a>
+            </div>
+            <div class="navbar-right">
+                <div><a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-dark-mode"></i></a></div>
+                <div class="menu-toggle">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                <nav class="mb-md">
+                    
+                    
+                        <a class="menu-item" href="/posts/" title="">
+                            <h3>Blog</h3>
+                            <div class="menu-active"></div>
+                        </a>
+                    
+                        <a class="menu-item" href="/categories/" title="">
+                            <h3>Categories</h3>
+                            <div class="menu-active"></div>
+                        </a>
+                    
+                        <a class="menu-item" href="/tags/" title="">
+                            <h3>Tags</h3>
+                            <div class="menu-active"></div>
+                        </a>
+                    
+                        <a class="menu-item" href="/about/" title="">
+                            <h3>About</h3>
+                            <div class="menu-active"></div>
+                        </a>
+                    
+                </nav>
+        </div>
+    </div>
+</nav>
+            <main class="main">
+                <div class="container">
+                    
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">数据库及SQL/MySQL进阶</h1>
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://ymingliu.github.io" rel="author">Yiming</a> with ♥
+                <span class="post-time">
+                on <time datetime=2021-03-10 itemprop="datePublished">March 10, 2021</time>
+                </span>
+                in
+                
+                <span class="post-word-count">3183 words</span>
+        </div>
+    </header>
+
+    <div class="post-content">
+        
+
+        
+        
+
+        
+        
+        
+        
+        
+
+        
+        
+        
+
+        <h2 id="课程参考">课程参考</h2>
+<p><a href="https://developer.aliyun.com/learning/roadmap/database?spm=5176.12901015.0.i12901015.4ea8525cMC1llR">阿里云开发者社区——数据库学习路线</a></p>
+<h2 id="mysql编码问题">mysql编码问题</h2>
+<p>1、查看MySQL数据库编码</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">show</span> <span style="color:#a6e22e">variables</span> <span style="color:#a6e22e">like</span> <span style="color:#e6db74">&#39;char%&#39;</span>;
+</code></pre></div><table>
+<thead>
+<tr>
+<th>Variable_name</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>character_set_client</td>
+<td>utf8mb4</td>
+</tr>
+<tr>
+<td>character_set_connection</td>
+<td>utf8mb4</td>
+</tr>
+<tr>
+<td>character_set_database</td>
+<td>utf8</td>
+</tr>
+<tr>
+<td>character_set_filesystem</td>
+<td>binary</td>
+</tr>
+<tr>
+<td>character_set_results</td>
+<td>utf8mb4</td>
+</tr>
+<tr>
+<td>character_set_server</td>
+<td>utf8mb4</td>
+</tr>
+<tr>
+<td>character_set_system</td>
+<td>utf8</td>
+</tr>
+<tr>
+<td>character_sets_dir</td>
+<td>/usr/local/mysql-8.0.20-macos10.15-x86_64/share/charsets/</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>character_set_client客户端接受数据的编码形式</li>
+<li>character_set_results客户端返回数据的编码形式</li>
+</ul>
+<p>2、修改编码
+<code>set character_set_client=gbk</code> 设置只在当前窗口内有效，关闭窗口后还是utf8mb4，因此需设置<code>set character_set_results=gbk</code>，或到<strong>my.ini</strong>修改总配置文件</p>
+<blockquote>
+<p>[client]<br>
+port=3306<br>
+[mysql]<br>
+Default-character-set=gbk</p>
+</blockquote>
+<p>具体细节还可参考<a href="https://blog.csdn.net/StriverLi/article/details/78637026">这里</a></p>
+<p>注意可以修改三个变量<code>client</code>、<code>results</code>、<code>connection</code>，然后<code>net stop mysql</code>停止服务器，<code>net start mysql</code>重启服务器，即可完成设置。</p>
+<h2 id="备份与恢复">备份与恢复</h2>
+<p>1、数据库导出sql脚本（备份数据库内容，并不是备份数据库）</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">$</span> <span style="color:#a6e22e">mysqldump</span> <span style="color:#f92672">-</span><span style="color:#a6e22e">u</span> <span style="color:#a6e22e">root</span> <span style="color:#f92672">-</span><span style="color:#a6e22e">p</span> <span style="color:#a6e22e">test</span> <span style="color:#a6e22e">emp</span><span style="color:#f92672">&gt;</span><span style="color:#960050;background-color:#1e0010">/Users/liuyiming/Workspace/mysql_data/emp.sql</span>
+</code></pre></div><p>2、导入sql脚本</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">$</span> <span style="color:#a6e22e">mysql</span> <span style="color:#f92672">-</span><span style="color:#a6e22e">u</span> <span style="color:#a6e22e">root</span> <span style="color:#f92672">-</span><span style="color:#a6e22e">p</span> <span style="color:#a6e22e">test</span><span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/Users/liuyiming/Workspace/mysql_data/emp.sql</span>
+</code></pre></div><p>注意如果数据库删除了，无法恢复，但若有数据库内容（表），则导入时应先创建数据库，再用上述语句导入sql脚本，不要打分号，不要登录，直接在cmd下运行</p>
+<p>3、导入sql脚本另一种写法，需登录后，进入数据库</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">source</span> <span style="color:#f92672">/</span><span style="color:#a6e22e">Users</span><span style="color:#f92672">/</span><span style="color:#a6e22e">liuyiming</span><span style="color:#f92672">/</span><span style="color:#a6e22e">Workspace</span><span style="color:#f92672">/</span><span style="color:#a6e22e">mysql_data</span><span style="color:#f92672">/</span><span style="color:#a6e22e">emp</span>.<span style="color:#a6e22e">sql</span>;
+</code></pre></div><h2 id="约束">约束</h2>
+<p>是添加在列上，用来约束列的</p>
+<p><strong>1、主键约束（唯一标识）：非空、唯一、被引用（外键引用主键）</strong></p>
+<ul>
+<li>创建表时指定主键的两种方式：</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">CREATE</span> <span style="color:#a6e22e">TABLE</span> <span style="color:#a6e22e">mydb</span>(
+<span style="color:#f92672">-&gt;</span> <span style="color:#a6e22e">empno</span> <span style="color:#a6e22e">INT</span> <span style="color:#a6e22e">PRIMARY</span> <span style="color:#a6e22e">KEY</span>,
+<span style="color:#f92672">-&gt;</span> <span style="color:#a6e22e">ename</span> <span style="color:#a6e22e">VARCHAR</span>(<span style="color:#ae81ff">50</span>)
+<span style="color:#f92672">-&gt;</span> );
+<span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">CREATE</span> <span style="color:#a6e22e">TABLE</span> <span style="color:#a6e22e">mydb</span>(
+<span style="color:#f92672">-&gt;</span> <span style="color:#a6e22e">empno</span> <span style="color:#a6e22e">INT</span>,
+<span style="color:#f92672">-&gt;</span> <span style="color:#a6e22e">ename</span> <span style="color:#a6e22e">VARCHAR</span>(<span style="color:#ae81ff">50</span>),
+<span style="color:#f92672">-&gt;</span> <span style="color:#a6e22e">PRIMARY</span> <span style="color:#a6e22e">KEY</span>(<span style="color:#a6e22e">empno</span>)
+<span style="color:#f92672">-&gt;</span> );
+</code></pre></div><ul>
+<li>表已存在指定主键</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">ALTER</span> <span style="color:#a6e22e">TABLE</span> <span style="color:#a6e22e">mydb</span> <span style="color:#a6e22e">ADD</span> <span style="color:#a6e22e">PRIMARY</span> <span style="color:#a6e22e">KEY</span>(<span style="color:#a6e22e">empno</span>);
+</code></pre></div><ul>
+<li>删除主键</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">ALTER</span> <span style="color:#a6e22e">TABLE</span> <span style="color:#a6e22e">mydb</span> <span style="color:#a6e22e">DROP</span> <span style="color:#a6e22e">PRIMARY</span> <span style="color:#a6e22e">KEY</span>;
+</code></pre></div><hr>
+<p><strong>小结</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">ALTER</span> <span style="color:#a6e22e">TABLE</span> <span style="color:#a6e22e">表名</span>
+<span style="color:#a6e22e">ADD</span> <span style="color:#f92672">--&gt;</span> <span style="color:#a6e22e">添加列</span>
+<span style="color:#a6e22e">MODIFY</span> <span style="color:#f92672">--&gt;</span> <span style="color:#a6e22e">修改列名和列类型</span>
+<span style="color:#a6e22e">CHANGE</span> <span style="color:#f92672">--&gt;</span> <span style="color:#a6e22e">修改列名</span>
+<span style="color:#a6e22e">DROP</span> <span style="color:#f92672">--&gt;</span> <span style="color:#a6e22e">删除列</span>
+<span style="color:#a6e22e">RENAME</span> <span style="color:#a6e22e">TO</span> <span style="color:#f92672">--&gt;</span> <span style="color:#a6e22e">修改表名</span>
+<span style="color:#a6e22e">ADD</span> <span style="color:#a6e22e">PRIMARY</span> <span style="color:#a6e22e">KEY</span>(<span style="color:#a6e22e">列名</span>) <span style="color:#f92672">--&gt;</span> <span style="color:#a6e22e">为列添加主键</span>
+<span style="color:#a6e22e">DROP</span> <span style="color:#a6e22e">PRIMARY</span> <span style="color:#a6e22e">KEY</span>  <span style="color:#f92672">--&gt;</span> <span style="color:#a6e22e">删除主键</span>
+</code></pre></div><hr>
+<p><strong>2、主键自增长：由于唯一、非空的特点，通常将主键类定义为整型（一定是整型列），并设置自增长，不用再手动插入</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">CREATE</span> <span style="color:#a6e22e">TABLE</span> <span style="color:#a6e22e">mydb</span>(
+<span style="color:#f92672">-&gt;</span> <span style="color:#a6e22e">emptno</span> <span style="color:#a6e22e">INT</span> <span style="color:#a6e22e">PRIMARY</span> <span style="color:#a6e22e">KEY</span> <span style="color:#a6e22e">AUTO_INCREMENT</span>,
+<span style="color:#f92672">-&gt;</span> <span style="color:#a6e22e">ename</span> <span style="color:#a6e22e">VARCHAR</span>(<span style="color:#ae81ff">50</span>)
+<span style="color:#f92672">-&gt;</span> );
+<span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">INSERT</span> <span style="color:#a6e22e">INTO</span> <span style="color:#a6e22e">mydb</span> <span style="color:#a6e22e">VALUES</span>(<span style="color:#ae81ff">1111</span>, <span style="color:#e6db74">&#39;zhangSan&#39;</span>);
+<span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">INSERT</span> <span style="color:#a6e22e">INTO</span> <span style="color:#a6e22e">mydb</span> <span style="color:#a6e22e">VALUES</span>(<span style="color:#a6e22e">NULL</span>, <span style="color:#e6db74">&#39;liSi&#39;</span>);
+</code></pre></div><table>
+<thead>
+<tr>
+<th>emptno</th>
+<th>ename</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1111</td>
+<td>zhangSan</td>
+</tr>
+<tr>
+<td>1112</td>
+<td>liSi</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">DELECT</span> <span style="color:#a6e22e">FROM</span> <span style="color:#a6e22e">mydb</span>;
+<span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">INSERT</span> <span style="color:#a6e22e">INTO</span> <span style="color:#a6e22e">mydb</span> <span style="color:#a6e22e">VALUES</span>(<span style="color:#a6e22e">NULL</span>, <span style="color:#e6db74">&#39;zhangSan&#39;</span>);
+</code></pre></div><table>
+<thead>
+<tr>
+<th>emptno</th>
+<th>ename</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1113</td>
+<td>zhangSan</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>表格内容删除后，再插入新内容时主键依旧保持自增长</li>
+<li>实际使用时，应单独创建一列为主键列，与内容区别开来，例如取名为ID，即不建议使用自然主键，而使用代理主键</li>
+<li>当数据量过大，一个数据库存不下时，需保存在多个数据库中，比如分别向两个数据库中插入记录，可能会出现主键相同情况，违背主键唯一特点，因此在集群环境下易出现主键不唯一，推荐使用UUID作为主键</li>
+</ul>
+<p><strong>3、非空约束：设置某些列不能有NULL值</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">CREATE</span> <span style="color:#a6e22e">TABLE</span> <span style="color:#a6e22e">mydb</span>(
+<span style="color:#f92672">-&gt;</span> <span style="color:#a6e22e">emptno</span> <span style="color:#a6e22e">INT</span> <span style="color:#a6e22e">PRIMARY</span> <span style="color:#a6e22e">KEY</span> <span style="color:#a6e22e">AUTO_INCREMENT</span>,
+<span style="color:#f92672">-&gt;</span> <span style="color:#a6e22e">ename</span> <span style="color:#a6e22e">VARCHAR</span>(<span style="color:#ae81ff">50</span>) <span style="color:#a6e22e">NOT</span> <span style="color:#a6e22e">NULL</span>
+<span style="color:#f92672">-&gt;</span> );
+</code></pre></div><p><strong>4、唯一约束：设置某些列不能有重复值</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">CREATE</span> <span style="color:#a6e22e">TABLE</span> <span style="color:#a6e22e">mydb</span>(
+<span style="color:#f92672">-&gt;</span> <span style="color:#a6e22e">emptno</span> <span style="color:#a6e22e">INT</span> <span style="color:#a6e22e">PRIMARY</span> <span style="color:#a6e22e">KEY</span> <span style="color:#a6e22e">AUTO_INCREMENT</span>,
+<span style="color:#f92672">-&gt;</span> <span style="color:#a6e22e">ename</span> <span style="color:#a6e22e">VARCHAR</span>(<span style="color:#ae81ff">50</span>) <span style="color:#a6e22e">NOT</span> <span style="color:#a6e22e">NULL</span> <span style="color:#a6e22e">UNIQUE</span>
+<span style="color:#f92672">-&gt;</span> );
+</code></pre></div><p>即便某列有唯一且非空约束它也不能代替主键约束，因为不能被引用</p>
+<p><strong>5、概念模型</strong></p>
+<ul>
+<li>对象模型（Java的类），可以双向关联，而且引用的是对象，不是一个主键</li>
+<li>关系模型（数据库的表），只能多方引用一方，而且引用的只是主键，而不是一整行记录</li>
+<li>实体之间的关系：1对多，1对1，多对多</li>
+<li>其他称呼：1方是主表，多方是从表</li>
+</ul>
+<p><strong>6、外键约束：一张表有一个主键，同时也可能包含一个外键，它是另一张表（或者本表）的主键</strong></p>
+<ul>
+<li>特点：必须引用主键、可以重复、可以为空、一张表可以有多个外键</li>
+</ul>
+<p>假设存在两张表：员工表 etest，部门表 dtest，&lsquo;fk_etest_dtest&rsquo;是外键名，表示&rsquo;外键_从表名_主表名&rsquo;</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">CREATE</span> <span style="color:#a6e22e">TABLE</span> <span style="color:#a6e22e">etest</span>(
+<span style="color:#f92672">-&gt;</span> <span style="color:#a6e22e">empno</span> <span style="color:#a6e22e">INT</span> <span style="color:#a6e22e">PRIMARY</span> <span style="color:#a6e22e">KEY</span> <span style="color:#a6e22e">AUTO_INCREMENT</span>,
+<span style="color:#f92672">-&gt;</span> <span style="color:#a6e22e">ename</span> <span style="color:#a6e22e">VARCHAR</span>(<span style="color:#ae81ff">50</span>),
+<span style="color:#f92672">-&gt;</span> <span style="color:#a6e22e">deptno</span> <span style="color:#a6e22e">INT</span>,
+<span style="color:#f92672">-&gt;</span> <span style="color:#a6e22e">CONSTRAINT</span> <span style="color:#a6e22e">fk_etest_dtest</span> <span style="color:#a6e22e">FOREIGN</span> <span style="color:#a6e22e">KEY</span>(<span style="color:#a6e22e">deptno</span>) <span style="color:#a6e22e">REFERENCES</span> <span style="color:#a6e22e">dtest</span>(<span style="color:#a6e22e">deptno</span>)
+<span style="color:#f92672">-&gt;</span> );
+<span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">ALTER</span> <span style="color:#a6e22e">TABLE</span> <span style="color:#a6e22e">etest</span>
+<span style="color:#f92672">-&gt;</span> <span style="color:#a6e22e">ADD</span> <span style="color:#a6e22e">CONSTRAINT</span> <span style="color:#a6e22e">fk_etest_dtest</span> <span style="color:#a6e22e">FOREIGN</span> <span style="color:#a6e22e">KEY</span>(<span style="color:#a6e22e">deptno</span>) <span style="color:#a6e22e">REFERENCES</span> <span style="color:#a6e22e">dtest</span>(<span style="color:#a6e22e">deptno</span>)
+</code></pre></div><h2 id="三种关联关系">三种关联关系</h2>
+<p><strong>1、一对一</strong></p>
+<p>将从表的主键作为外键，即可构造一对一关系</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">CREATE</span> <span style="color:#a6e22e">TABLE</span> <span style="color:#a6e22e">husband</span>(
+<span style="color:#f92672">-&gt;</span> <span style="color:#a6e22e">hid</span> <span style="color:#a6e22e">INT</span> <span style="color:#a6e22e">PRIMARY</span> <span style="color:#a6e22e">KEY</span> <span style="color:#a6e22e">AUTO_INCREMENT</span>,
+<span style="color:#f92672">-&gt;</span> <span style="color:#a6e22e">hname</span> <span style="color:#a6e22e">VARCHAR</span>(<span style="color:#ae81ff">50</span>)
+<span style="color:#f92672">-&gt;</span> );
+<span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">INSERT</span> <span style="color:#a6e22e">INTO</span> <span style="color:#a6e22e">husband</span> <span style="color:#a6e22e">VALUES</span>(<span style="color:#a6e22e">NULL</span>, <span style="color:#e6db74">&#39;zhangSan’);
+</span><span style="color:#e6db74">mysql&gt; INSERT INTO husband VALUES(NULL, &#39;</span><span style="color:#a6e22e">liSi</span><span style="color:#960050;background-color:#1e0010">’</span>);
+<span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">INSERT</span> <span style="color:#a6e22e">INTO</span> <span style="color:#a6e22e">husband</span> <span style="color:#a6e22e">VALUES</span>(<span style="color:#a6e22e">NULL</span>, <span style="color:#960050;background-color:#1e0010">&#39;</span><span style="color:#a6e22e">wangWu</span><span style="color:#960050;background-color:#1e0010">’</span>);
+<span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">CREATE</span> <span style="color:#a6e22e">TABLE</span> <span style="color:#a6e22e">wife</span>(
+<span style="color:#f92672">-&gt;</span> <span style="color:#a6e22e">wid</span> <span style="color:#a6e22e">INT</span> <span style="color:#a6e22e">PRIMARY</span> <span style="color:#a6e22e">KEY</span> <span style="color:#a6e22e">AUTO_INCREMENT</span>,
+<span style="color:#f92672">-&gt;</span> <span style="color:#a6e22e">wname</span> <span style="color:#a6e22e">VARCHAR</span>(<span style="color:#ae81ff">50</span>),
+<span style="color:#f92672">-&gt;</span> <span style="color:#a6e22e">CONSTRAINT</span> <span style="color:#a6e22e">fk_wife_hasband</span> <span style="color:#a6e22e">FOREIGN</span> <span style="color:#a6e22e">KEY</span>(<span style="color:#a6e22e">wid</span>) <span style="color:#a6e22e">REFERENCES</span> <span style="color:#a6e22e">husband</span>(<span style="color:#a6e22e">hid</span>)
+<span style="color:#f92672">-&gt;</span> );
+</code></pre></div><p>wid列唯一、非空、引用hid，因此wid列的取值必须与hid的取值相同，且不能重复，如</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">INSERT</span> <span style="color:#a6e22e">INTO</span> <span style="color:#a6e22e">husband</span> <span style="color:#a6e22e">VALUES</span>(<span style="color:#ae81ff">1</span>, <span style="color:#960050;background-color:#1e0010">&#39;</span><span style="color:#a6e22e">zhaoliu</span><span style="color:#960050;background-color:#1e0010">’</span>);
+<span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">INSERT</span> <span style="color:#a6e22e">INTO</span> <span style="color:#a6e22e">husband</span> <span style="color:#a6e22e">VALUES</span>(<span style="color:#ae81ff">2</span>, <span style="color:#960050;background-color:#1e0010">‘</span><span style="color:#a6e22e">liuqi</span><span style="color:#960050;background-color:#1e0010">’</span>);
+</code></pre></div><p>即wife表中若有一条记录的wid是1，其他记录就不能再是1，因为它是主键；同时在hid中必须存在1这个值，因为wid是外键，而hid不会有第二条记录为1，因为它也是主键，这就完成一对一关系。</p>
+<p><strong>2、多对多</strong></p>
+<p>使用中间表，即需要三张表，在中间表中使用两个外键，分别引用其他两个表的主键</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">CREATE</span> <span style="color:#a6e22e">TABLE</span> <span style="color:#a6e22e">student</span>(
+<span style="color:#f92672">-&gt;</span> <span style="color:#a6e22e">sid</span> <span style="color:#a6e22e">INT</span> <span style="color:#a6e22e">PRIMARY</span> <span style="color:#a6e22e">KEY</span> <span style="color:#a6e22e">AUTO_INCREMENT</span>,
+<span style="color:#f92672">-&gt;</span> <span style="color:#a6e22e">sname</span> <span style="color:#a6e22e">VARCHAR</span>(<span style="color:#ae81ff">50</span>)
+<span style="color:#f92672">-&gt;</span> );
+<span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">CREATE</span> <span style="color:#a6e22e">TABLE</span> <span style="color:#a6e22e">teacher</span>(
+<span style="color:#f92672">-&gt;</span> <span style="color:#a6e22e">tid</span> <span style="color:#a6e22e">INT</span> <span style="color:#a6e22e">PRIMARY</span> <span style="color:#a6e22e">KEY</span> <span style="color:#a6e22e">AUTO_INCREMENT</span>,
+<span style="color:#f92672">-&gt;</span> <span style="color:#a6e22e">tname</span> <span style="color:#a6e22e">VARCHAR</span>(<span style="color:#ae81ff">50</span>)
+<span style="color:#f92672">-&gt;</span> );
+<span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">CREATE</span> <span style="color:#a6e22e">TABLE</span> <span style="color:#a6e22e">stu_tea</span>(
+<span style="color:#f92672">-&gt;</span> <span style="color:#a6e22e">sid</span> <span style="color:#a6e22e">INT</span>,
+<span style="color:#f92672">-&gt;</span> <span style="color:#a6e22e">tid</span> <span style="color:#a6e22e">INT</span>,
+<span style="color:#f92672">-&gt;</span> <span style="color:#a6e22e">CONSTRAINT</span> <span style="color:#a6e22e">fk_student</span> <span style="color:#a6e22e">FOREIGN</span> <span style="color:#a6e22e">KEY</span>(<span style="color:#a6e22e">sid</span>) <span style="color:#a6e22e">REFERENCES</span> <span style="color:#a6e22e">student</span>(<span style="color:#a6e22e">sid</span>),
+<span style="color:#f92672">-&gt;</span> <span style="color:#a6e22e">CONSTRAINT</span> <span style="color:#a6e22e">fk_teacher</span> <span style="color:#a6e22e">FOREIGN</span> <span style="color:#a6e22e">KEY</span>(<span style="color:#a6e22e">tid</span>) <span style="color:#a6e22e">REFERENCES</span> <span style="color:#a6e22e">teacher</span>(<span style="color:#a6e22e">tid</span>)
+<span style="color:#f92672">-&gt;</span> );
+<span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">INSERT</span> <span style="color:#a6e22e">INTO</span> <span style="color:#a6e22e">student</span> <span style="color:#a6e22e">VALUES</span>(<span style="color:#a6e22e">NULL</span>, <span style="color:#e6db74">&#39;zhangSan&#39;</span>);
+<span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">INSERT</span> <span style="color:#a6e22e">INTO</span> <span style="color:#a6e22e">student</span> <span style="color:#a6e22e">VALUES</span>(<span style="color:#a6e22e">NULL</span>, <span style="color:#e6db74">&#39;liSi&#39;</span>);
+<span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">INSERT</span> <span style="color:#a6e22e">INTO</span> <span style="color:#a6e22e">student</span> <span style="color:#a6e22e">VALUES</span>(<span style="color:#a6e22e">NULL</span>, <span style="color:#e6db74">&#39;wangWu&#39;</span>);
+<span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">INSERT</span> <span style="color:#a6e22e">INTO</span> <span style="color:#a6e22e">student</span> <span style="color:#a6e22e">VALUES</span>(<span style="color:#a6e22e">NULL</span>, <span style="color:#e6db74">&#39;zhaoLiu&#39;</span>);
+<span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">INSERT</span> <span style="color:#a6e22e">INTO</span> <span style="color:#a6e22e">student</span> <span style="color:#a6e22e">VALUES</span>(<span style="color:#a6e22e">NULL</span>, <span style="color:#e6db74">&#39;qianQi&#39;</span>);
+<span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">INSERT</span> <span style="color:#a6e22e">INTO</span> <span style="color:#a6e22e">teacher</span> <span style="color:#a6e22e">VALUES</span>(<span style="color:#a6e22e">NULL</span>, <span style="color:#e6db74">&#39;cui&#39;</span>);
+<span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">INSERT</span> <span style="color:#a6e22e">INTO</span> <span style="color:#a6e22e">teacher</span> <span style="color:#a6e22e">VALUES</span>(<span style="color:#a6e22e">NULL</span>, <span style="color:#e6db74">&#39;liu&#39;</span>);
+<span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">INSERT</span> <span style="color:#a6e22e">INTO</span> <span style="color:#a6e22e">teacher</span> <span style="color:#a6e22e">VALUES</span>(<span style="color:#a6e22e">NULL</span>, <span style="color:#e6db74">&#39;shi&#39;</span>);
+<span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">INSERT</span> <span style="color:#a6e22e">INTO</span> <span style="color:#a6e22e">stu_tea</span> <span style="color:#a6e22e">VALUES</span>(<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">1</span>);
+<span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">INSERT</span> <span style="color:#a6e22e">INTO</span> <span style="color:#a6e22e">stu_tea</span> <span style="color:#a6e22e">VALUES</span>(<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">1</span>);
+<span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">INSERT</span> <span style="color:#a6e22e">INTO</span> <span style="color:#a6e22e">stu_tea</span> <span style="color:#a6e22e">VALUES</span>(<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">1</span>);
+<span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">INSERT</span> <span style="color:#a6e22e">INTO</span> <span style="color:#a6e22e">stu_tea</span> <span style="color:#a6e22e">VALUES</span>(<span style="color:#ae81ff">4</span>,<span style="color:#ae81ff">1</span>);
+<span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">INSERT</span> <span style="color:#a6e22e">INTO</span> <span style="color:#a6e22e">stu_tea</span> <span style="color:#a6e22e">VALUES</span>(<span style="color:#ae81ff">5</span>,<span style="color:#ae81ff">1</span>);
+<span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">INSERT</span> <span style="color:#a6e22e">INTO</span> <span style="color:#a6e22e">stu_tea</span> <span style="color:#a6e22e">VALUES</span>(<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">2</span>);
+<span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">INSERT</span> <span style="color:#a6e22e">INTO</span> <span style="color:#a6e22e">stu_tea</span> <span style="color:#a6e22e">VALUES</span>(<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">2</span>);
+<span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">INSERT</span> <span style="color:#a6e22e">INTO</span> <span style="color:#a6e22e">stu_tea</span> <span style="color:#a6e22e">VALUES</span>(<span style="color:#ae81ff">4</span>,<span style="color:#ae81ff">2</span>);
+<span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">INSERT</span> <span style="color:#a6e22e">INTO</span> <span style="color:#a6e22e">stu_tea</span> <span style="color:#a6e22e">VALUES</span>(<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">3</span>);
+<span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">INSERT</span> <span style="color:#a6e22e">INTO</span> <span style="color:#a6e22e">stu_tea</span> <span style="color:#a6e22e">VALUES</span>(<span style="color:#ae81ff">4</span>,<span style="color:#ae81ff">3</span>);
+<span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">INSERT</span> <span style="color:#a6e22e">INTO</span> <span style="color:#a6e22e">stu_tea</span> <span style="color:#a6e22e">VALUES</span>(<span style="color:#ae81ff">5</span>,<span style="color:#ae81ff">3</span>);
+</code></pre></div><p>stu_tea表中存储的就是多对多关系</p>
+<h2 id="多表查询">多表查询</h2>
+<p>一次性查询多个表，包含三种：合并结果集（了解），连接查询，子查询</p>
+<p><strong>1、合并结果集</strong></p>
+<p>要求被合并的结果集中，列的类型和列数相同，即结果集的结构一模一样</p>
+<p><code>UNION ALL</code>完全相同的行会被去除</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">FROM</span> <span style="color:#a6e22e">ab</span>
+<span style="color:#f92672">-&gt;</span> <span style="color:#a6e22e">UNION</span> <span style="color:#a6e22e">ALL</span>
+<span style="color:#f92672">-&gt;</span> <span style="color:#a6e22e">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">FROM</span> <span style="color:#a6e22e">cd</span>;
+</code></pre></div><p><code>UNION</code>完全相同的行不会被去除</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">FROM</span> <span style="color:#a6e22e">ab</span>
+<span style="color:#f92672">-&gt;</span> <span style="color:#a6e22e">UNION</span>
+<span style="color:#f92672">-&gt;</span> <span style="color:#a6e22e">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">FROM</span> <span style="color:#a6e22e">cd</span>;
+</code></pre></div><p>注意是结果集的表结构相同，就能合并</p>
+<p><strong>2、连接查询</strong></p>
+<p>包含：内连接，外连接，自然连接</p>
+<p><strong>2.1 内连接</strong></p>
+<p>若按如下连接，emp表的一行记录分别出现count(dept.deptno)次，分别对应dept表的每一行记录，又称笛卡尔积</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">FROM</span> <span style="color:#a6e22e">emp</span>, <span style="color:#a6e22e">dept</span>;
+</code></pre></div><p>(1) 方言版：笛卡尔积去除，用在跨表查询</p>
+<p>查询当前员工信息及其部门信息</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">FROM</span> <span style="color:#a6e22e">emp</span>, <span style="color:#a6e22e">dept</span> <span style="color:#a6e22e">WHERE</span> <span style="color:#a6e22e">emp</span>.<span style="color:#a6e22e">deptno</span><span style="color:#f92672">=</span><span style="color:#a6e22e">dept</span>.<span style="color:#a6e22e">deptno</span>;
+</code></pre></div><p>查询所有员工的姓名，工资和部门名称</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">SELECT</span> <span style="color:#a6e22e">emp</span>.<span style="color:#a6e22e">ename</span>, <span style="color:#a6e22e">emp</span>.<span style="color:#a6e22e">sal</span>, <span style="color:#a6e22e">dept</span>.<span style="color:#a6e22e">dname</span> <span style="color:#a6e22e">FROM</span> <span style="color:#a6e22e">emp</span>, <span style="color:#a6e22e">dept</span> <span style="color:#a6e22e">WHERE</span> <span style="color:#a6e22e">emp</span>.<span style="color:#a6e22e">deptno</span><span style="color:#f92672">=</span><span style="color:#a6e22e">dept</span>.<span style="color:#a6e22e">deptno</span>;
+</code></pre></div><p>简化，给表起别名</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">SELECT</span> <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">ename</span>, <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">sal</span>, <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">dname</span> <span style="color:#a6e22e">FROM</span> <span style="color:#a6e22e">emp</span> <span style="color:#a6e22e">e</span>, <span style="color:#a6e22e">dept</span> <span style="color:#a6e22e">d</span> <span style="color:#a6e22e">WHERE</span> <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">deptno</span><span style="color:#f92672">=</span><span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">deptno</span>;
+</code></pre></div><p>(2) 标准版（注意<code>INNER JOIN</code>和<code>ON</code>用法）</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">SELECT</span> <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">ename</span>, <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">sal</span>, <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">dname</span> <span style="color:#a6e22e">FROM</span> <span style="color:#a6e22e">emp</span> <span style="color:#a6e22e">e</span> <span style="color:#a6e22e">INNER</span> <span style="color:#a6e22e">JOIN</span> <span style="color:#a6e22e">dept</span> <span style="color:#a6e22e">d</span> <span style="color:#a6e22e">ON</span> <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">deptno</span><span style="color:#f92672">=</span><span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">deptno</span>;
+</code></pre></div><p>(3) 自然版（注意不需要<code>ON</code>，会自动找两张表中完全相同的列并匹配）</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">SELECT</span> <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">ename</span>, <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">sal</span>, <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">dname</span> <span style="color:#a6e22e">FROM</span> <span style="color:#a6e22e">emp</span> <span style="color:#a6e22e">e</span> <span style="color:#a6e22e">NATURAL</span> <span style="color:#a6e22e">JOIN</span> <span style="color:#a6e22e">dept</span> <span style="color:#a6e22e">d</span>;
+</code></pre></div><p>注意：内连接无法查询出“张三”，因为张三对应的50部门不存在</p>
+<p><strong>2.2 外连接</strong></p>
+<p>外连接有一主一次，左外即左表为主，即emp为主，那么主表中的所有记录无论满足不满足条件，都打印出来，并且使用NULL补位</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">SELECT</span> <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">ename</span>, <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">sal</span>, <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">dname</span> <span style="color:#a6e22e">FROM</span> <span style="color:#a6e22e">emp</span> <span style="color:#a6e22e">e</span> <span style="color:#a6e22e">LEFT</span> <span style="color:#a6e22e">OUTER</span> <span style="color:#a6e22e">JOIN</span> <span style="color:#a6e22e">dept</span> <span style="color:#a6e22e">d</span> <span style="color:#a6e22e">ON</span> <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">deptno</span><span style="color:#f92672">=</span><span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">deptno</span>;
+</code></pre></div><table>
+<thead>
+<tr>
+<th>ename</th>
+<th>sal</th>
+<th>dname</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>甘宁</td>
+<td>8000</td>
+<td>学工部</td>
+</tr>
+<tr>
+<td>黛绮丝</td>
+<td>16000</td>
+<td>销售部</td>
+</tr>
+<tr>
+<td>殷天正</td>
+<td>12500</td>
+<td>销售部</td>
+</tr>
+<tr>
+<td>刘备</td>
+<td>29750</td>
+<td>学工部</td>
+</tr>
+<tr>
+<td>谢逊</td>
+<td>12500</td>
+<td>销售部</td>
+</tr>
+<tr>
+<td>关羽</td>
+<td>28500</td>
+<td>销售部</td>
+</tr>
+<tr>
+<td>张飞</td>
+<td>24500</td>
+<td>教研部</td>
+</tr>
+<tr>
+<td>诸葛亮</td>
+<td>30000</td>
+<td>学工部</td>
+</tr>
+<tr>
+<td>曾阿牛</td>
+<td>50000</td>
+<td>教研部</td>
+</tr>
+<tr>
+<td>韦一笑</td>
+<td>15000</td>
+<td>销售部</td>
+</tr>
+<tr>
+<td>周泰</td>
+<td>11000</td>
+<td>学工部</td>
+</tr>
+<tr>
+<td>程普</td>
+<td>9500</td>
+<td>销售部</td>
+</tr>
+<tr>
+<td>庞统</td>
+<td>30000</td>
+<td>学工部</td>
+</tr>
+<tr>
+<td>黄盖</td>
+<td>13000</td>
+<td>教研部</td>
+</tr>
+<tr>
+<td>张三</td>
+<td>80000</td>
+<td>NULL</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">SELECT</span> <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">ename</span>, <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">sal</span>, <span style="color:#a6e22e">IFNULL</span>(<span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">dname</span>, <span style="color:#960050;background-color:#1e0010">‘</span><span style="color:#a6e22e">无部门</span><span style="color:#960050;background-color:#1e0010">’</span>) <span style="color:#a6e22e">AS</span> <span style="color:#a6e22e">dname</span> <span style="color:#a6e22e">FROM</span> <span style="color:#a6e22e">emp</span> <span style="color:#a6e22e">e</span> <span style="color:#a6e22e">LEFT</span> <span style="color:#a6e22e">OUTER</span> <span style="color:#a6e22e">JOIN</span> <span style="color:#a6e22e">dept</span> <span style="color:#a6e22e">d</span> <span style="color:#a6e22e">ON</span> <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">deptno</span><span style="color:#f92672">=</span><span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">deptno</span>;
+</code></pre></div><p><strong>SQL题：查询所有员工名称，工资以及部门名称，最好用外连接，防止遗漏不属于任何部门的员工</strong></p>
+<p><strong>2.3 右外连接</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">SELECT</span> <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">ename</span>, <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">sal</span>, <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">dname</span> <span style="color:#a6e22e">FROM</span> <span style="color:#a6e22e">emp</span> <span style="color:#a6e22e">e</span> <span style="color:#a6e22e">RIGHT</span> <span style="color:#a6e22e">OUTER</span> <span style="color:#a6e22e">JOIN</span> <span style="color:#a6e22e">dept</span> <span style="color:#a6e22e">d</span> <span style="color:#a6e22e">ON</span> <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">deptno</span><span style="color:#f92672">=</span><span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">deptno</span>;
+</code></pre></div><table>
+<thead>
+<tr>
+<th>ename</th>
+<th>sal</th>
+<th>dname</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>张飞</td>
+<td>24500</td>
+<td>教研部</td>
+</tr>
+<tr>
+<td>曾阿牛</td>
+<td>50000</td>
+<td>教研部</td>
+</tr>
+<tr>
+<td>黄盖</td>
+<td>13000</td>
+<td>教研部</td>
+</tr>
+<tr>
+<td>甘宁</td>
+<td>8000</td>
+<td>学工部</td>
+</tr>
+<tr>
+<td>刘备</td>
+<td>29750</td>
+<td>学工部</td>
+</tr>
+<tr>
+<td>诸葛亮</td>
+<td>30000</td>
+<td>学工部</td>
+</tr>
+<tr>
+<td>周泰</td>
+<td>11000</td>
+<td>学工部</td>
+</tr>
+<tr>
+<td>庞统</td>
+<td>30000</td>
+<td>学工部</td>
+</tr>
+<tr>
+<td>黛绮丝</td>
+<td>16000</td>
+<td>销售部</td>
+</tr>
+<tr>
+<td>殷天正</td>
+<td>12500</td>
+<td>销售部</td>
+</tr>
+<tr>
+<td>谢逊</td>
+<td>12500</td>
+<td>销售部</td>
+</tr>
+<tr>
+<td>关羽</td>
+<td>28500</td>
+<td>销售部</td>
+</tr>
+<tr>
+<td>韦一笑</td>
+<td>15000</td>
+<td>销售部</td>
+</tr>
+<tr>
+<td>程普</td>
+<td>9500</td>
+<td>销售部</td>
+</tr>
+<tr>
+<td>NULL</td>
+<td>NULL</td>
+<td>财务部</td>
+</tr>
+</tbody>
+</table>
+<p>即没有人在财务部</p>
+<p><strong>2.4 全外连接（了解即可）</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">SELECT</span> <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">ename</span>, <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">sal</span>, <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">dname</span> <span style="color:#a6e22e">FROM</span> <span style="color:#a6e22e">emp</span> <span style="color:#a6e22e">e</span> <span style="color:#a6e22e">LEFT</span> <span style="color:#a6e22e">OUTER</span> <span style="color:#a6e22e">JOIN</span> <span style="color:#a6e22e">dept</span> <span style="color:#a6e22e">d</span> <span style="color:#a6e22e">ON</span> <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">deptno</span><span style="color:#f92672">=</span><span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">deptno</span>
+<span style="color:#960050;background-color:#1e0010">—</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">UNION</span>
+<span style="color:#960050;background-color:#1e0010">—</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">SELECT</span> <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">ename</span>, <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">sal</span>, <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">dname</span> <span style="color:#a6e22e">FROM</span> <span style="color:#a6e22e">emp</span> <span style="color:#a6e22e">e</span> <span style="color:#a6e22e">RIGHT</span> <span style="color:#a6e22e">OUTER</span> <span style="color:#a6e22e">JOIN</span> <span style="color:#a6e22e">dept</span> <span style="color:#a6e22e">d</span> <span style="color:#a6e22e">ON</span> <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">deptno</span><span style="color:#f92672">=</span><span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">deptno</span>;
+</code></pre></div><h2 id="子查询">子查询</h2>
+<p>查询本公司工资最高的员工的详细信息，如下语句错误，因为条件中不能出现聚合函数</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">FROM</span> <span style="color:#a6e22e">emp</span> <span style="color:#a6e22e">WHERE</span> <span style="color:#a6e22e">sal</span><span style="color:#f92672">=</span><span style="color:#a6e22e">MAX</span>(<span style="color:#a6e22e">sal</span>);
+</code></pre></div><p>因此使用查询中包含查询，即子查询</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">FROM</span> <span style="color:#a6e22e">emp</span> <span style="color:#a6e22e">WHERE</span> <span style="color:#a6e22e">sal</span><span style="color:#f92672">=</span>(<span style="color:#a6e22e">SELECT</span> <span style="color:#a6e22e">MAX</span>(<span style="color:#a6e22e">sal</span>) <span style="color:#a6e22e">FROM</span> <span style="color:#a6e22e">emp</span>);
+</code></pre></div><p><code>FROM</code>和<code>WHERE</code>两个位置后都可以出现子查询</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">SELECT</span> <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">empno</span>, <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">ename</span> <span style="color:#a6e22e">FROM</span> (<span style="color:#a6e22e">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">FROM</span> <span style="color:#a6e22e">emp</span> <span style="color:#a6e22e">WHERE</span> <span style="color:#a6e22e">deptno</span><span style="color:#f92672">=</span><span style="color:#ae81ff">30</span>) <span style="color:#a6e22e">e</span>;
+</code></pre></div><p>注意要对表起别名</p>
+<p>(1) 单行单列（通常用来做条件）</p>
+<p>打印工资高于平均工资的所有人</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">FROM</span> <span style="color:#a6e22e">emp</span> <span style="color:#a6e22e">WHERE</span> <span style="color:#a6e22e">sal</span> <span style="color:#f92672">&gt;</span> (<span style="color:#a6e22e">SELECT</span> <span style="color:#a6e22e">AVG</span>(<span style="color:#a6e22e">sal</span>) <span style="color:#a6e22e">FROM</span> <span style="color:#a6e22e">emp</span>);
+</code></pre></div><p>(2) 多行单列（常用<code>ALL</code>和<code>ANY</code>）</p>
+<p>打印大于30部门所有人工资的员工的信息（两种情况，情况2是&rsquo;单行单列&rsquo;）</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">FROM</span> <span style="color:#a6e22e">emp</span> <span style="color:#a6e22e">WHERE</span> <span style="color:#a6e22e">sal</span> <span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">ALL</span> (<span style="color:#a6e22e">SELECT</span> <span style="color:#a6e22e">sal</span> <span style="color:#a6e22e">FROM</span> <span style="color:#a6e22e">emp</span> <span style="color:#a6e22e">WHERE</span> <span style="color:#a6e22e">deptno</span><span style="color:#f92672">=</span><span style="color:#ae81ff">30</span>);
+<span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">FROM</span> <span style="color:#a6e22e">emp</span> <span style="color:#a6e22e">WHERE</span> <span style="color:#a6e22e">sal</span><span style="color:#f92672">&gt;</span>(<span style="color:#a6e22e">SELECT</span> <span style="color:#a6e22e">MAX</span>(<span style="color:#a6e22e">sal</span>) <span style="color:#a6e22e">FROM</span> <span style="color:#a6e22e">emp</span> <span style="color:#a6e22e">WHERE</span> <span style="color:#a6e22e">deptno</span><span style="color:#f92672">=</span><span style="color:#ae81ff">30</span>);
+</code></pre></div><p>打印工资高于任意经理的员工的信息</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">FROM</span> <span style="color:#a6e22e">emp</span> <span style="color:#a6e22e">WHERE</span> <span style="color:#a6e22e">sal</span> <span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">ANY</span> (<span style="color:#a6e22e">SELECT</span> <span style="color:#a6e22e">sal</span> <span style="color:#a6e22e">FROM</span> <span style="color:#a6e22e">emp</span> <span style="color:#a6e22e">WHERE</span> <span style="color:#a6e22e">job</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#39;经理&#39;</span>);
+</code></pre></div><p>注意不能写成如下语句，因为不能将<code>job='经理'</code>的提取出来，因为经理和经理之间也能比较，如果三个经理有一个工资最低，则另外两个还要显示出来</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">FROM</span> <span style="color:#a6e22e">emp</span> <span style="color:#a6e22e">WHERE</span> <span style="color:#a6e22e">sal</span><span style="color:#f92672">&gt;</span>(<span style="color:#a6e22e">SELECT</span> <span style="color:#a6e22e">MAX</span>(<span style="color:#a6e22e">sal</span>) <span style="color:#a6e22e">FROM</span> <span style="color:#a6e22e">emp</span> <span style="color:#a6e22e">WHERE</span> <span style="color:#a6e22e">job</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#39;经理&#39;</span>);
+</code></pre></div><p>(3) 单行多列（常用<code>IN</code>，比较两个对象是否相同）</p>
+<p>打印工作和部门与殷天正完全相同的员工</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">FROM</span> <span style="color:#a6e22e">emp</span> <span style="color:#a6e22e">WHERE</span> (<span style="color:#a6e22e">job</span>, <span style="color:#a6e22e">deptno</span>) <span style="color:#a6e22e">IN</span> (<span style="color:#a6e22e">SELECT</span> <span style="color:#a6e22e">job</span>, <span style="color:#a6e22e">deptno</span> <span style="color:#a6e22e">FROM</span> <span style="color:#a6e22e">emp</span> <span style="color:#a6e22e">WHERE</span> <span style="color:#a6e22e">ename</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#39;殷天正&#39;</span>);
+</code></pre></div><p>(4) 多行多列（常用在<code>FROM</code>之后）</p>
+
+    </div>
+
+    <div class="post-copyright">
+            
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>Yiming </span>
+                </p>
+            
+
+            
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://ymingliu.github.io/2021/sql-advanced/>https://ymingliu.github.io/2021/sql-advanced/</span>
+            </p>
+            
+            
+    </div>
+
+
+    <div class="post-tags">
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> ·
+                <span><a href="https://ymingliu.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://ymingliu.github.io/2021/sql-basic-practice/" class="prev" rel="prev" title="数据库及SQL/MySQL基础练习题"><i class="iconfont icon-left"></i>&nbsp;数据库及SQL/MySQL基础练习题</a>
+        
+        
+    </div>
+
+    <div class="post-comment">
+        
+            
+                <div id="gitalk-container"></div>
+<link rel="stylesheet" href="https://cdn.bootcss.com/gitalk/1.5.2/gitalk.css">
+<script src="https://cdn.bootcss.com/gitalk/1.5.2/gitalk.min.js"></script>
+<script>
+    const gitalk = new Gitalk({
+
+        clientID: '',
+        clientSecret: '',
+        repo: '',
+        owner: 'ymingliu',
+        admin: ['ymingliu'],
+        id: location.pathname, 
+        distractionFreeMode: false 
+    });
+    (function () {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('gitalk-container').innerHTML = 'Gitalk comments not available by default when the website is previewed locally.';
+            return;
+        }
+        gitalk.render('gitalk-container');
+    })();
+</script>
+
+            
+        
+    </div>
+</article>
+                </div>
+            </main>
+            <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span itemprop="copyrightYear">2021 - 2021</span>
+        
+        <span class="with-love">
+    	 <i class="iconfont icon-love"></i>
+         </span>
+         
+            <span class="author" itemprop="copyrightHolder"><a href="https://ymingliu.github.io">Yiming</a> | </span>
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/Mogeko/Mogege" target="_blank" rel="external nofollow">Mogege</a></span>
+    </div>
+</footer>
+
+
+
+
+
+
+<script defer src="/js/vendor_main.min.js"></script>
+
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script> pangu.spacingPage();</script>
+
+
+
+
+
+        </div>
+    </body>
+</html>

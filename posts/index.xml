@@ -6,10 +6,19 @@
     <description>Recent content in Posts on Yiming`s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Tue, 09 Mar 2021 11:36:52 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 10 Mar 2021 09:38:20 +0800</lastBuildDate>
     
 	<atom:link href="https://ymingliu.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>数据库及SQL/MySQL进阶</title>
+      <link>https://ymingliu.github.io/2021/sql-advanced/</link>
+      <pubDate>Wed, 10 Mar 2021 09:38:20 +0800</pubDate>
+      
+      <guid>https://ymingliu.github.io/2021/sql-advanced/</guid>
+      <description>课程参考 阿里云开发者社区——数据库学习路线 mysql编码问题 1、查看MySQL数据库编码 mysql&amp;gt; show variables like &amp;#39;char%&amp;#39;; Variable_name Value character_set_client utf8mb4 character_set_connection utf8mb4 character_set_database utf8 character_set_filesystem binary character_set_results utf8mb4 character_set_server utf8mb4 character_set_system utf8 character_sets_dir /usr/local/mysql-8.0.20-macos10.15-x86_64/share/charsets/ cha</description>
+    </item>
     
     <item>
       <title>数据库及SQL/MySQL基础练习题</title>

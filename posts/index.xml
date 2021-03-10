@@ -6,13 +6,22 @@
     <description>Recent content in Posts on Yiming`s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 10 Mar 2021 09:38:20 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 10 Mar 2021 09:48:59 +0800</lastBuildDate>
     
 	<atom:link href="https://ymingliu.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>数据库及SQL/MySQL进阶</title>
+      <title>Advanced sql/mysql for practice</title>
+      <link>https://ymingliu.github.io/2021/sql-advanced-practice/</link>
+      <pubDate>Wed, 10 Mar 2021 09:48:59 +0800</pubDate>
+      
+      <guid>https://ymingliu.github.io/2021/sql-advanced-practice/</guid>
+      <description>课程参考 阿里云开发者社区——数据库学习路线 数据库及SQL/MySQL进阶练习题 1、查出至少有一个员工的部门，显示部门编号、部门名称、部门位置</description>
+    </item>
+    
+    <item>
+      <title>Advanced sql/mysql</title>
       <link>https://ymingliu.github.io/2021/sql-advanced/</link>
       <pubDate>Wed, 10 Mar 2021 09:38:20 +0800</pubDate>
       
@@ -21,7 +30,7 @@
     </item>
     
     <item>
-      <title>数据库及SQL/MySQL基础练习题</title>
+      <title>Basic sql/mysql for practice</title>
       <link>https://ymingliu.github.io/2021/sql-basic-practice/</link>
       <pubDate>Tue, 09 Mar 2021 11:36:52 +0800</pubDate>
       
@@ -30,7 +39,7 @@
     </item>
     
     <item>
-      <title>数据库及SQL/MySQL基础</title>
+      <title>Basic sql/mysql</title>
       <link>https://ymingliu.github.io/2021/sql-basic/</link>
       <pubDate>Tue, 09 Mar 2021 10:25:45 +0800</pubDate>
       

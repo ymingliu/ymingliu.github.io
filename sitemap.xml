@@ -2,9 +2,9 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
     <url>
-      <loc>https://ymingliu.github.io/2021/sql-advanced-practice/</loc>
+      <loc>https://ymingliu.github.io/posts/</loc>
       
-      <lastmod>2021-03-10T09:48:59+08:00</lastmod>
+      <lastmod>2021-03-12T17:27:39+08:00</lastmod>
       
       
       
@@ -12,7 +12,27 @@
     </url>
   
     <url>
-      <loc>https://ymingliu.github.io/posts/</loc>
+      <loc>https://ymingliu.github.io/2021/index-optimization-strategies/</loc>
+      
+      <lastmod>2021-03-12T17:27:39+08:00</lastmod>
+      
+      
+      
+      
+    </url>
+  
+    <url>
+      <loc>https://ymingliu.github.io/2021/sql-advanced-application/</loc>
+      
+      <lastmod>2021-03-11T11:00:06+08:00</lastmod>
+      
+      
+      
+      
+    </url>
+  
+    <url>
+      <loc>https://ymingliu.github.io/2021/sql-advanced-practice/</loc>
       
       <lastmod>2021-03-10T09:48:59+08:00</lastmod>
       
@@ -44,7 +64,7 @@
     <url>
       <loc>https://ymingliu.github.io/2021/sql-basic/</loc>
       
-      <lastmod>2021-03-09T10:25:45+08:00</lastmod>
+      <lastmod>2021-03-08T10:25:45+08:00</lastmod>
       
       
       

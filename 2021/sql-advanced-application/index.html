@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noodp"/>
+    <meta name="author" content="Yiming">
+    <meta name="description" content="Yiming`s Blog">
+    
+    
+    <link rel="prev" href="https://ymingliu.github.io/2021/sql-advanced-practice/" />
+    <link rel="next" href="https://ymingliu.github.io/2021/index-optimization-strategies/" />
+    <link rel="canonical" href="https://ymingliu.github.io/2021/sql-advanced-application/" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+    <title>
+        
+        
+            SQL/MySQL Advanced Application | Yiming`s Blog
+        
+    </title>
+    <meta name="title" content="SQL/MySQL Advanced Application | Yiming`s Blog">
+    
+<link rel="stylesheet" href="/css/main.min.css">
+
+
+    
+    
+ 
+
+<script type="application/ld+json">
+{
+    "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/ymingliu.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "SQL\/MySQL Advanced Application",
+    "headline" : "SQL\/MySQL Advanced Application",
+    "description" : "课程参考 阿里云开发者社区——数据库学习路线 综述 本节侧重于高效、好用、优化、和开发相关的数据库知识，包括如下5部分 一、MySQL的架构介绍 简介",
+    "inLanguage" : "zh-cn",
+    "author" : "Yiming",
+    "creator" : "Yiming",
+    "publisher": "Yiming",
+    "accountablePerson" : "Yiming",
+    "copyrightHolder" : "Yiming",
+    "copyrightYear" : "2021",
+    "datePublished": "2021-03-11 11:00:06 \x2b0800 CST",
+    "dateModified" : "2021-03-11 11:00:06 \x2b0800 CST",
+    "url" : "https:\/\/ymingliu.github.io\/2021\/sql-advanced-application\/",
+    "wordCount" : "6698",
+    "keywords" : [  "Yiming`s Blog"]
+}
+</script>
+
+  </head>
+    <body class="">
+        <div class="wrapper">
+            <nav class="navbar">
+    
+        <progress class="content_progress" max="0" value="0"></progress>
+    
+    <div class="container">
+        
+            <div class="navbar-header header-back2home-logo">
+                <span class="logo_mark" >>$</span>
+                <a href="https://ymingliu.github.io">
+                    <span class="logo_text" >cd /home/</span>
+                    <span class="logo_cursor" ></span>
+                </a>
+            </div>
+        
+        <div class="navbar-right">
+                
+                <span class="menu">
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+                <span class="divide"></span>
+                <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-dark-mode"></i></a>
+                </span>
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+    
+        <progress class="content_progress" max="0" value="0"></progress>
+    
+     <div class="container">
+        <div class="navbar">
+            <div class="navbar-header header-logo">
+                    <a href="https://ymingliu.github.io">Yiming`s Blog</a>
+            </div>
+            <div class="navbar-right">
+                <div><a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-dark-mode"></i></a></div>
+                <div class="menu-toggle">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                <nav class="mb-md">
+                    
+                    
+                        <a class="menu-item" href="/posts/" title="">
+                            <h3>Blog</h3>
+                            <div class="menu-active"></div>
+                        </a>
+                    
+                        <a class="menu-item" href="/categories/" title="">
+                            <h3>Categories</h3>
+                            <div class="menu-active"></div>
+                        </a>
+                    
+                        <a class="menu-item" href="/tags/" title="">
+                            <h3>Tags</h3>
+                            <div class="menu-active"></div>
+                        </a>
+                    
+                        <a class="menu-item" href="/about/" title="">
+                            <h3>About</h3>
+                            <div class="menu-active"></div>
+                        </a>
+                    
+                </nav>
+        </div>
+    </div>
+</nav>
+            <main class="main">
+                <div class="container">
+                    
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">SQL/MySQL Advanced Application</h1>
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://ymingliu.github.io" rel="author">Yiming</a> with ♥
+                <span class="post-time">
+                on <time datetime=2021-03-11 itemprop="datePublished">March 11, 2021</time>
+                </span>
+                in
+                
+                <span class="post-word-count">6698 words</span>
+        </div>
+    </header>
+
+    <div class="post-content">
+        
+
+        
+        
+
+        
+        
+        
+        
+        
+
+        
+        
+        
+
+        <h2 id="课程参考">课程参考</h2>
+<p><a href="https://developer.aliyun.com/learning/roadmap/database?spm=5176.12901015.0.i12901015.4ea8525cMC1llR">阿里云开发者社区——数据库学习路线</a></p>
+<h2 id="综述">综述</h2>
+<p>本节侧重于高效、好用、优化、和开发相关的数据库知识，包括如下5部分</p>
+<p>一、MySQL的架构介绍</p>
+<ul>
+<li>简介</li>
+<li>Linux版的安装</li>
+<li>配置文件</li>
+<li>逻辑架构介绍</li>
+<li>存储引擎</li>
+</ul>
+<p>二、索引优化分析（重）</p>
+<ul>
+<li>性能下降SQL慢，执行时间长，等待时间长</li>
+<li>常见通用的Join查询</li>
+<li>索引简介（重）</li>
+<li>性能分析（重）</li>
+<li>索引优化（重）</li>
+</ul>
+<p>三、查询截取分析</p>
+<ul>
+<li>查询优化</li>
+<li>慢查询日志</li>
+<li>批量数据脚本</li>
+<li>Show Profile</li>
+<li>全局查询日志</li>
+</ul>
+<p>四、MySQL锁机制</p>
+<ul>
+<li>概述</li>
+<li>三锁：表锁（偏读）、行锁（偏写）、页锁</li>
+</ul>
+<p>五、主从复制</p>
+<ul>
+<li>复制的基本原则</li>
+<li>一主一从常见配置</li>
+</ul>
+<hr>
+<h2 id="一mysql的架构介绍">一、MySQL的架构介绍</h2>
+<p>1、MySQL简介：关系型数据库管理系统，由瑞典MySQL AB公司开发，目前属于Oracle公司。</p>
+<p>2、高级MySQL包含：MySQL内核，SQL优化，MySQL服务器优化，各种参数常量设定，查询语句优化，主从复制，软硬件升级，容灾备份，SQL编程。</p>
+<p>3、MySQL安装包含：下载地址，检查当前系统是否安装过MySQL，安装MySQL服务端，安装MySQL客户端，查看MySQL安装时创建的MySQL用户和MySQL组，MySQL服务器启动和停止，MySQL启动后开始连接，自启动MySQL服务，修改配置文件位置，修改字符集和数据存储路径。</p>
+<p>4、MySQL主要配置文件包含：二进制日志log-bin（主要用于主从复制），错误日志log-error（默认关闭，记录严重的警告和错误信息），查询日志log（默认关闭，记录查询的SQL语句），数据文件（frm文件，存放表结构，myd文件，存放表数据，myi文件，存放表索引），如何配置（Windows下my.ini文件，Linux下my.cnf文件）。</p>
+<p>5、MySQL逻辑架构：第一层，<strong>连接层</strong>，第二层，<strong>服务层</strong>（业务逻辑处理层），第三层，<strong>引擎层</strong>（可拔插存储引擎层），第四层，<strong>存储层</strong>（文件存储层）。因此，与其他数据库不同，MySQL是插件式的可拔插的结构，可以在多种不同场景中发挥良好作用。特别是存储引擎架构，<strong>插件式的存储引擎架构</strong>将查询处理和其他系统任务以及数据的存储提取相分离，这样就可以根据业务的实际需求选择合适的存储引擎。</p>
+<p>6、MySQL存储引擎：常用MyISAM和InnoDB，可用<code>SHOW ENGINES</code>查看目前MySQL已提供什么存储引擎，以及<code>SHOW VARIABLES LIKE '%storage_engine%'</code>查看MySQL当前默认的存储引擎。两者区别略。</p>
+<hr>
+<h2 id="二索引优化分析重">二、索引优化分析（重）</h2>
+<h3 id="1sql性能下降执行和等待时间长原因">1、SQL性能下降（执行和等待时间长）原因</h3>
+<ul>
+<li>查询语句有待优化</li>
+<li>索引失效（即有索引但没有充分利用）</li>
+<li>关联查询有太多的<code>JOIN</code>（多表查询的设计不好）</li>
+<li>服务器调优及各个参数设置（缓冲、线程数等）</li>
+</ul>
+<p>因此如何写好的查询语句，如何建合适的索引并利用，如何高效地多表查询是优化重点</p>
+<h3 id="2常见通用的join查询">2、常见通用的<code>JOIN</code>查询</h3>
+<p>首先需要知道SQL执行顺序，对于手写、机读、总结有何不同。标准的手写MySQL语句为如下格式</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">SELECT DISTINCT
+<span style="color:#f92672">&lt;</span> select_list <span style="color:#f92672">&gt;</span>
+FROM
+<span style="color:#f92672">&lt;</span> left_table <span style="color:#f92672">&gt;</span> <span style="color:#f92672">&lt;</span> join_type <span style="color:#f92672">&gt;</span>
+JOIN <span style="color:#f92672">&lt;</span> right_table <span style="color:#f92672">&gt;</span> ON <span style="color:#f92672">&lt;</span> join_condition <span style="color:#f92672">&gt;</span>
+WHERE
+<span style="color:#f92672">&lt;</span> where_condition <span style="color:#f92672">&gt;</span>
+GROUP BY
+<span style="color:#f92672">&lt;</span> group_by_condition <span style="color:#f92672">&gt;</span>
+HAVING
+<span style="color:#f92672">&lt;</span> having_condition <span style="color:#f92672">&gt;</span>
+ORDER BY
+<span style="color:#f92672">&lt;</span> order_by_condition <span style="color:#f92672">&gt;</span>
+LIMIT <span style="color:#f92672">&lt;</span> limit_number <span style="color:#f92672">&gt;</span>
+</code></pre></div><p>但数据库的理解方式与手写顺序不同</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">FROM <span style="color:#f92672">&lt;</span> left_table <span style="color:#f92672">&gt;</span>
+ON <span style="color:#f92672">&lt;</span> join_condition <span style="color:#f92672">&gt;</span>
+<span style="color:#f92672">&lt;</span> join_type <span style="color:#f92672">&gt;</span> JOIN <span style="color:#f92672">&lt;</span> right_table <span style="color:#f92672">&gt;</span>
+WHERE <span style="color:#f92672">&lt;</span> where_condition <span style="color:#f92672">&gt;</span>
+GROUP BY <span style="color:#f92672">&lt;</span> group_by_condition <span style="color:#f92672">&gt;</span>
+HAVING <span style="color:#f92672">&lt;</span> having_condition <span style="color:#f92672">&gt;</span>
+SELECT
+DISTINCT <span style="color:#f92672">&lt;</span> select_list <span style="color:#f92672">&gt;</span>
+ORDER BY <span style="color:#f92672">&lt;</span> order_by_condition <span style="color:#f92672">&gt;</span>
+LIMIT <span style="color:#f92672">&lt;</span> limit_number <span style="color:#f92672">&gt;</span>
+</code></pre></div><p>也就是说，对于MySQL而言，机读的时候首先关注的是表，从<code>FROM</code>开始。</p>
+<p>对于两表连接，七种<code>JOIN</code>连接方式如下，注意<code>LEFT JOIN</code>是<code>LEFT OUTER JOIN</code>的简写</p>
+<p>$$A\bigcapB$$</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">SELECT <span style="color:#f92672">&lt;</span> select_list <span style="color:#f92672">&gt;</span>
+FROM Table A
+INNER JOIN Table B
+ON A.Key<span style="color:#f92672">=</span>B.Key
+</code></pre></div><p>$$A\bigcupB-B+A\bigcapB$$</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">SELECT <span style="color:#f92672">&lt;</span> select_list <span style="color:#f92672">&gt;</span>
+FROM Table A
+LEFT JOIN Table B
+ON A.Key<span style="color:#f92672">=</span>B.Key
+</code></pre></div><p>$$A\bigcupB-A+A\bigcapB$$</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">SELECT <span style="color:#f92672">&lt;</span> select_list <span style="color:#f92672">&gt;</span>
+FROM Table A
+RIGHT JOIN Table B
+ON A.Key<span style="color:#f92672">=</span>B.Key
+</code></pre></div><p>$$A\bigcupB-B$$</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">SELECT <span style="color:#f92672">&lt;</span> select_list <span style="color:#f92672">&gt;</span>
+FROM Table A
+LEFT JOIN Table B
+ON A.Key<span style="color:#f92672">=</span>B.Key
+WHERE B.Key IS <span style="color:#66d9ef">NULL</span>
+</code></pre></div><p>$$A\bigcupB-A$$</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">SELECT <span style="color:#f92672">&lt;</span> select_list <span style="color:#f92672">&gt;</span>
+FROM Table A
+RIGHT JOIN Table B
+ON A.Key<span style="color:#f92672">=</span>B.Key
+WHERE A.Key IS <span style="color:#66d9ef">NULL</span>
+</code></pre></div><p>$$A\bigcupB$$</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">SELECT <span style="color:#f92672">&lt;</span> select_list <span style="color:#f92672">&gt;</span>
+FROM Table A
+FULL OUTER JOIN Table B
+ON A.Key<span style="color:#f92672">=</span>B.Key
+</code></pre></div><p><code>FULL OUTER JOIN</code>语法MySQL不支持，因此使用如下语句完成，注意使用<code>UNION</code>合并结果集</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">SELECT <span style="color:#f92672">&lt;</span> select_list <span style="color:#f92672">&gt;</span> FROM Table A LEFT JOIN Table B ON A.Key<span style="color:#f92672">=</span>B.Key WHERE B.Key IS <span style="color:#66d9ef">NULL</span>
+UNION
+SELECT <span style="color:#f92672">&lt;</span> select_list <span style="color:#f92672">&gt;</span> FROM Table A RIGHT JOIN Table B ON A.Key<span style="color:#f92672">=</span>B.Key WHERE B.Key IS <span style="color:#66d9ef">NULL</span>
+</code></pre></div><p>$$A\bigcupB-A\bigcapB$$</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">SELECT <span style="color:#f92672">&lt;</span> select_list <span style="color:#f92672">&gt;</span>
+FROM Table A
+FULL OUTER JOIN Table B
+ON A.Key<span style="color:#f92672">=</span>B.Key
+WHERE A.Key IS <span style="color:#66d9ef">NULL</span> OR B.Key IS <span style="color:#66d9ef">NULL</span>
+</code></pre></div><p><code>FULL OUTER JOIN</code>语法MySQL不支持，因此使用如下语句完成</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">SELECT <span style="color:#f92672">&lt;</span> select_list <span style="color:#f92672">&gt;</span> FROM Table A LEFT JOIN Table B ON A.Key<span style="color:#f92672">=</span>B.Key WHERE B.Key IS <span style="color:#66d9ef">NULL</span>
+UNION
+SELECT <span style="color:#f92672">&lt;</span> select_list <span style="color:#f92672">&gt;</span> FROM Table A RIGHT JOIN Table B ON A.Key<span style="color:#f92672">=</span>B.Key WHERE A.Key IS <span style="color:#66d9ef">NULL</span>
+</code></pre></div><h3 id="3索引简介重">3、索引简介（重）</h3>
+<p><strong>什么是索引？</strong></p>
+<p>官方定义：索引（Index）是帮助MySQL高效获取数据的<strong>数据结构</strong>，或者称<strong>排好序的快速查找数据结构</strong>。具体而言，在数据之外，数据库系统还维护着满足特定查找算法的数据结构，这些数据结构以某种方式引用（指向）数据，这样即可在这些数据结构上实现高级查找算法，这种数据结构就是索引（如BITREE索引）。</p>
+<p>索引的目的在于提高查询效率，可以类比<strong>字典</strong>。比如若要查询&rsquo;mysql&rsquo;单词，需要首先定位到&rsquo;m&rsquo;字母，然后再定位其中的&rsquo;y&rsquo;字母，以此类推。如果没有索引，需要a-z的遍历定位。因此，索引会影响<code>WHERE</code>后的条件和<code>ORDER BY</code>后的排序方式。</p>
+<p>一般而言索引本身也很大，不可能全部存储在内存中，往往以索引文件的形式存储在磁盘上。</p>
+<p>平时所说的索引，若没有特别指明，都是指B树（多路搜索树，并不一定是二叉的）结构组织的索引。其中聚集索引，次要索引，覆盖索引，复合索引，前缀索引，唯一索引默认都是使用B+树索引，统称索引。除了B+树这种类型的索引之外，还有哈希索引（hash index）等。</p>
+<p><strong>索引的优势与劣势</strong></p>
+<p>优势：一是类似大学图书馆的书目检索，提高数据检索的效率，降低数据库的I/O（Input/Output）成本；二是通过索引列对数据进行排序，降低数据排序的成本，降低CPU的消耗。</p>
+<p>劣势：一是实际上索引也是一张表，保存主键与索引字段，并指向实体表的记录，所以索引列也是要占用空间的。二是虽然索引大大提高了查询速度，但同时会降低更新表的速度，如对表进行<code>INSERT</code>、<code>UPDATE</code>和<code>DELECT</code>操作。因为更新表时，MySQL不仅要保存数据，还要保存一下索引文件每次更新添加了索引列的字段，需要调整因为更新带来的键值变化后的索引信息。三是索引只是提高效率的一个因素，如果MySQL有大数据量的表，就需要花时间研究建立最优秀的索引来优化查询。</p>
+<p><strong>索引分类</strong></p>
+<p>1）单值索引：即一个索引只包含单个列，一个表可以有多个单列索引。</p>
+<p>2）唯一索引：索引列的值必须唯一，但允许有空值。</p>
+<p>3）复合索引：即一个索引包含多个列。</p>
+<p><strong>索引基本语法</strong></p>
+<p>创建（在tableName表的columnName建立索引，若columnName有多个，即为复合索引）</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">CREATE [UNIQUE] INDEX indexName ON <span style="color:#a6e22e">tableName</span>(<span style="color:#a6e22e">columnName</span>(length));
+<span style="color:#75715e"># 或者</span>
+ALTER tableName ADD [UNIQUE] INDEX [indexName] <span style="color:#a6e22e">ON </span>(<span style="color:#a6e22e">columnName</span>(length));
+</code></pre></div><p>删除</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">DROP INDEX [indexName] ON tableName;
+</code></pre></div><p>查看</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">SHOW INDEX FROM tableName;
+</code></pre></div><p>添加（4种方法）</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#75715e"># 为某列（或多列）添加一个主键（或联合主键），这时的主键可以又作为索引，由主键的特性可知，该索引值是唯一的且不能为NULL</span>
+ALTER TABLE tableName ADD PRIMARY <span style="color:#a6e22e">KEY</span>(columnName_list)；
+<span style="color:#75715e"># 该语句创建的索引是唯一的，但可以有NULL，且NULL可以有多个</span>
+ALTER TABLE tableName ADD UNIQUE <span style="color:#a6e22e">indexName</span>(columnName_list);
+<span style="color:#75715e"># 添加普通索引，索引值不唯一且可为NULL</span>
+ALTER TABLE tableName ADD <span style="color:#a6e22e">indexName</span>(columnName_list);
+<span style="color:#75715e"># 指定添加的索引为FULLTEXT，用于全文索引</span>
+ALTER TABLE tableName ADD FULLTEXT <span style="color:#a6e22e">indexName</span>(columnName_list);
+</code></pre></div><p><strong>注意一张表只能有一个主键，<code>PRIMARY KEY</code>后可跟多个列字段实际上在创建联合主键，即通过多个字段作为唯一标识记录。</strong></p>
+<p><strong>索引结构</strong></p>
+<p>四种结构：BTree索引（重）、Hash索引、full-text全文索引和R-Tree索引</p>
+<ul>
+<li>BTree索引</li>
+</ul>
+<p>检索原理：磁盘和内存读取方式参考课时17。注意两点即可，一是BTree索引由多个磁盘块构成，真实的数据存放在叶子节点磁盘块，非叶子节点磁盘块不存储真实数据，只存储指引搜索方向的数据项和指针；二是树高即为所需的查询次数，或者称进行I/O的次数，因此理论上增加树索引的宽度，降低树高，会提升检索性能。</p>
+<p><strong>哪些情况需要建索引？</strong></p>
+<p>1）主键自动建立唯一索引</p>
+<p>2）频繁作为查询条件的字段应该创建索引，如银行系统的银行账号，电信系统的手机号</p>
+<p>3）查询中与其他表关联的字段，外键关系建立索引，如员工表的deptno</p>
+<p>4）频繁更新的字段不适合创建索引，因为每次更新记录的同时还要更新索引</p>
+<p>5）<code>WHERE</code>条件里用不到的字段不要创建索引</p>
+<p>6）在高并发下倾向建立复合索引</p>
+<p>7）查询中排序的字段建议创建索引，因为排序字段若通过索引去访问将大大提高排序速度</p>
+<p>8）查询中统计或者分组的字段建议创建索引，<code>GROUP BY</code>前必排序，因此分组与索引也密切相关</p>
+<p><strong>哪些情况不建议建索引？</strong></p>
+<p>1）表记录太少，实际业务中保存三百万条记录以上MySQL检索性能下降。</p>
+<p>2）经常增删改的表，因为虽然提高了查询速度，但却降低更新表的速度，如对表进行<code>INSERT</code>、<code>UPDATE</code>和<code>DELECT</code>操作后，MySQL不仅要保存数据，还要保存索引文件。</p>
+<p>3）数据重复且平均的表字段，应该为经常查询和经常排序的数据列建立索引。注意如果某数据列重复值很多，即数据的差异率不高，建立索引没有太大意义。索引的选择性指索引列中不同值的数目与表中记录数的比，如某表有2000条记录，索引列有1980个不同的值，则该索引的选择性为1980/2000=0.99，索引的选择性越接近1，索引的效率越高。</p>
+<h3 id="3性能分析重">3、性能分析（重）</h3>
+<p>MySQL Query Optimizer是MySQL中专门负责优化SELECT语句的优化器模块，主要功能是通过计算分析系统中收集到的统计信息，为客户端请求的Query提供它认为最优的数据检索方式，本部分最耗时。</p>
+<p>MySQL常见瓶颈有三种：一是CPU，当数据装入内存或从磁盘上读取数据的时候会发生CPU饱和；二是IO，磁盘I/O瓶颈发生在装入数据远大于内存容量的时候；三是服务器硬件的性能瓶颈。</p>
+<p>若优化器不可更改，瓶颈也未出现，则可利用Explain查询具体性能下降原因。</p>
+<h4 id="explain"><strong>Explain</strong></h4>
+<p>1）是什么？</p>
+<p>用于查询执行计划，即模拟优化器执行SQL查询语句，从而知道MySQL是如何处理本条语句的，分析该查询语句或表结构的性能瓶颈。具体细节参考MySQL官网<a href="https://dev.mysql.com/doc/refman/8.0/en/using-explain.html">Optimizing Queries with EXPLAIN</a></p>
+<p>2）能干什么？</p>
+<ul>
+<li>表的读取顺序（id）</li>
+<li>数据读取操作的操作类型（select_type）</li>
+<li>哪些索引可以使用（possible_keys）</li>
+<li>哪些索引被实际使用（key）</li>
+<li>表之间的引用（ref）</li>
+<li>每张表有多少行被优化器查询（rows）</li>
+</ul>
+<p>3）怎么用？</p>
+<p>EXPLAIN+SQL语句，如</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> EXPLAIN SELECT <span style="color:#f92672">*</span> FROM emp;
+</code></pre></div><table>
+<thead>
+<tr>
+<th>id</th>
+<th>select_type</th>
+<th>table</th>
+<th>partitions</th>
+<th>type</th>
+<th>possible_keys</th>
+<th>key</th>
+<th>key_len</th>
+<th>ref</th>
+<th>rows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>SIMPLE</td>
+<td>emp</td>
+<td>NULL</td>
+<td>ALL</td>
+<td>NULL</td>
+<td>NULL</td>
+<td>NULL</td>
+<td>NULL</td>
+<td>14</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>filtered</th>
+<th>Extra</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>100.00</td>
+<td>NULL</td>
+</tr>
+</tbody>
+</table>
+<p>或者在末尾加上&rdquo;\G&quot;且不加&rdquo;;&ldquo;竖版显示</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> EXPLAIN SELECT <span style="color:#f92672">*</span> FROM emp\G
+<span style="color:#f92672">***************************</span> <span style="color:#ae81ff">1</span>. row <span style="color:#f92672">***************************</span>
+id<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+select_type<span style="color:#f92672">:</span> SIMPLE
+table<span style="color:#f92672">:</span> emp
+partitions<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+type<span style="color:#f92672">:</span> ALL
+possible_keys<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+key<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+key_len<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+ref<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+rows<span style="color:#f92672">:</span> <span style="color:#ae81ff">14</span>
+filtered<span style="color:#f92672">:</span> <span style="color:#ae81ff">100.00</span>
+Extra<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+<span style="color:#ae81ff">1</span> row in set, <span style="color:#ae81ff">1</span> <span style="color:#a6e22e">warning </span>(<span style="color:#ae81ff">0.00</span> sec)
+</code></pre></div><p>4）怎么看？</p>
+<p>利用EXPLAIN查询后会返回如上表格，现对表格返回的信息做详细解释</p>
+<ul>
+<li>id</li>
+</ul>
+<p><code>SELECT</code>查询的序列号，包含一组数字，表示查询中执行<code>SELECT</code>子句或操作表的顺序。取值有三种情况：第一，id相同，表示执行顺序由上至下；第二，id不同，如果是子查询，id序号会递增，id值越大优先级越高，越先被执行；第三，id相同不同同时存在，如果id相同，认为是一组，顺序执行，在所有组中，id值越大的组越先执行。如对于如下语句，机器读取顺序为 emp -&gt; d -&gt; e。</p>
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>select_type</th>
+<th>table</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>PRIMARY</td>
+<td>d</td>
+</tr>
+<tr>
+<td>1</td>
+<td>PRIMARY</td>
+<td>e</td>
+</tr>
+<tr>
+<td>2</td>
+<td>SUBQUERY</td>
+<td>emp</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>select_type</li>
+</ul>
+<p>表示查询类型，主要用于区别普通查询、联合查询、子查询等复杂查询，常用取值为6种：</p>
+<p>SIMPLE —简单的<code>SELECT</code>查询，查询中不包含子查询或者<code>UNION</code></p>
+<p>PRIMARY —查询中若包含任何复杂的子查询，最外层查询被标记为该值</p>
+<p>SUBQUERY —在<code>SELECT</code>或<code>WHERE</code>列表中包含了子查询</p>
+<p>DERIVED —在<code>FROM</code>列表中包含的子查询被标记为该值（衍生），MySQL会递归执行这些子查询，把结果放在临时表里，临时表会增加系统负担，但有时不得不用</p>
+<p>UNION —若第二个<code>SELECT</code>出现在<code>UNION</code>之后，则被标记为该值，若<code>UNION</code>包含在<code>FROM</code>子句的子查询中，则外层的<code>SELECT</code>将被标记为DERIVED</p>
+<p>UNION RESULT —从<code>UNION</code>表获取结果的<code>SELECT</code>，即两个表合并的最终结果集。注意select_type为此值的语句最后执行，即执行等级最低。</p>
+<ul>
+<li>table</li>
+</ul>
+<p>略</p>
+<ul>
+<li>type</li>
+</ul>
+<p>访问类型排列，显示查询使用了何种类型，常见的访问类型从最好到最差依次为 system &gt; const &gt; eq_ref &gt; ref &gt; range &gt; index &gt; ALL。一般来说查询至少要达到range级别，最好是ref，ALL表示检索方法是全表扫描，检索效率是最低的。</p>
+<p><strong>system</strong>表示表只有一行记录，等于系统表，这是const类型的特例；</p>
+<p><strong>const</strong>表示通过索引一次就找到了，用于比较PRIMARY KEY或者UNIQUE索引，因为只匹配一行数据，所以很快。如将主键置于<code>WHERE</code>列表中，MySQL就能将该查询转换为一个常量；</p>
+<p><strong>eq_ref</strong>表示唯一性索引扫描，对于每个索引键，表中只有一条记录与之匹配，常见于主键或唯一索引扫描；</p>
+<p><strong>ref</strong>表示非唯一性索引扫描，返回匹配某个单独值的所有行，因为会找到多个符合条件的行，因此属于查找和扫描的混合体。</p>
+<p><strong>range</strong>表示只检索给定范围的行，使用一个索引来选择行，key列显示使用了哪个索引。一般是在<code>WHERE</code>语句中出现了<code>BETWEEN</code>、<code>&lt;</code>、<code>&gt;</code>、<code>in</code>等查询，比全表扫描好。</p>
+<p><strong>index</strong>表示Full Index Scan，遍历索引树。通常比ALL快，因为索引文件通常比数据文件小，且index是从索引中读取的，而ALL是从硬盘中读取的。例如输出某表的主键列。</p>
+<p><strong>ALL</strong>表示Full Table Scan，遍历全表以找到匹配行。</p>
+<ul>
+<li>possible_keys</li>
+</ul>
+<p>显示可能应用在这张表中的索引，一个或多个。查询涉及到的字段上若存在索引，则会被列出，但不一定被查询实际使用。</p>
+<ul>
+<li>key</li>
+</ul>
+<p>实际使用的索引，如果为NULL，则没有使用索引。查询中若使用了覆盖索引，则该索引仅出现在key列表中。覆盖索引指<code>SELECT</code>后的查询字段和顺序与复合索引建立的字段和顺序全部一致，表示索引与查询全部吻合，可以提示用户不用全表扫描而用此覆盖索引。</p>
+<ul>
+<li>key_len</li>
+</ul>
+<p>表示索引中使用的字节数，可通过该列计算查询中使用的索引的长度。在不损失精确性的情况下，长度越短越好。但需注意这是索引字段的最大可能长度，并非实际使用长度，即key_len是根据表定义计算而得，而不是通过表内检索出的。</p>
+<ul>
+<li>ref</li>
+</ul>
+<p>显示索引的哪一列被使用了，如果可能的话，是一个常数。<strong>哪些列或常量被用于查找索引列上的值</strong>。若返回&rsquo;test.t1.ID&rsquo;，表示test库的t1表的ID列。</p>
+<ul>
+<li>rows</li>
+</ul>
+<p>根据表统计信息及索引选用情况，大致估算出找到所需的记录所需要读取的行数，该值越小越好。</p>
+<ul>
+<li>Extra</li>
+</ul>
+<p>包含不适合在其他列中显示但十分重要的额外信息。</p>
+<p>i. Using filesort 说明MySQL会对数据使用一个外部的索引排序，而不是按照表内的索引顺序进行读取。MySQL中无法利用索引完成的排序操作称为“文件排序”。如若创建索引&rsquo;idx_col1_col2_col3&rsquo;，则下述两条语句虽然结果相同，但是第二条的性能优于第一条。可以这样理解，第一条只利用了部分索引性能，另外又产生一个<code>ORDER BY</code>排序进行检索，而第二条利用了全部索引性能。出现此值需尽快优化。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> EXPLAIN SELECT col1 FROM t1 WHERE col1<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;ac&#39;</span> ORDER BY col3\G
+mysql<span style="color:#f92672">&gt;</span> EXPLAIN SELECT col1 FROM t1 WHERE col1<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;ac&#39;</span> ORDER BY col2, col3\G
+</code></pre></div><p>ii. Using temporary 使用了临时表保存了中间结果，MySQL在对查询结果排序时使用临时表。常见于排序<code>ORDER BY</code>和分组查询<code>GROUP BY</code>。如若创建索引&rsquo;idx_col1_col2&rsquo;，则下述第一条语句会出现&rsquo;Using temporery&rsquo;和&rsquo;Using filesort&rsquo;，但第二句不会出现。出现此值需尽快优化。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> EXPLAIN SELECT col1 FROM t1 WHERE col1 <span style="color:#a6e22e">in </span>(<span style="color:#e6db74">&#39;ac&#39;</span>,<span style="color:#e6db74">&#39;ab&#39;</span>) GROUP BY col2\G
+mysql<span style="color:#f92672">&gt;</span> EXPLAIN SELECT col1 FROM t1 WHERE col1 <span style="color:#a6e22e">in </span>(<span style="color:#e6db74">&#39;ac&#39;</span>,<span style="color:#e6db74">&#39;ab&#39;</span>) GROUP BY col1, col2\G
+</code></pre></div><p>iii. Using index 表示相应的<code>SELECT</code>操作中使用了覆盖索引，避免访问了表的数据行，效率不错！如果同时出现&rsquo;Using where&rsquo;，表明索引被用来执行索引键值的查找；如果没有出现&rsquo;Using where&rsquo;，表明索引用来读取数据而非执行查找动作。如若创建索引&rsquo;idx_col1_col2&rsquo;，第一条语句部分满足索引，Extra返回Using where和Using index，而第二条语句与索引全部一致，Extra返回Using index。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> EXPLAIN SELECT col1 FROM t1 WHERE col1<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;ab&#39;</span>\G
+mysql<span style="color:#f92672">&gt;</span> EXPLAIN SELECT col1, col2 FROM t1\G
+</code></pre></div><p>再次补充覆盖索引（Covering Index）：即<code>SELECT</code>的数据列只用从索引中就能够取得，不必读取数据航，MySQL可以利用索引返回<code>SELECT</code>列表中的字段，而不必根据索引再次读取数据文件，换句话说，查询列要被所建的索引覆盖。</p>
+<p>因此注意如果要使用覆盖索引，<code>SELECT</code>列表中只去除需要的列，不可<code>SELECT *</code>，因为所有字段一起做索引会导致索引文件过大，查询性能下降。</p>
+<p>iv. Using where 表明使用<code>WHERE</code>过滤。</p>
+<p>v. Using join buffer 使用了连接缓存。</p>
+<p>vi. Impossible where 提示<code>WHERE</code>子句的值总是false，不能用来获取任何元组。</p>
+<p>vii. Select tables optimized away 略</p>
+<p>viii. Distinct 略</p>
+<h3 id="4索引优化重">4、索引优化（重）</h3>
+<p>参考下一章 SQL/MySQL index optimization case</p>
+<hr>
+<h2 id="三查询截取分析">三、查询截取分析</h2>
+<h3 id="1查询优化">1、查询优化</h3>
+
+    </div>
+
+    <div class="post-copyright">
+            
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>Yiming </span>
+                </p>
+            
+
+            
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://ymingliu.github.io/2021/sql-advanced-application/>https://ymingliu.github.io/2021/sql-advanced-application/</span>
+            </p>
+            
+            
+    </div>
+
+
+    <div class="post-tags">
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> ·
+                <span><a href="https://ymingliu.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://ymingliu.github.io/2021/sql-advanced-practice/" class="prev" rel="prev" title="Advanced SQL/MySQL for practice"><i class="iconfont icon-left"></i>&nbsp;Advanced SQL/MySQL for practice</a>
+        
+        
+        <a href="https://ymingliu.github.io/2021/index-optimization-strategies/" class="next" rel="next" title="SQL/MySQL index optimization case">SQL/MySQL index optimization case&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+        
+            
+                <div id="gitalk-container"></div>
+<link rel="stylesheet" href="https://cdn.bootcss.com/gitalk/1.5.2/gitalk.css">
+<script src="https://cdn.bootcss.com/gitalk/1.5.2/gitalk.min.js"></script>
+<script>
+    const gitalk = new Gitalk({
+
+        clientID: '',
+        clientSecret: '',
+        repo: '',
+        owner: 'ymingliu',
+        admin: ['ymingliu'],
+        id: location.pathname, 
+        distractionFreeMode: false 
+    });
+    (function () {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('gitalk-container').innerHTML = 'Gitalk comments not available by default when the website is previewed locally.';
+            return;
+        }
+        gitalk.render('gitalk-container');
+    })();
+</script>
+
+            
+        
+    </div>
+</article>
+                </div>
+            </main>
+            <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span itemprop="copyrightYear">2021 - 2021</span>
+        
+        <span class="with-love">
+    	 <i class="iconfont icon-love"></i>
+         </span>
+         
+            <span class="author" itemprop="copyrightHolder"><a href="https://ymingliu.github.io">Yiming</a> | </span>
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/Mogeko/Mogege" target="_blank" rel="external nofollow">Mogege</a></span>
+    </div>
+</footer>
+
+
+
+
+
+
+<script defer src="/js/vendor_main.min.js"></script>
+
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script> pangu.spacingPage();</script>
+
+
+
+
+
+        </div>
+    </body>
+</html>

@@ -10,7 +10,7 @@
     
     
     <link rel="prev" href="https://ymingliu.github.io/2021/sql-advanced/" />
-    
+    <link rel="next" href="https://ymingliu.github.io/2021/sql-advanced-application/" />
     <link rel="canonical" href="https://ymingliu.github.io/2021/sql-advanced-practice/" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -22,10 +22,10 @@
     <title>
         
         
-            Advanced sql/mysql for practice | Yiming`s Blog
+            Advanced SQL/MySQL for practice | Yiming`s Blog
         
     </title>
-    <meta name="title" content="Advanced sql/mysql for practice | Yiming`s Blog">
+    <meta name="title" content="Advanced SQL/MySQL for practice | Yiming`s Blog">
     
 <link rel="stylesheet" href="/css/main.min.css">
 
@@ -43,8 +43,8 @@
          "@id": "https:\/\/ymingliu.github.io"
     },
     "articleSection" : "posts",
-    "name" : "Advanced sql\/mysql for practice",
-    "headline" : "Advanced sql\/mysql for practice",
+    "name" : "Advanced SQL\/MySQL for practice",
+    "headline" : "Advanced SQL\/MySQL for practice",
     "description" : "课程参考 阿里云开发者社区——数据库学习路线 数据库及SQL\/MySQL进阶练习题 1、查出至少有一个员工的部门，显示部门编号、部门名称、部门位置",
     "inLanguage" : "zh-cn",
     "author" : "Yiming",
@@ -146,7 +146,7 @@
                     
 <article class="post-warp" itemscope itemtype="http://schema.org/Article">
     <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">Advanced sql/mysql for practice</h1>
+        <h1 class="post-title" itemprop="name headline">Advanced SQL/MySQL for practice</h1>
         <div class="post-meta">
                 Written by <a itemprop="name" href="https://ymingliu.github.io" rel="author">Yiming</a> with ♥
                 <span class="post-time">
@@ -402,9 +402,9 @@
 <li>条件：e.deptno=d.deptno and d.dname=‘销售部&rsquo;</li>
 </ul>
 <p>思路：(1) 利用子查询，先把销售部的部门编号查出来</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">select</span> <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">ename</span> <span style="color:#a6e22e">from</span> <span style="color:#a6e22e">emp</span> <span style="color:#a6e22e">e</span> <span style="color:#a6e22e">where</span> <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">deptno</span><span style="color:#f92672">=</span>(<span style="color:#a6e22e">select</span> <span style="color:#a6e22e">deptno</span> <span style="color:#a6e22e">from</span> <span style="color:#a6e22e">dept</span> <span style="color:#a6e22e">where</span> <span style="color:#a6e22e">dname</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#39;销售部&#39;</span>);
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">SELECT</span> <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">ename</span> <span style="color:#a6e22e">FROM</span> <span style="color:#a6e22e">emp</span> <span style="color:#a6e22e">e</span> <span style="color:#a6e22e">WHERE</span> <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">deptno</span><span style="color:#f92672">=</span>(<span style="color:#a6e22e">SELECT</span> <span style="color:#a6e22e">deptno</span> <span style="color:#a6e22e">FROM</span> <span style="color:#a6e22e">dept</span> <span style="color:#a6e22e">WHERE</span> <span style="color:#a6e22e">dname</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#39;销售部&#39;</span>);
 </code></pre></div><p>(2) 或者先连接两张表，再提取部门名称为销售部的员工</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">select</span> <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">ename</span> <span style="color:#a6e22e">from</span> <span style="color:#a6e22e">emp</span> <span style="color:#a6e22e">e</span>, <span style="color:#a6e22e">dept</span> <span style="color:#a6e22e">d</span> <span style="color:#a6e22e">where</span> <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">deptno</span><span style="color:#f92672">=</span><span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">deptno</span> <span style="color:#a6e22e">and</span> <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">dname</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#39;销售部&#39;</span>;
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">SELECT</span> <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">ename</span> <span style="color:#a6e22e">FROM</span> <span style="color:#a6e22e">emp</span> <span style="color:#a6e22e">e</span>, <span style="color:#a6e22e">dept</span> <span style="color:#a6e22e">d</span> <span style="color:#a6e22e">WHERE</span> <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">deptno</span><span style="color:#f92672">=</span><span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">deptno</span> <span style="color:#a6e22e">AND</span> <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">dname</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#39;销售部&#39;</span>;
 </code></pre></div><table>
 <thead>
 <tr>
@@ -1048,8 +1048,10 @@
 
     <div class="post-nav">
         
-        <a href="https://ymingliu.github.io/2021/sql-advanced/" class="prev" rel="prev" title="Advanced sql/mysql"><i class="iconfont icon-left"></i>&nbsp;Advanced sql/mysql</a>
+        <a href="https://ymingliu.github.io/2021/sql-advanced/" class="prev" rel="prev" title="Advanced SQL/MySQL"><i class="iconfont icon-left"></i>&nbsp;Advanced SQL/MySQL</a>
         
+        
+        <a href="https://ymingliu.github.io/2021/sql-advanced-application/" class="next" rel="next" title="SQL/MySQL Advanced Application">SQL/MySQL Advanced Application&nbsp;<i class="iconfont icon-right"></i></a>
         
     </div>
 

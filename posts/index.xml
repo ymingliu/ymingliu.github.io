@@ -6,13 +6,31 @@
     <description>Recent content in Posts on Yiming`s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 10 Mar 2021 09:48:59 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 12 Mar 2021 17:27:39 +0800</lastBuildDate>
     
 	<atom:link href="https://ymingliu.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Advanced sql/mysql for practice</title>
+      <title>SQL/MySQL index optimization case</title>
+      <link>https://ymingliu.github.io/2021/index-optimization-strategies/</link>
+      <pubDate>Fri, 12 Mar 2021 17:27:39 +0800</pubDate>
+      
+      <guid>https://ymingliu.github.io/2021/index-optimization-strategies/</guid>
+      <description>索引优化案例 案例一：单表优化 mysql&amp;gt; SELECT * FROM article; id auther_id category_id views comments title content 1 1 1 1 1 0x31 1 2 2 2 2 2 0x32 2 3 1 1 3 3 0x33 3 问题：查询category_id为1且comm</description>
+    </item>
+    
+    <item>
+      <title>SQL/MySQL Advanced Application</title>
+      <link>https://ymingliu.github.io/2021/sql-advanced-application/</link>
+      <pubDate>Thu, 11 Mar 2021 11:00:06 +0800</pubDate>
+      
+      <guid>https://ymingliu.github.io/2021/sql-advanced-application/</guid>
+      <description>课程参考 阿里云开发者社区——数据库学习路线 综述 本节侧重于高效、好用、优化、和开发相关的数据库知识，包括如下5部分 一、MySQL的架构介绍 简介</description>
+    </item>
+    
+    <item>
+      <title>Advanced SQL/MySQL for practice</title>
       <link>https://ymingliu.github.io/2021/sql-advanced-practice/</link>
       <pubDate>Wed, 10 Mar 2021 09:48:59 +0800</pubDate>
       
@@ -21,7 +39,7 @@
     </item>
     
     <item>
-      <title>Advanced sql/mysql</title>
+      <title>Advanced SQL/MySQL</title>
       <link>https://ymingliu.github.io/2021/sql-advanced/</link>
       <pubDate>Wed, 10 Mar 2021 09:38:20 +0800</pubDate>
       
@@ -30,7 +48,7 @@
     </item>
     
     <item>
-      <title>Basic sql/mysql for practice</title>
+      <title>Basic SQL/MySQL for practice</title>
       <link>https://ymingliu.github.io/2021/sql-basic-practice/</link>
       <pubDate>Tue, 09 Mar 2021 11:36:52 +0800</pubDate>
       
@@ -39,9 +57,9 @@
     </item>
     
     <item>
-      <title>Basic sql/mysql</title>
+      <title>Basic SQL/MySQL</title>
       <link>https://ymingliu.github.io/2021/sql-basic/</link>
-      <pubDate>Tue, 09 Mar 2021 10:25:45 +0800</pubDate>
+      <pubDate>Mon, 08 Mar 2021 10:25:45 +0800</pubDate>
       
       <guid>https://ymingliu.github.io/2021/sql-basic/</guid>
       <description>课程参考 阿里云开发者社区——数据库学习路线 数据库及SQL/MySQL基础 1、常见数据库： Oracle：甲骨文； DB2：IBM； SQL Server</description>

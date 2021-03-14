@@ -2,9 +2,9 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
     <url>
-      <loc>https://ymingliu.github.io/posts/</loc>
+      <loc>https://ymingliu.github.io/2021/sql-query-optimization/</loc>
       
-      <lastmod>2021-03-12T17:27:39+08:00</lastmod>
+      <lastmod>2021-03-14T21:36:03+08:00</lastmod>
       
       
       
@@ -12,7 +12,37 @@
     </url>
   
     <url>
-      <loc>https://ymingliu.github.io/2021/index-optimization-strategies/</loc>
+      <loc>https://ymingliu.github.io/posts/</loc>
+      
+      <lastmod>2021-03-14T21:36:03+08:00</lastmod>
+      
+      
+      
+      
+    </url>
+  
+    <url>
+      <loc>https://ymingliu.github.io/2021/sql-master-slave-replication/</loc>
+      
+      <lastmod>2021-03-14T20:56:53+08:00</lastmod>
+      
+      
+      
+      
+    </url>
+  
+    <url>
+      <loc>https://ymingliu.github.io/2021/sql-innodb-locking/</loc>
+      
+      <lastmod>2021-03-14T20:56:38+08:00</lastmod>
+      
+      
+      
+      
+    </url>
+  
+    <url>
+      <loc>https://ymingliu.github.io/2021/sql-index-optimization-case/</loc>
       
       <lastmod>2021-03-12T17:27:39+08:00</lastmod>
       
@@ -82,7 +112,7 @@
     </url>
   
     <url>
-      <loc>https://ymingliu.github.io/2021/start/</loc>
+      <loc>https://ymingliu.github.io/2021/start-my-own-blog/</loc>
       
       <lastmod>2021-03-05T08:52:29+08:00</lastmod>
       

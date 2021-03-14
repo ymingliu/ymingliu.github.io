@@ -1,33 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on Yiming`s Blog</title>
-    <link>https://ymingliu.github.io/posts/</link>
-    <description>Recent content in Posts on Yiming`s Blog</description>
+    <title>MySQL on Yiming`s Blog</title>
+    <link>https://ymingliu.github.io/tags/mysql/</link>
+    <description>Recent content in MySQL on Yiming`s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 14 Mar 2021 21:57:11 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 14 Mar 2021 20:56:53 +0800</lastBuildDate>
     
-	<atom:link href="https://ymingliu.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://ymingliu.github.io/tags/mysql/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>Introduction to Blockchain</title>
-      <link>https://ymingliu.github.io/2021/blockchain-introduction/</link>
-      <pubDate>Sun, 14 Mar 2021 21:57:11 +0800</pubDate>
-      
-      <guid>https://ymingliu.github.io/2021/blockchain-introduction/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Getting Started with Tensorflow</title>
-      <link>https://ymingliu.github.io/2021/tensorflow-getting-started/</link>
-      <pubDate>Sun, 14 Mar 2021 21:56:10 +0800</pubDate>
-      
-      <guid>https://ymingliu.github.io/2021/tensorflow-getting-started/</guid>
-      <description></description>
-    </item>
     
     <item>
       <title>MySQL Master Slave Replication</title>

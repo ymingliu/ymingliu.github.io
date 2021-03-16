@@ -45,7 +45,7 @@
     "articleSection" : "posts",
     "name" : "MySQL Innodb Locking",
     "headline" : "MySQL Innodb Locking",
-    "description" : "MySQL锁机制 锁是计算机协调多个进程或线程并发访问某一资源的机制。在数据库中，除传统的计算资源（如CPU、RAM、I\/O）的争用以外，数据",
+    "description" : "课程参考 阿里云开发者社区——数据库学习路线 MySQL锁机制 锁是计算机协调多个进程或线程并发访问某一资源的机制。在数据库中，除传统的计算资源（",
     "inLanguage" : "zh-cn",
     "author" : "Yiming",
     "creator" : "Yiming",
@@ -56,7 +56,7 @@
     "datePublished": "2021-03-15 20:56:38 \x2b0800 CST",
     "dateModified" : "2021-03-15 20:56:38 \x2b0800 CST",
     "url" : "https:\/\/ymingliu.github.io\/2021\/sql-innodb-locking\/",
-    "wordCount" : "4086",
+    "wordCount" : "4107",
     "keywords" : [ "MySQL", "Yiming`s Blog"]
 }
 </script>
@@ -163,7 +163,7 @@
                         
                         
                 </span>
-                <span class="post-word-count">4086 words</span>
+                <span class="post-word-count">4107 words</span>
         </div>
     </header>
 
@@ -183,7 +183,9 @@
         
         
 
-        <h2 id="mysql锁机制">MySQL锁机制</h2>
+        <h2 id="课程参考">课程参考</h2>
+<p><a href="https://developer.aliyun.com/learning/roadmap/database?spm=5176.12901015.0.i12901015.4ea8525cMC1llR">阿里云开发者社区——数据库学习路线</a></p>
+<h2 id="mysql锁机制">MySQL锁机制</h2>
 <p><strong>锁</strong>是计算机协调多个进程或线程并发访问某一资源的机制。在数据库中，除传统的计算资源（如CPU、RAM、I/O）的争用以外，数据也是一种供许多用户共享的资源。如何保证数据并发访问的一致性、有效性是所有数据库必须解决的一个问题，锁冲突也是影响数据库并发访问性能的一个重要因素。因此，锁对数据库而言尤为重要，也十分复杂。</p>
 <p>比如在网购商品时，若商品库存只有一件，但同时有两个人有购买意愿，那么如何保证只有一个人买到？这里就需要用到事务，我们先从库存表中取出物品数量，再插入订单，付款后插入付款表信息，然后更新商品数量。在这个过程中，就需要使用锁对有限的资源进行保护，解决隔离和并发的矛盾。</p>
 <p>锁的分类：从对数据操作的类型分为读锁和写锁；从对数据操作的粒度分为表锁和行锁（页锁介于表锁和行锁之间）。</p>

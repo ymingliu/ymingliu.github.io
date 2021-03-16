@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Machine Learning on Yiming`s Blog</title>
+    <link>https://ymingliu.github.io/categories/machine-learning/</link>
+    <description>Recent content in Machine Learning on Yiming`s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Tue, 16 Mar 2021 19:50:49 +0800</lastBuildDate>
+    
+	<atom:link href="https://ymingliu.github.io/categories/machine-learning/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Overview of Machine Learning</title>
+      <link>https://ymingliu.github.io/2021/machine-learning-overview/</link>
+      <pubDate>Tue, 16 Mar 2021 19:50:49 +0800</pubDate>
+      
+      <guid>https://ymingliu.github.io/2021/machine-learning-overview/</guid>
+      <description>课程参考 阿里云开发者社区——人工智能学习路线 一、云计算、大数据及人工智能 内存、CPU、磁盘的虚拟化 云计算特点：资源使用率高，一切可以服务化 二</description>
+    </item>
+    
+  </channel>
+</rss>

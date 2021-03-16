@@ -6,7 +6,7 @@
     <description>Recent content in MySQL on Yiming`s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 14 Mar 2021 20:56:53 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 15 Mar 2021 20:56:53 +0800</lastBuildDate>
     
 	<atom:link href="https://ymingliu.github.io/tags/mysql/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,19 +14,19 @@
     <item>
       <title>MySQL Master Slave Replication</title>
       <link>https://ymingliu.github.io/2021/sql-master-slave-replication/</link>
-      <pubDate>Sun, 14 Mar 2021 20:56:53 +0800</pubDate>
+      <pubDate>Mon, 15 Mar 2021 20:56:53 +0800</pubDate>
       
       <guid>https://ymingliu.github.io/2021/sql-master-slave-replication/</guid>
-      <description>MySQL主从复制</description>
+      <description>MySQL主从复制 一、复制的基本原理 slave会从master读取binlog来进行数据同步。具体地有三步，第一步，master将改变记录到</description>
     </item>
     
     <item>
       <title>MySQL Innodb Locking</title>
       <link>https://ymingliu.github.io/2021/sql-innodb-locking/</link>
-      <pubDate>Sun, 14 Mar 2021 20:56:38 +0800</pubDate>
+      <pubDate>Mon, 15 Mar 2021 20:56:38 +0800</pubDate>
       
       <guid>https://ymingliu.github.io/2021/sql-innodb-locking/</guid>
-      <description>MySQL锁机制</description>
+      <description>MySQL锁机制 锁是计算机协调多个进程或线程并发访问某一资源的机制。在数据库中，除传统的计算资源（如CPU、RAM、I/O）的争用以外，数据</description>
     </item>
     
     <item>

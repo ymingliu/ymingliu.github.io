@@ -6,10 +6,19 @@
     <description>Recent content in MySQL on Yiming`s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 15 Mar 2021 20:56:53 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 17 Mar 2021 08:17:44 +0800</lastBuildDate>
     
 	<atom:link href="https://ymingliu.github.io/tags/mysql/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>MySQL Views and Stored Procedure</title>
+      <link>https://ymingliu.github.io/2021/sql-views-and-stored-procedure/</link>
+      <pubDate>Wed, 17 Mar 2021 08:17:44 +0800</pubDate>
+      
+      <guid>https://ymingliu.github.io/2021/sql-views-and-stored-procedure/</guid>
+      <description>资料参考 《MySQL必知必会》Ben Forta著，刘晓霞 钟鸣译，人民邮电出版社 推荐收藏 —— MySQL视图详细介绍 MySQL教程——易百教程 M</description>
+    </item>
     
     <item>
       <title>MySQL Master Slave Replication</title>

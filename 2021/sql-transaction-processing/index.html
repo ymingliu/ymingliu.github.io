@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noodp"/>
+    <meta name="author" content="Yiming">
+    <meta name="description" content="Yiming`s Blog">
+    
+    
+    <link rel="prev" href="https://ymingliu.github.io/2021/sql-cursor-and-trigger/" />
+    <link rel="next" href="https://ymingliu.github.io/2021/sql-quick-guide/" />
+    <link rel="canonical" href="https://ymingliu.github.io/2021/sql-transaction-processing/" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+    <title>
+        
+        
+            MySQL Transaction Processing | Yiming`s Blog
+        
+    </title>
+    <meta name="title" content="MySQL Transaction Processing | Yiming`s Blog">
+    
+<link rel="stylesheet" href="/css/main.min.css">
+
+
+    
+    
+ 
+
+<script type="application/ld+json">
+{
+    "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/ymingliu.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "MySQL Transaction Processing",
+    "headline" : "MySQL Transaction Processing",
+    "description" : "资料参考 《MySQL必知必会》Ben Forta著，刘晓霞 钟鸣译，人民邮电出版社 MySQL事务 | 菜鸟教程 MySQL事务的概念和特性 MySQL—",
+    "inLanguage" : "zh-cn",
+    "author" : "Yiming",
+    "creator" : "Yiming",
+    "publisher": "Yiming",
+    "accountablePerson" : "Yiming",
+    "copyrightHolder" : "Yiming",
+    "copyrightYear" : "2021",
+    "datePublished": "2021-03-19 12:41:05 \x2b0800 CST",
+    "dateModified" : "2021-03-19 12:41:05 \x2b0800 CST",
+    "url" : "https:\/\/ymingliu.github.io\/2021\/sql-transaction-processing\/",
+    "wordCount" : "6216",
+    "keywords" : [ "MySQL", "Yiming`s Blog"]
+}
+</script>
+
+  </head>
+    <body class="">
+        <div class="wrapper">
+            <nav class="navbar">
+    
+        <progress class="content_progress" max="0" value="0"></progress>
+    
+    <div class="container">
+        
+            <div class="navbar-header header-back2home-logo">
+                <span class="logo_mark" >>$</span>
+                <a href="https://ymingliu.github.io">
+                    <span class="logo_text" >cd /home/</span>
+                    <span class="logo_cursor" ></span>
+                </a>
+            </div>
+        
+        <div class="navbar-right">
+                
+                <span class="menu">
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+                <span class="divide"></span>
+                <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-dark-mode"></i></a>
+                </span>
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+    
+        <progress class="content_progress" max="0" value="0"></progress>
+    
+     <div class="container">
+        <div class="navbar">
+            <div class="navbar-header header-logo">
+                    <a href="https://ymingliu.github.io">Yiming`s Blog</a>
+            </div>
+            <div class="navbar-right">
+                <div><a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-dark-mode"></i></a></div>
+                <div class="menu-toggle">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                <nav class="mb-md">
+                    
+                    
+                        <a class="menu-item" href="/posts/" title="">
+                            <h3>Blog</h3>
+                            <div class="menu-active"></div>
+                        </a>
+                    
+                        <a class="menu-item" href="/categories/" title="">
+                            <h3>Categories</h3>
+                            <div class="menu-active"></div>
+                        </a>
+                    
+                        <a class="menu-item" href="/tags/" title="">
+                            <h3>Tags</h3>
+                            <div class="menu-active"></div>
+                        </a>
+                    
+                        <a class="menu-item" href="/about/" title="">
+                            <h3>About</h3>
+                            <div class="menu-active"></div>
+                        </a>
+                    
+                </nav>
+        </div>
+    </div>
+</nav>
+            <main class="main">
+                <div class="container">
+                    
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">MySQL Transaction Processing</h1>
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://ymingliu.github.io" rel="author">Yiming</a> with ♥
+                <span class="post-time">
+                on <time datetime=2021-03-19 itemprop="datePublished">March 19, 2021</time>
+                </span>
+                in
+                
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        
+                        
+                        
+                          <a href="https://ymingliu.github.io/categories/mysql/"> MySQL, </a>
+                        
+                        
+                </span>
+                <span class="post-word-count">6216 words</span>
+        </div>
+    </header>
+
+    <div class="post-content">
+        
+
+        
+        
+
+        
+        
+        
+        
+        
+
+        
+        
+        
+
+        <h2 id="资料参考">资料参考</h2>
+<p>《MySQL必知必会》Ben Forta著，刘晓霞 钟鸣译，人民邮电出版社</p>
+<p><a href="https://www.runoob.com/mysql/mysql-transaction.html">MySQL事务 | 菜鸟教程</a></p>
+<p><a href="http://c.biancheng.net/view/7289.html">MySQL事务的概念和特性</a></p>
+<p><a href="https://blog.csdn.net/w_linux/article/details/79666086">MySQL——事务(Transaction)详解</a></p>
+<p><a href="https://tech.meituan.com/2014/08/20/innodb-lock.html">Innodb中的事务隔离级别和锁的关系-美团技术团队</a></p>
+<p><a href="https://my.oschina.net/jikeh/blog/2961450">深入理解mysql四种隔离级别及底层实现原理（MVCC和锁）</a></p>
+<h2 id="mysql事务">MySQL事务</h2>
+<h3 id="1什么是事务">1、什么是事务</h3>
+<p>事务是指作为单个逻辑工作单元执行的一系列操作，通常由批量的DML语句组成。事务处理是一种机制，指将这一系列操作作为一个整体一起向系统提交或撤销操作请求，即这一组数据库命令要么都执行，要么都不执行，保证数据库的完整性。</p>
+<h3 id="2事务的适用场景">2、事务的适用场景</h3>
+<p>在数据库系统上执行并发操作时，事务通常作为最小的控制单元来使用，特别适用于多用户同时操作的数据库系统。例如，航空公司的订票系统、银行、保险公司以及证券交易系统等。</p>
+<h3 id="3事务的四大特征acid">3、事务的四大特征（ACID）</h3>
+<ul>
+<li>
+<p>原子性（Atomicity）：又称不可分割性，指一个事务中的所有操作，要么全部完成，要么全部不完成，不会结束在中间某个环节。事务在执行过程中发生错误，可以回滚（Rollback）到事务开始前的状态，就像这个事务从来没有执行过一样。</p>
+</li>
+<li>
+<p>一致性（Consistency）：在事务开始之前和事务结束以后，数据库的完整性没有被破坏。这表示写入的资料必须完全符合所有的预设规则，这包含资料的精确度、串联性以及后续数据库可以自发性地完成预定的工作。</p>
+</li>
+<li>
+<p>隔离性（Isolation）：又称独立性，指数据库允许多个并发事务同时对其数据进行读写和修改的能力，隔离性可以防止多个事务并发执行时由于交叉执行而导致数据的不一致。事务隔离分为不同级别，包括读未提交（Read uncommitted）、读提交（read committed）、可重复读（repeatable read）和串行化（Serializable）。</p>
+</li>
+<li>
+<p>持久性（Durability）：事务处理结束后，对数据的修改就是永久的，即便系统故障也不会丢失。</p>
+</li>
+</ul>
+<h3 id="4支持事务的存储引擎">4、支持事务的存储引擎</h3>
+<p>MySQL 提供了多种存储引擎来支持事务。支持事务的存储引擎有 InnoDB 和 BDB，其中，InnoDB 存储引擎事务主要通过 UNDO 日志和 REDO 日志实现，MyISAM 存储引擎不支持事务。</p>
+<h3 id="5执行事务">5、执行事务</h3>
+<p>在 MySQL 命令行的默认设置下，事务都是自动提交的，即执行 SQL 语句后就会马上执行 <code>COMMIT</code> 操作。因此要显式地开启一个事务务须使用命令 <code>BEGIN</code> 或 <code>START TRANSACTION</code>，或者执行命令 <code>SET AUTOCOMMIT=0</code>，用来禁止使用当前会话的自动提交。</p>
+<p>举例，创建一个银行账户表，实现当两个用户发生转账操作时对银行账户表的更新。注意当A的账户余额减小一定数额时，B的账户余额应增加相同数额，两条操作必须同时执行，因此这是一个事务。</p>
+<p>创建银行账户表</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> CREATE TABLE <span style="color:#a6e22e">bankAccount</span>(user_id INT PRIMARY KEY, balance INT);
+mysql<span style="color:#f92672">&gt;</span> SELECT <span style="color:#f92672">*</span> FROM bankAccount;
+</code></pre></div><table>
+<thead>
+<tr>
+<th>user_id</th>
+<th>balance</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>500</td>
+</tr>
+<tr>
+<td>2</td>
+<td>100</td>
+</tr>
+</tbody>
+</table>
+<p>现在用户1向用户2转账100，执行事务，更新银行账户表</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">START TRANSACTION;
+UPDATE bankAccount SET balance <span style="color:#f92672">=</span> balance <span style="color:#f92672">-</span> <span style="color:#ae81ff">100</span> WHERE user_id <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
+UPDATE bankAccount SET balance <span style="color:#f92672">=</span> balance <span style="color:#f92672">+</span> <span style="color:#ae81ff">100</span> WHERE user_id <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>;
+COMMIT;
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> SELECT <span style="color:#f92672">*</span> FROM bankAccount;
+</code></pre></div><table>
+<thead>
+<tr>
+<th>user_id</th>
+<th>balance</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>400</td>
+</tr>
+<tr>
+<td>2</td>
+<td>200</td>
+</tr>
+</tbody>
+</table>
+<p>在没有COMMIT之前，其他进程查询账户时依旧是START TRANSACTION之前的数据，也就是说，事务不会让其他进程查询到未执行完的不完整结果。</p>
+<h3 id="6回滚事务">6、回滚事务</h3>
+<p>MySQL的ROLLBACK命令可以用来回滚（撤销）事务。<strong>事务回滚只用于DML，不适用于DDL！</strong></p>
+<p>举例，回滚成功。用户1向用户2转账300，但未转账成功</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">BEGIN;
+UPDATE bankAccount SET balance <span style="color:#f92672">=</span> balance <span style="color:#f92672">-</span> <span style="color:#ae81ff">300</span> WHERE user_id <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
+UPDATE bankAccount SET balance <span style="color:#f92672">=</span> balance <span style="color:#f92672">+</span> <span style="color:#ae81ff">300</span> WHERE user_id <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>;
+ROLLBACK;
+</code></pre></div><p>查询银行账户表，还是原来的账户余额</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> SELECT <span style="color:#f92672">*</span> FROM bankAccount;
+</code></pre></div><table>
+<thead>
+<tr>
+<th>user_id</th>
+<th>balance</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>400</td>
+</tr>
+<tr>
+<td>2</td>
+<td>200</td>
+</tr>
+</tbody>
+</table>
+<p>举例，回滚失败</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">BEGIN;
+CREATE TABLE <span style="color:#a6e22e">backupAccount</span>(user_id INT PRIMARY KEY, balance INT);
+INSERT INTO <span style="color:#a6e22e">backupAccount</span>(user_id, balance) <span style="color:#a6e22e">VALUES</span>(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">400</span>);
+UPDATE backupAccount SET balance <span style="color:#f92672">=</span> balance <span style="color:#f92672">-</span> <span style="color:#ae81ff">300</span> WHERE user_id <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
+ROLLBACK;
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> SELECT <span style="color:#f92672">*</span> FROM backupAccount;
+</code></pre></div><table>
+<thead>
+<tr>
+<th>user_id</th>
+<th>balance</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>100</td>
+</tr>
+</tbody>
+</table>
+<p>这是因为DDL语句（这里是<code>CREATE TABLE</code>）直接触发隐式提交，相当于在创建表格后默认加了一行<code>COMMIT</code>，导致本事务结束，因此最后的<code>ROLLBACK</code>没有意义，插入和更新操作照常进行。</p>
+<p>想要回滚成功，应先创建表格后再开启事务，回滚后再在事务结束后删除表格，使数据库回到原始状态</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">CREATE TABLE <span style="color:#a6e22e">backupAccount</span>(user_id INT PRIMARY KEY, balance INT);
+BEGIN;
+INSERT INTO <span style="color:#a6e22e">backupAccount</span>(user_id, balance) <span style="color:#a6e22e">VALUES</span>(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">400</span>);
+UPDATE backupAccount SET balance <span style="color:#f92672">=</span> balance <span style="color:#f92672">-</span> <span style="color:#ae81ff">300</span> WHERE user_id <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
+ROLLBACK;
+DROP TABLE backupAccount;
+</code></pre></div><p>当COMMIT或ROLLBACK语句执行后，事务会自动关闭，更改会隐含提交。</p>
+<h3 id="7部分回滚事务">7、部分回滚事务</h3>
+<p>MySQL中支持部分回滚事务，只需在事务处理块中的合适位置设置保留点（或称占位符），回滚时可以指定回滚到哪个占位符。</p>
+<p>举例，向备份银行账户表中插入新用户，并修改账户余额，但撤销修改操作</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">START TRANSACTION;
+INSERT INTO <span style="color:#a6e22e">backupAccount</span>(user_id, balance) <span style="color:#a6e22e">VALUES</span>(<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1000</span>);
+SAVEPOINT delect1;
+UPDATE backupAccount SET balance <span style="color:#f92672">=</span> <span style="color:#ae81ff">500</span> WHERE user_id <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>;
+ROLLBACK TO delect1;
+COMMIT;
+</code></pre></div><p>注意定义保留点的名字为delect1，这样可以使用<code>ROLLBACK TO</code>语句回到指定的保留点。</p>
+<p>查询备份表结果，的确没有进行修改操作</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> SELECT <span style="color:#f92672">*</span> FROM backupAccount;
+</code></pre></div><table>
+<thead>
+<tr>
+<th>user_id</th>
+<th>balance</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>100</td>
+</tr>
+<tr>
+<td>2</td>
+<td>1000</td>
+</tr>
+</tbody>
+</table>
+<p>一个事务中可以设置多个保留点，方便误操作时进行回滚。</p>
+<h3 id="8查看当前有多少事务正在运行">8、查看当前有多少事务正在运行</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> select <span style="color:#f92672">*</span> from information_schema.innodb_trx;
+</code></pre></div><h2 id="mysql事务之隔离级别">MySQL事务之隔离级别</h2>
+<p>在并发事务处理中，会出现三个主要问题</p>
+<p>1）脏读（Dirty Read），即一个事务可以读到另一个未提交事务修改过的数据。</p>
+<blockquote>
+<p>举例，会话A开启一个事务，把id=1的name为上海市修改成北京市，此时另外一个会话B也开启一个事务，读取id=1的name，此时的查询结果为北京市，并进行后续操作。若会话A发现操作有误，将事务回滚了刚才修改的记录，则会话B读到的数据是不存在的，这个现象就是脏读。</p>
+</blockquote>
+<p>2）不可重复读（Non-Repeatable Read），一个事务只能读到另一个已经提交的事务修改过的数据，但对该事务而言，不同的时刻读到的同一批数据是不一样的，受其他事务提交结果影响。通常针对数据的UPDATE和DELETE操作。</p>
+<blockquote>
+<p>举例，会话A开启一个事务，查询id=1的结果，此时查询的结果name为上海市。接着会话B把id=1的name修改为北京市并提交，此时会话A的事务再一次查询id=1的结果，读取的结果name为北京市。也即在会话B提交之前与之后，会话A的查询结果不同，这种现象就是不可重复读。</p>
+</blockquote>
+<p>3）幻读（Phantom），一个事务先根据某些条件查询出一些记录，之后另一个事务又向表中插入了符合这些条件的记录，原先的事务再次按照该条件查询时，能把另一个事务插入的记录也读出来。通常针对数据的INSERT操作。</p>
+<blockquote>
+<p>举例，会话A开启一个事务，查询id&gt;0的记录，此时会查到name=上海市的记录。接着会话B插入一条name=北京市的数据并提交，这时会话A的事务再以刚才的查询条件（id&gt;0）再一次查询，此时会出现两条记录（name为上海市和北京市的记录），这种现象就是幻读。</p>
+</blockquote>
+<p><em>一定要区别不可重复度和幻读，前者是查询的结果集数值不一致，后者是查询的结果集数量不一致。</em></p>
+<h3 id="1事务隔离级别">1、事务隔离级别</h3>
+<p>为解决如上问题，MySQL支持四种隔离级别</p>
+<p>1）读未提交（READ UNCOMMITTED）</p>
+<p>2）读提交 （READ COMMITTED）</p>
+<p>3）可重复读 （REPEATABLE READ）</p>
+<p>4）串行化 （SERIALIZABLE）</p>
+<p>从上往下，隔离强度逐渐增强，性能逐渐变差。采用哪种隔离级别要根据系统需求权衡决定，其中，<strong>可重复读是 MySQL 的默认级别</strong>。下表展示了四种隔离级别对如上问题的解决程度</p>
+<table>
+<thead>
+<tr>
+<th>隔离级别</th>
+<th>脏读</th>
+<th>不可重复读</th>
+<th>幻读</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>读未提交</td>
+<td>可能</td>
+<td>可能</td>
+<td>可能</td>
+</tr>
+<tr>
+<td>读提交</td>
+<td>不可能</td>
+<td>可能</td>
+<td>可能</td>
+</tr>
+<tr>
+<td>可重复读</td>
+<td>不可能</td>
+<td>不可能</td>
+<td>可能</td>
+</tr>
+<tr>
+<td>串行化</td>
+<td>不可能</td>
+<td>不可能</td>
+<td>不可能</td>
+</tr>
+</tbody>
+</table>
+<p>即串行化能解决全部脏读、可重复读、幻读的问题，隔离效果最强。但是执行效果最差，因为它将事务的执行变为顺序执行，与其他三个隔离级别相比，它就相当于单线程，后一个事务的执行必须等待前一个事务结束。</p>
+<p><em>注意MySQL的RR级别是解决了幻读问题的！</em></p>
+<h3 id="2查看并设置隔离级别">2、查看并设置隔离级别</h3>
+<p>查看隔离级别</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> SHOW variables LIKE <span style="color:#e6db74">&#39;transaction_isolation&#39;</span>;
+</code></pre></div><table>
+<thead>
+<tr>
+<th>Variable_name</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>transaction_isolation</td>
+<td>REPEATABLE-READ</td>
+</tr>
+</tbody>
+</table>
+<p>设置隔离级别格式</p>
+<blockquote>
+<p>SET &lt;SESSION | GLOBAL&gt; TRANSACTION ISOLATION LEVEL</p>
+<p>&lt;READ UNCOMMITTED | READ COMMITTED | REPEATABLE READ | SERIALIZABLE&gt;</p>
+</blockquote>
+<p>SESSION表示设置对当前会话的所有后续的事务有效，对其他会话无作用。若该语句在已经开启的事务中间执行，不会影响当前正在执行的事务，只会影响后续事务。GLOBAL表示设置只对执行完该语句之后开启的新会话起作用，对当前已经存在的会话无效。若无SESSION和GLOBAL关键词，表示设置只对当前会话中下一个即将开启的事务有效，下一个事务执行完后，后续事务将恢复到之前的隔离级别，且该语句不能在已经开启的事务中间执行。</p>
+<p>比如设置隔离级别为只读提交级别</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> SET GLOBAL TRANSACTION ISOLATION LEVEL READ COMMITTED;
+</code></pre></div><h2 id="mysql事务隔离与锁的关系">MySQL事务隔离与锁的关系</h2>
+<h3 id="1锁的分类">1、锁的分类</h3>
+<p>1） Shared Locks(共享锁/S锁)</p>
+<p>若事务T对数据对象A加上S锁，则事务T只能读A；其他事务只能再对A加S锁，而不能加X锁，直到T释放A上的S锁。这就保证了其他事务可以读A，但在T释放A上的S锁之前不能对A做任何修改。</p>
+<p>2） Exclusive Locks(排它锁/X锁)</p>
+<p>若事务T对数据对象A加上X锁，则只允许T读取和修改A，其它任何事务都不能再对A加任何类型的锁，直到T释放A上的锁。它防止任何其它事务获取资源上的锁，直到在事务的末尾将资源上的原始锁释放为止。在更新操作(INSERT、UPDATE 或 DELETE)过程中始终应用排它锁。注意：排他锁会阻止其它事务再对其锁定的数据加读或写的锁，但是不加锁的就没办法控制了。</p>
+<p>3） Record Locks(记录锁)</p>
+<p>是索引上的锁，通过锁定索引来锁定具体的一行或者多行记录。如果InnoDB存储引擎表在建立的时候没有设置任何一个索引，那么这时InnoDB会使用隐式的主键来进行锁定。属于行锁。</p>
+<p>4） Gap Locks(间隙锁)</p>
+<p>锁定一个范围，但不包含记录本身，即锁定一个开区间。属于行锁。</p>
+<p>5） Next-Key Locks(临键锁)</p>
+<p>等于记录锁加间隙锁，锁定一个范围，并且锁定记录本身，即锁定一个左开右闭的区间。主要是阻止多个事务将记录插入到同一个范围内，从而避免幻读。属于行锁。</p>
+<h3 id="2如何加锁">2、如何加锁</h3>
+<p>在一个事务中，INSERT、SELETE和UPDATE都会默认加排它锁，而SELECT只有显式声明才会加锁:</p>
+<ul>
+<li>SELECT &hellip; LOCK IN SHARE MODE: 会加共享锁</li>
+<li>SELECT &hellip; FOR UPDATE: 会加排它锁</li>
+</ul>
+<p>当提交COMMIT结束事务时，锁被释放。</p>
+<blockquote>
+<p>InnoDB 行锁是通过索引上的索引项来实现的，这一点 ＭySQL 与 Oracle 不同，后者是通过在数据中对相应数据行加锁来实现的。InnoDB 这种行锁实现特点意味者：只有通过索引条件检索数据，InnoDB才会准确定位行，并使用行级锁锁定，否则，InnoDB会为这张表中所有行加行锁，然后进行一遍过滤，释放不满足的行对应的锁，留下符合条件的行。虽然最终只为符合条件的行加了锁，但一锁一释放的过程对性能影响极大。因此在使用锁时，一定预先为表建立合适的索引。</p>
+</blockquote>
+<h3 id="3mysql如何实现事务隔离">3、MySQL如何实现事务隔离</h3>
+<p>1）读未提交</p>
+<p>不加锁</p>
+<p>2）串行化</p>
+<p>读时加共享锁，其他事务可以并发读，但是不能写。写时加排他锁，其他事务不能并发写也不能并发读。</p>
+<p>3）读提交和可重复读</p>
+<p>MySQL采用MVCC多版本并发控制机制。</p>
+<h3 id="4用锁可以解决的问题">4、用锁可以解决的问题</h3>
+<p>1）并发写</p>
+<p>加行锁，防止不同事务版本的数据修改提交时造成数据冲突的情况。比如在事务中，利用SELECT &hellip; WHERE &lt;索引列条件&gt; LOCK IN SHARE MODE为查询结果集加共享锁，使得其他事务可读但不能写。</p>
+<p>2）幻读</p>
+<p>加临键锁，阻止其它事务在锁定区间内插入数据。</p>
+<h3 id="补充死锁">补充：死锁</h3>
+<p>两个或者两个以上的事务，因争夺资源而造成的一种互相等待的现象，称为死锁。</p>
+<blockquote>
+<p>事务A利用UPDATE语句对id=1的有关数据进行更新，则id=1行被加上排他锁，事务B利用UPDATE语句对id=2的有关数据进行更新，则id=2行被加上排他锁，此时，若事务A利用UPDATE语句修改id=2行，会发生阻塞，同时事务B利用UPDATE语句修改id=1行，会发生阻塞。两事务都无法结束操作。</p>
+</blockquote>
+<p>解决死锁的方法：设置超时时间，即当两个事务互相等待时，当一个等待时间超过设置的阈值时，其中一个事务进行回滚，另外一个等待的事务就能继续执行。如果出现死锁，可以用 SHOW INNODB STATUS 命令来确定最后一个死锁产生的原因和改进措施。实际业务中还有许多避免死锁的方法（略）。</p>
+<h2 id="mvcc原理">MVCC原理</h2>
+<h3 id="1什么是mvcc">1、什么是MVCC</h3>
+<p>全称Multi-Version Concurrency Control，是一种多版本并发控制机制。借助MVCC，数据库可以实现READ COMMITTED，REPEATABLE READ隔离级别，由于保存了数据的历史版本记录，不同事务的读写操作可以并发执行，提升系统性能。</p>
+<blockquote>
+<p>MVCC只在REPEATABLE READ和READ COMMITIED两个隔离级别下工作。其他两个隔离级别都和 MVCC不兼容 ，因为READ UNCOMMITIED总是读取最新的数据行，而不是符合当前事务版本的数据行。而SERIALIZABLE则会对所有读取的行都加锁。</p>
+</blockquote>
+<h3 id="2mvcc的实现">2、MVCC的实现</h3>
+<p>MVCC是通过保存数据在某个时间点的快照来实现的。不同存储引擎的MVCC实现是不同的。</p>
+<blockquote>
+<p>快照数据其实就是当前行数据之前的历史版本。每行记录可能有多个版本，也即一个行记录可能有不止一个快照数据。一般称这种技术为行多版本技术，由此带来的并发控制，称之为多版本并发控制 MVCC。</p>
+</blockquote>
+<p>InnoDB的MVCC实现是在每行记录后面保存两个隐藏的列，DB_TRX_ID和DB_ROLL_PTR。这两个列分别保存了这个行的创建时间和删除时间。这里存储的并不是实际的时间值，而是系统版本号（可以理解为事务的ID）。每开始一个新的事务，系统版本号就会自动递增。查询时用当前事务ID和每行记录的事务ID进行比较，根据不同的隔离级别规则返回符合要求的结果集。</p>
+<p>例如在RR级别下，MVCC的具体实现方式如下：</p>
+<p>&mdash;&gt; SELECT</p>
+<p>InnoDB会根据以下两个条件检查每行记录:</p>
+<p>a）InnoDB只会查找版本早于当前事务版本的数据行（也就是行的系统版本号小于或等于事务的系统版本号），这样可以确保事务读取的行，要么是在事务开始前已经存在的，要么是事务自身插入或者修改过的。</p>
+<p>b）行的删除版本要么未定义，要么大于当前事务版本号。这可以确保事务读取到的行，在事务开始之前未被删除。</p>
+<p>只有a，b同时满足的记录，才能返回作为查询结果。</p>
+<p>&mdash;&gt; INSERT</p>
+<p>InnoDB为新插入的每一行保存当前事务编号作为行版本号。（放在创建时间列）</p>
+<p>&mdash;&gt; DELETE</p>
+<p>InnoDB为删除的每一行保存当前事务编号作为行删除标识。（放在删除时间列）</p>
+<p>&mdash;&gt; UPDATE</p>
+<p>InnoDB执行UPDATE，实际上是新插入了一行记录，并保存其行版本号为当前事务的ID，同时保存当前事务ID到原来的行作为行删除标识。</p>
+<h3 id="2mvcc的优点">2、MVCC的优点</h3>
+<p>MVCC在大多数情况下代替了行锁，实现了对读的非阻塞，读不加锁，读写不冲突。不足之处是每行记录都需要额外的存储空间，需要做更多的行检查工作，以及一些额外的维护工作。</p>
+<h4 id="如何理解mvcc在大多数情况下可以代替行锁使得读不加锁提升系统性能">如何理解MVCC在大多数情况下可以代替行锁，使得读不加锁，提升系统性能？</h4>
+<hr>
+<p>传统的隔离级别是基于锁实现的，这种方式叫做基于锁的并发控制（Lock-Based Concurrent Control，LBCC）。通过对读写操作加不同的锁，以及对释放锁的时机进行不同的控制，就可以实现四种隔离级别。</p>
+<p>以RR级别为例，为保证事务进行过程中读结果的一致性，如果不使用MVCC，就需要对事务过程中所涉及的行加上共享锁，这样在本事务中可以进行读写操作，而其他事务虽可以加共享锁，但不能加排他锁，也就是只能读，不能改。直到本事务COMMIT后，将共享锁释放。</p>
+<p>虽然数据库的四种隔离级别通过 LBCC 技术都可以实现，但是它最大的问题是它只实现了并发的读读，对于并发的读写还是冲突的，写时不能读，读时不能写，当读写操作都很频繁时，数据库的并发性将大大降低。</p>
+<p>综上，为维护事务的一致性和隔离性，数据库可以用锁来协调多个进程或线程并发访问某一资源。但加锁过度，会极大的降低并发处理能力，且不支持读写并行。MVCC实现了读写并行，虽然浪费了存储空间，但大大降低了加锁解锁次数，有效提升系统性能。</p>
+
+    </div>
+
+    <div class="post-copyright">
+            
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>Yiming </span>
+                </p>
+            
+
+            
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://ymingliu.github.io/2021/sql-transaction-processing/>https://ymingliu.github.io/2021/sql-transaction-processing/</span>
+            </p>
+            
+            
+    </div>
+
+
+    <div class="post-tags">
+        
+            <section>
+            <i class="iconfont icon-tag"></i>Tag(s):
+            
+            <span class="tag"><a href="https://ymingliu.github.io/tags/mysql/">
+                    #MySQL</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> ·
+                <span><a href="https://ymingliu.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://ymingliu.github.io/2021/sql-cursor-and-trigger/" class="prev" rel="prev" title="MySQL Cursor and Trigger"><i class="iconfont icon-left"></i>&nbsp;MySQL Cursor and Trigger</a>
+        
+        
+        <a href="https://ymingliu.github.io/2021/sql-quick-guide/" class="next" rel="next" title="MySQL Quick Guide">MySQL Quick Guide&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+        
+            
+                <div id="gitalk-container"></div>
+<link rel="stylesheet" href="https://cdn.bootcss.com/gitalk/1.5.2/gitalk.css">
+<script src="https://cdn.bootcss.com/gitalk/1.5.2/gitalk.min.js"></script>
+<script>
+    const gitalk = new Gitalk({
+
+        clientID: '',
+        clientSecret: '',
+        repo: '',
+        owner: 'ymingliu',
+        admin: ['ymingliu'],
+        id: location.pathname, 
+        distractionFreeMode: false 
+    });
+    (function () {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('gitalk-container').innerHTML = 'Gitalk comments not available by default when the website is previewed locally.';
+            return;
+        }
+        gitalk.render('gitalk-container');
+    })();
+</script>
+
+            
+        
+    </div>
+</article>
+                </div>
+            </main>
+            <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span itemprop="copyrightYear">2021 - 2021</span>
+        
+        <span class="with-love">
+    	 <i class="iconfont icon-love"></i>
+         </span>
+         
+            <span class="author" itemprop="copyrightHolder"><a href="https://ymingliu.github.io">Yiming</a> | </span>
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/Mogeko/Mogege" target="_blank" rel="external nofollow">Mogege</a></span>
+    </div>
+</footer>
+
+
+
+
+
+
+<script defer src="/js/vendor_main.min.js"></script>
+
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script> pangu.spacingPage();</script>
+
+
+
+
+
+        </div>
+    </body>
+</html>

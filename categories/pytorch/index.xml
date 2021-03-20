@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Pytorch on Yiming`s Blog</title>
+    <link>https://ymingliu.github.io/categories/pytorch/</link>
+    <description>Recent content in Pytorch on Yiming`s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 18 Mar 2021 09:10:20 +0800</lastBuildDate>
+    
+	<atom:link href="https://ymingliu.github.io/categories/pytorch/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Getting Started with Pytorch</title>
+      <link>https://ymingliu.github.io/2021/pytorch-getting-started/</link>
+      <pubDate>Thu, 18 Mar 2021 09:10:20 +0800</pubDate>
+      
+      <guid>https://ymingliu.github.io/2021/pytorch-getting-started/</guid>
+      <description>if &#39;__name__ == &#39;__main__&#39;相当于Python的模拟程序入口。__name__是内置变量，表示当前模块的名字，还可同时反映该模块在包中的层次。</description>
+    </item>
+    
+  </channel>
+</rss>

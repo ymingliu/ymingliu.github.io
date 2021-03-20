@@ -4,7 +4,7 @@
     <url>
       <loc>https://ymingliu.github.io/categories/</loc>
       
-      <lastmod>2021-03-17T08:17:44+08:00</lastmod>
+      <lastmod>2021-03-20T21:40:24+08:00</lastmod>
       
       
       
@@ -14,7 +14,7 @@
     <url>
       <loc>https://ymingliu.github.io/tags/mysql/</loc>
       
-      <lastmod>2021-03-17T08:17:44+08:00</lastmod>
+      <lastmod>2021-03-20T21:40:24+08:00</lastmod>
       
       
       
@@ -24,7 +24,7 @@
     <url>
       <loc>https://ymingliu.github.io/categories/mysql/</loc>
       
-      <lastmod>2021-03-17T08:17:44+08:00</lastmod>
+      <lastmod>2021-03-20T21:40:24+08:00</lastmod>
       
       
       
@@ -32,9 +32,9 @@
     </url>
   
     <url>
-      <loc>https://ymingliu.github.io/2021/sql-views-and-stored-procedure/</loc>
+      <loc>https://ymingliu.github.io/2021/sql-quick-guide/</loc>
       
-      <lastmod>2021-03-17T08:17:44+08:00</lastmod>
+      <lastmod>2021-03-20T21:40:24+08:00</lastmod>
       
       
       
@@ -44,7 +44,7 @@
     <url>
       <loc>https://ymingliu.github.io/posts/</loc>
       
-      <lastmod>2021-03-17T08:17:44+08:00</lastmod>
+      <lastmod>2021-03-20T21:40:24+08:00</lastmod>
       
       
       
@@ -54,7 +54,7 @@
     <url>
       <loc>https://ymingliu.github.io/tags/</loc>
       
-      <lastmod>2021-03-17T08:17:44+08:00</lastmod>
+      <lastmod>2021-03-20T21:40:24+08:00</lastmod>
       
       
       
@@ -63,6 +63,66 @@
   
     <url>
       <loc>https://ymingliu.github.io/</loc>
+      
+      <lastmod>2021-03-20T21:40:24+08:00</lastmod>
+      
+      
+      
+      
+    </url>
+  
+    <url>
+      <loc>https://ymingliu.github.io/2021/sql-transaction-processing/</loc>
+      
+      <lastmod>2021-03-19T12:41:05+08:00</lastmod>
+      
+      
+      
+      
+    </url>
+  
+    <url>
+      <loc>https://ymingliu.github.io/2021/sql-cursor-and-trigger/</loc>
+      
+      <lastmod>2021-03-18T17:46:17+08:00</lastmod>
+      
+      
+      
+      
+    </url>
+  
+    <url>
+      <loc>https://ymingliu.github.io/2021/pytorch-getting-started/</loc>
+      
+      <lastmod>2021-03-18T09:10:20+08:00</lastmod>
+      
+      
+      
+      
+    </url>
+  
+    <url>
+      <loc>https://ymingliu.github.io/tags/pytorch/</loc>
+      
+      <lastmod>2021-03-18T09:10:20+08:00</lastmod>
+      
+      
+      
+      
+    </url>
+  
+    <url>
+      <loc>https://ymingliu.github.io/categories/pytorch/</loc>
+      
+      <lastmod>2021-03-18T09:10:20+08:00</lastmod>
+      
+      
+      
+      
+    </url>
+  
+    <url>
+      <loc>https://ymingliu.github.io/2021/sql-views-and-stored-procedure/</loc>
       
       <lastmod>2021-03-17T08:17:44+08:00</lastmod>
       

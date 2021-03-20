@@ -6,10 +6,37 @@
     <description>Recent content in MySQL on Yiming`s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 17 Mar 2021 08:17:44 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 20 Mar 2021 21:40:24 +0800</lastBuildDate>
     
 	<atom:link href="https://ymingliu.github.io/categories/mysql/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>MySQL Quick Guide</title>
+      <link>https://ymingliu.github.io/2021/sql-quick-guide/</link>
+      <pubDate>Sat, 20 Mar 2021 21:40:24 +0800</pubDate>
+      
+      <guid>https://ymingliu.github.io/2021/sql-quick-guide/</guid>
+      <description>MySQL速查手册 创建表 CREATE TABLE 表名( 列名1 NOT NULL PRIMARY KEY AUTO_INCREMENT, 列名2 &amp;lt;INT | &amp;gt; &amp;hellip; )COMENT</description>
+    </item>
+    
+    <item>
+      <title>MySQL Transaction Processing</title>
+      <link>https://ymingliu.github.io/2021/sql-transaction-processing/</link>
+      <pubDate>Fri, 19 Mar 2021 12:41:05 +0800</pubDate>
+      
+      <guid>https://ymingliu.github.io/2021/sql-transaction-processing/</guid>
+      <description>资料参考 《MySQL必知必会》Ben Forta著，刘晓霞 钟鸣译，人民邮电出版社 MySQL事务 | 菜鸟教程 MySQL事务的概念和特性 MySQL—</description>
+    </item>
+    
+    <item>
+      <title>MySQL Cursor and Trigger</title>
+      <link>https://ymingliu.github.io/2021/sql-cursor-and-trigger/</link>
+      <pubDate>Thu, 18 Mar 2021 17:46:17 +0800</pubDate>
+      
+      <guid>https://ymingliu.github.io/2021/sql-cursor-and-trigger/</guid>
+      <description>资料参考 《MySQL必知必会》Ben Forta著，刘晓霞 钟鸣译，人民邮电出版社 MySQL教程——易百教程 MySQL游标 1、什么是游标 游标实际</description>
+    </item>
     
     <item>
       <title>MySQL Views and Stored Procedure</title>

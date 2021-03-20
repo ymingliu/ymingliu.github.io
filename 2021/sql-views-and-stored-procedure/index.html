@@ -10,7 +10,7 @@
     
     
     <link rel="prev" href="https://ymingliu.github.io/2021/machine-learning-overview/" />
-    
+    <link rel="next" href="https://ymingliu.github.io/2021/pytorch-getting-started/" />
     <link rel="canonical" href="https://ymingliu.github.io/2021/sql-views-and-stored-procedure/" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -56,7 +56,7 @@
     "datePublished": "2021-03-17 08:17:44 \x2b0800 CST",
     "dateModified" : "2021-03-17 08:17:44 \x2b0800 CST",
     "url" : "https:\/\/ymingliu.github.io\/2021\/sql-views-and-stored-procedure\/",
-    "wordCount" : "2061",
+    "wordCount" : "3719",
     "keywords" : [ "MySQL", "Yiming`s Blog"]
 }
 </script>
@@ -163,7 +163,7 @@
                         
                         
                 </span>
-                <span class="post-word-count">2061 words</span>
+                <span class="post-word-count">3719 words</span>
         </div>
     </header>
 
@@ -333,14 +333,23 @@ mysql<span style="color:#f92672">&gt;</span> SELECT <span style="color:#f92672">
 </tr>
 </tbody>
 </table>
-<p>6）ORDER BY可以用在视图中，但如果该视图检索数据的SELECT语句中也含有ORDER BY，那么该视图中的ORDER BY将会被覆盖。</p>
-<h3 id="5其他视图操作">5、其他视图操作</h3>
+<p>6）ORDER BY可以用在视图中，但如果该视图检索数据的SELECT语句中也含有ORDER BY，那么该视图中的ORDER BY将会被覆盖。（书上是这样写的，但测试了一下没有被覆盖，返回按sal的升序结果）</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> CREATE VIEW testOrderBy AS SELECT <span style="color:#f92672">*</span> FROM emp ORDER BY sal DESC;
+Query OK, <span style="color:#ae81ff">0</span> rows <span style="color:#a6e22e">affected </span>(<span style="color:#ae81ff">0.07</span> sec)
+mysql<span style="color:#f92672">&gt;</span> SELECT <span style="color:#f92672">*</span> FROM testOrderBy ORDER BY sal;
+</code></pre></div><h3 id="5其他视图操作">5、其他视图操作</h3>
 <p>1）查看创建视图的语句</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> SHOW CREATE VIEW staffInfo;
 </code></pre></div><p>2）删除视图</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> DROP VIEW staffInfo;
-</code></pre></div><p>3）更新视图</p>
-<p>视图不仅是可查询的，还是可更新的，我们可以通过更新视图实现对基表的更新。但若视图定义中包括分组（GROUP BY和HAVING）、联结（UNION和UNION ALL）、子查询、并（JOIN系列）、聚集函数、DISTINCT子句，结果仅包含文字值，则不能进行视图更新。<strong>一般来说，创建视图是为了方便检索（SELECT）而不是为了更新（UPDATE、INSERT和DELECT）！</strong></p>
+</code></pre></div><p>3）创建或替换现有视图</p>
+<p>CREATE OR REPLACE VIEW &lt;视图名称&gt;  AS SELECT语句;</p>
+<p>如果视图已经存在，MySQL只会修改视图。如果视图不存在，MySQL将创建一个新的视图。</p>
+<p>4）修改视图</p>
+<p>ALTER VIEW &lt;视图名称&gt; AS SELECT语句;</p>
+<p>5）更新视图</p>
+<p>视图不仅是可查询的，还是可更新的，我们可以通过更新视图实现对基表的更新。但若视图定义中包括分组（GROUP BY和HAVING）、联结（UNION和UNION ALL）、位于选择列表中的子查询、并（JOIN系列）、聚集函数、DISTINCT子句，结果仅包含文字值，则不能进行视图更新。<strong>一般来说，创建视图是为了方便检索（SELECT）而不是为了更新（UPDATE、INSERT和DELECT）！</strong></p>
+<p>另外更新视图时，还可以在SELECT语句后加上WITH CHECK OPTION，来判断新插入的数据是否符合WHERE设置的条件。</p>
 <p>举例一：不可更新</p>
 <p>使用staffInfo视图更改刘备的薪资为500（原来是29750）</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> UPDATE staffInfo SET sal<span style="color:#f92672">=</span><span style="color:#ae81ff">500</span> WHERE ename<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;刘备&#39;</span>;
@@ -378,7 +387,7 @@ Empty <span style="color:#a6e22e">set </span>(<span style="color:#ae81ff">0.00</
 <p>举例二：不可更新</p>
 <p>创建empDept视图，连接员工和部门表</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> CREATE VIEW empDept AS SELECT e.ename, e.sal, d.dname, d.loc FROM emp e, dept d WHERE e.deptno<span style="color:#f92672">=</span>d.deptno;
-</code></pre></div><p>把工资最高的员工的调往杭州</p>
+</code></pre></div><p>把工资最高的员工调往杭州</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> UPDATE empDept SET loc<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;杭州&#39;</span> WHERE sal<span style="color:#f92672">=</span><span style="color:#a6e22e">MAX</span>(sal);
 ERROR <span style="color:#ae81ff">1111</span> (HY000)<span style="color:#f92672">:</span> Invalid use of group function
 </code></pre></div><p>举例三：可更新</p>
@@ -499,7 +508,180 @@ Rows matched<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</
 mysql<span style="color:#f92672">&gt;</span> CREATE VIEW staffInfoComm AS SELECT <span style="color:#f92672">*</span> FROM emp WHERE comm IS NOT <span style="color:#66d9ef">NULL</span>;
 </code></pre></div><p>2）简化计算字段。例如，统计涨薪10%后的员工总薪酬（薪资+奖金）</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> CREATE VIEW staffInfoNewSal AS SELECT ename, sal<span style="color:#f92672">*</span><span style="color:#ae81ff">1.1</span><span style="color:#f92672">+</span><span style="color:#a6e22e">IFNULL</span>(comm,<span style="color:#ae81ff">0</span>) 总薪酬 FROM emp;
-</code></pre></div>
+</code></pre></div><h2 id="mysql存储过程">MySQL存储过程</h2>
+<h3 id="1什么是存储过程">1、什么是存储过程</h3>
+<p>存储过程是一组为了完成特定功能的 SQL 语句集合。使用存储过程的目的是将常用或复杂的工作预先用 SQL 语句写好并用一个指定名称存储起来，这个过程经编译和优化后存储在数据库服务器中，因此称为存储过程。当以后需要数据库提供与已定义好的存储过程的功能相同的服务时，只需调用“CALL 存储过程名字”即可自动完成。</p>
+<h3 id="2存储过程的优点">2、存储过程的优点</h3>
+<p>1）封装性。当一个逻辑功能需要多张表和多个SQL语句时，各个语句之间可能传递参数，编写较为复杂。存储过程可以将这些复杂的SQL语句封装在一个独立的单元，非专业数据库人员只需要调用存储过程即可，而不需要知道源SQL代码。</p>
+<p>2）可增强SQL语句的功能和灵活性。存储过程可以用流程控制语句编写，有很强的灵活性，可以完成复杂的判断和较复杂的运算。</p>
+<p>3）可减少网络流量。存储过程在服务器远端运行，客户计算机调用该存储过程，网络中传输的是该存储过程语句，而不是SQL源代码，降低网络负载。</p>
+<p>4）高性能。当存储过程被成功编译后，就存储在数据库服务器里了，以后客户端可以直接调用，这样所有的 SQL 语句将从服务器执行，从而提高性能。</p>
+<p>5）提高数据库安全性和完整性。由于封装的特点，外界调用存储过程时，不会对内部包含的数据库表直接操作。</p>
+<p>6）使数据独立。存储过程将数据和用户隔离开来，当数据表结构发生改变时，只需修改存储过程的代码，使用者甚至不需要知道这些变化。</p>
+<h3 id="3使用存储过程">3、使用存储过程</h3>
+<p>1）创建不带参数的存储过程</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">DELIMITER <span style="color:#f92672">$$</span>
+CREATE PROCEDURE <span style="color:#a6e22e">avgSal</span>()
+BEGIN
+   SELECT <span style="color:#a6e22e">AVG</span>(sal) AS 平均薪资 FROM emp;
+END <span style="color:#f92672">$$</span>
+DELIMITER ;
+</code></pre></div><p>或者直接输入</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> CREATE PROCEDURE <span style="color:#a6e22e">avgSal</span>() SELECT <span style="color:#a6e22e">AVG</span>(sal) AS 平均薪资 FROM emp;
+</code></pre></div><p>调用avgSal</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> CALL <span style="color:#a6e22e">avgSal</span>();
+</code></pre></div><table>
+<thead>
+<tr>
+<th>平均薪资</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>24683.333333333332</td>
+</tr>
+</tbody>
+</table>
+<p>2）创建带输出参数的存储过程</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">DELIMITER <span style="color:#f92672">$$</span>
+CREATE PROCEDURE <span style="color:#a6e22e">summarySal</span>(
+   OUT avgsal double,
+   OUT maxsal double,
+   OUT minsal double
+)
+BEGIN
+   SELECT <span style="color:#a6e22e">AVG</span>(sal) INTO avgsal FROM emp;
+   SELECT <span style="color:#a6e22e">MAX</span>(sal) INTO maxsal FROM emp;
+   SELECT <span style="color:#a6e22e">MIN</span>(sal) INTO minsal FROM emp;
+END <span style="color:#f92672">$$</span>
+DELIMITER ;
+</code></pre></div><p>本存储过程需要用三个SELECT语句，检索计算值后，分别保存在三个<code>INTO</code>类型的参数。<code>OUT</code>表示从存储过程中传出参数。因为sal列为double类型，因此三个参数都要定义为double类型。</p>
+<p>以下语句错误</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">DELIMITER <span style="color:#f92672">$$</span>
+CREATE PROCEDURE <span style="color:#a6e22e">summarySal</span>(
+   OUT avgsal double,
+   OUT maxsal double,
+   OUT minsal double
+)
+BEGIN
+   SELECT <span style="color:#a6e22e">AVG</span>(sal) INTO avgsal, <span style="color:#a6e22e">MAX</span>(sal) INTO maxsal, <span style="color:#a6e22e">MIN</span>(sal) INTO minsal FROM emp;
+END <span style="color:#f92672">$$</span>
+DELIMITER ;
+</code></pre></div><p>调用summarySal</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> CALL <span style="color:#a6e22e">summarySal</span>(<span style="color:#f92672">@</span>avgsal, <span style="color:#f92672">@</span>maxsal, <span style="color:#f92672">@</span>minsal);
+
+</code></pre></div><p>检索某个参数</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> SELECT <span style="color:#f92672">@</span>avgsal;
+</code></pre></div><table>
+<thead>
+<tr>
+<th>@avgsal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>24683.333333333332</td>
+</tr>
+</tbody>
+</table>
+<p>检索全部参数</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> SELECT <span style="color:#f92672">@</span>avgsal, <span style="color:#f92672">@</span>maxsal, <span style="color:#f92672">@</span>minsal;
+</code></pre></div><table>
+<thead>
+<tr>
+<th>@avgsal</th>
+<th>@maxsal</th>
+<th>@minsal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>24683.333333333332</td>
+<td>80000</td>
+<td>8000</td>
+</tr>
+</tbody>
+</table>
+<p>3）创建带输入输出参数的存储过程</p>
+<p>由员工编号查询员工的总薪资</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">DELIMITER <span style="color:#f92672">$$</span>
+CREATE PROCEDURE <span style="color:#a6e22e">totalWage</span>(
+   IN number INT,
+   OUT wage double
+)
+BEGIN
+   SELECT sal<span style="color:#f92672">+</span><span style="color:#a6e22e">IFNULL</span>(comm,<span style="color:#ae81ff">0</span>) INTO wage FROM emp WHERE empno<span style="color:#f92672">=</span>number;
+END <span style="color:#f92672">$$</span>
+DELIMITER ;
+</code></pre></div><p><code>IN</code>表示传递参数给存储过程。</p>
+<p>调用totalWage</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> CALL <span style="color:#a6e22e">totalWage</span>(<span style="color:#ae81ff">1002</span>, <span style="color:#f92672">@</span>Wage);
+</code></pre></div><p>注意调用时的参数可以与存储过程中定义的参数不同，与R语言定义函数类似</p>
+<p>检索结果</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> SELECT <span style="color:#f92672">@</span>Wage;
+</code></pre></div><table>
+<thead>
+<tr>
+<th>@Wage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>19000</td>
+</tr>
+</tbody>
+</table>
+<p>4）创建更加复杂的存储过程</p>
+<p>输入员工号，查询员工姓名、所在部门编号与总薪资，如果员工为销售部，涨5%总薪资后输出</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">DELIMITER <span style="color:#f92672">$$</span>
+CREATE PROCEDURE <span style="color:#a6e22e">staffWage</span>(
+   IN number INT,
+   OUT name <span style="color:#a6e22e">varchar</span>(<span style="color:#ae81ff">50</span>),
+   OUT department <span style="color:#a6e22e">char</span>(<span style="color:#ae81ff">50</span>),
+   OUT wage double
+)COMMENT <span style="color:#e6db74">&#39;Obtain staff name, department and wage&#39;</span>
+BEGIN
+   DECLARE tmpWage double;
+   DECLARE wageRate INT DEFAULT <span style="color:#ae81ff">5</span>;
+   SELECT ename FROM emp WHERE empno<span style="color:#f92672">=</span>number INTO name ;
+   SELECT d.dname FROM emp e, dept d WHERE e.deptno<span style="color:#f92672">=</span>d.deptno AND e.empno<span style="color:#f92672">=</span>number INTO department;
+   SELECT sal<span style="color:#f92672">+</span><span style="color:#a6e22e">IFNULL</span>(comm,<span style="color:#ae81ff">0</span>) FROM emp WHERE empno<span style="color:#f92672">=</span>number INTO tmpWage;
+   <span style="color:#a6e22e">IF </span>(department<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;销售部&#39;</span>) THEN
+      SELECT tmpWage<span style="color:#f92672">+</span>(tmpWage<span style="color:#f92672">/</span><span style="color:#ae81ff">100</span><span style="color:#f92672">*</span>wageRate) INTO tmpWage;
+   END IF;
+   SELECT tmpWage INTO wage;
+END <span style="color:#f92672">$$</span>
+DELIMITER ;
+</code></pre></div><p>注意<code>INTO</code>可以写在SELECT语句的末尾，可利用<code>DECLARE</code>定义中间参数，存储过程内部还可嵌套复杂语句。<code>COMMENT</code>用来给存储过程做注释，不是必须的，查询<code>SHOW PROCEDURE STATUS</code>会显示。</p>
+<p>调用staffWage</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> CALL <span style="color:#a6e22e">staffWage</span>(<span style="color:#ae81ff">1002</span>, <span style="color:#f92672">@</span>name, <span style="color:#f92672">@</span>department, <span style="color:#f92672">@</span>wage);
+</code></pre></div><p>检索结果</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> SELECT <span style="color:#f92672">@</span>name, <span style="color:#f92672">@</span>department, <span style="color:#f92672">@</span>wage;
+</code></pre></div><table>
+<thead>
+<tr>
+<th>@name</th>
+<th>@department</th>
+<th>@wage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>黛绮丝</td>
+<td>销售部</td>
+<td>19950</td>
+</tr>
+</tbody>
+</table>
+<h3 id="3其他存储过程操作">3、其他存储过程操作</h3>
+<p>1）删除存储过程，注意不带&rsquo;( )&rsquo;</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> DROP PROCEDURE avgSal;
+</code></pre></div><p>2）显示创建存储过程的语句</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> SHOW CREATE PROCEDURE staffWage;
+</code></pre></div><p>3）显示存储过程状态，利用了模糊查询</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> SHOW PROCEDURE STATUS LIKE <span style="color:#e6db74">&#39;staffWage&#39;</span>;
+</code></pre></div><p>注意要加引号，且若只输入<code>SHOW PROCEDURE STATUS</code>会显示全部存储过程。</p>
+
     </div>
 
     <div class="post-copyright">
@@ -540,6 +722,8 @@ mysql<span style="color:#f92672">&gt;</span> CREATE VIEW staffInfoComm AS SELECT
         
         <a href="https://ymingliu.github.io/2021/machine-learning-overview/" class="prev" rel="prev" title="Overview of Machine Learning"><i class="iconfont icon-left"></i>&nbsp;Overview of Machine Learning</a>
         
+        
+        <a href="https://ymingliu.github.io/2021/pytorch-getting-started/" class="next" rel="next" title="Getting Started with Pytorch">Getting Started with Pytorch&nbsp;<i class="iconfont icon-right"></i></a>
         
     </div>
 

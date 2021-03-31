@@ -1,0 +1,1208 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noodp"/>
+    <meta name="author" content="Yiming">
+    <meta name="description" content="Yiming`s Blog">
+    
+    
+    
+    <link rel="next" href="https://ymingliu.github.io/2021/sql-basic-practice/" />
+    <link rel="canonical" href="https://ymingliu.github.io/2021/sql-basic/" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+    <title>
+        
+        
+            Basic MySQL | Yiming`s Blog
+        
+    </title>
+    <meta name="title" content="Basic MySQL | Yiming`s Blog">
+    
+<link rel="stylesheet" href="/css/main.min.css">
+
+
+    
+    
+ 
+
+<script type="application/ld+json">
+{
+    "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/ymingliu.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "Basic MySQL",
+    "headline" : "Basic MySQL",
+    "description" : "课程参考 阿里云开发者社区——数据库学习路线 数据库及SQL\/MySQL基础 1、常见数据库： Oracle：甲骨文； DB2：IBM； SQL Server",
+    "inLanguage" : "zh-cn",
+    "author" : "Yiming",
+    "creator" : "Yiming",
+    "publisher": "Yiming",
+    "accountablePerson" : "Yiming",
+    "copyrightHolder" : "Yiming",
+    "copyrightYear" : "2021",
+    "datePublished": "2021-03-08 10:25:45 \x2b0800 CST",
+    "dateModified" : "2021-03-08 10:25:45 \x2b0800 CST",
+    "url" : "https:\/\/ymingliu.github.io\/2021\/sql-basic\/",
+    "wordCount" : "3204",
+    "keywords" : [ "MySQL", "Yiming`s Blog"]
+}
+</script>
+
+  </head>
+    <body class="">
+        <div class="wrapper">
+            <nav class="navbar">
+    
+        <progress class="content_progress" max="0" value="0"></progress>
+    
+    <div class="container">
+        
+            <div class="navbar-header header-back2home-logo">
+                <span class="logo_mark" >>$</span>
+                <a href="https://ymingliu.github.io">
+                    <span class="logo_text" >cd /home/</span>
+                    <span class="logo_cursor" ></span>
+                </a>
+            </div>
+        
+        <div class="navbar-right">
+                
+                <span class="menu">
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+                <span class="divide"></span>
+                <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-dark-mode"></i></a>
+                </span>
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+    
+        <progress class="content_progress" max="0" value="0"></progress>
+    
+     <div class="container">
+        <div class="navbar">
+            <div class="navbar-header header-logo">
+                    <a href="https://ymingliu.github.io">Yiming`s Blog</a>
+            </div>
+            <div class="navbar-right">
+                <div><a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-dark-mode"></i></a></div>
+                <div class="menu-toggle">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                <nav class="mb-md">
+                    
+                    
+                        <a class="menu-item" href="/posts/" title="">
+                            <h3>Blog</h3>
+                            <div class="menu-active"></div>
+                        </a>
+                    
+                        <a class="menu-item" href="/categories/" title="">
+                            <h3>Categories</h3>
+                            <div class="menu-active"></div>
+                        </a>
+                    
+                        <a class="menu-item" href="/tags/" title="">
+                            <h3>Tags</h3>
+                            <div class="menu-active"></div>
+                        </a>
+                    
+                        <a class="menu-item" href="/about/" title="">
+                            <h3>About</h3>
+                            <div class="menu-active"></div>
+                        </a>
+                    
+                </nav>
+        </div>
+    </div>
+</nav>
+            <main class="main">
+                <div class="container">
+                    
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">Basic MySQL</h1>
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://ymingliu.github.io" rel="author">Yiming</a> with ♥
+                <span class="post-time">
+                on <time datetime=2021-03-08 itemprop="datePublished">March 8, 2021</time>
+                </span>
+                in
+                
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        
+                        
+                        
+                          <a href="https://ymingliu.github.io/categories/mysql/"> MySQL, </a>
+                        
+                        
+                </span>
+                <span class="post-word-count">3204 words</span>
+        </div>
+    </header>
+
+    <div class="post-content">
+        
+
+        
+        
+
+        
+        
+        
+        
+        
+
+        
+        
+        
+
+        <h2 id="课程参考">课程参考</h2>
+<p><a href="https://developer.aliyun.com/learning/roadmap/database?spm=5176.12901015.0.i12901015.4ea8525cMC1llR">阿里云开发者社区——数据库学习路线</a></p>
+<h2 id="数据库及sqlmysql基础">数据库及SQL/MySQL基础</h2>
+<p>1、常见数据库：
+Oracle：甲骨文；
+DB2：IBM；
+SQL Server：微软；
+Sybase：赛尔斯；
+MySQL：甲骨文</p>
+<p>2、数据库全称：关系型数据库管理系统（RDBMS），即数据库服务器，
+Manager-&gt;databases-&gt;tables（管理员-&gt;仓库-&gt;表）</p>
+<p>3、表结构：包含列数、列名称、列类型；
+表记录：具体数据；
+先给定表结构，再插入表记录。</p>
+<p>4、SQL：结构化查询语言。客户端使用其来操作服务器。</p>
+<p>5、以分号结尾；可使用空格和缩进增加语句可读性；虽不区分大小写，但建议大写。</p>
+<p>6、登录与退出
+本地登录，Linux输入以下命令后回车，再输入密码即可登录</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">$</span> <span style="color:#a6e22e">mysql</span> <span style="color:#f92672">-</span><span style="color:#a6e22e">u</span> <span style="color:#a6e22e">root</span> <span style="color:#f92672">-</span><span style="color:#a6e22e">p</span>
+</code></pre></div><p>退出<code>exit</code>或<code>quit</code></p>
+<p>7、数据库操作</p>
+<ul>
+<li>DDL (Data Definition Language)：数据库或表结构操作，包括表创建、修改、删除；</li>
+<li>DML (Data Manipulation Language)：表记录操作，包括表增，删，改；</li>
+<li>DQL (Data Query Language)：表记录查询（重点、难点）；</li>
+<li>DCL (Data Control Language)：对用户的创建和授权</li>
+</ul>
+<hr>
+<h3 id="ddl-数据定义语言">DDL 数据定义语言</h3>
+<p>1、查看所有数据库</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">SHOW</span> <span style="color:#a6e22e">DATABASES</span>;
+</code></pre></div><p>切换数据库（注意先选库才能再查表）</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">USE</span> <span style="color:#a6e22e">TEST</span>;
+</code></pre></div><p>创建数据库</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">CREATE</span> <span style="color:#a6e22e">DATABASE</span> [<span style="color:#a6e22e">IF</span> <span style="color:#a6e22e">NOT</span> <span style="color:#a6e22e">EXISTS</span>]  <span style="color:#a6e22e">mydb</span> [<span style="color:#a6e22e">CHARSET</span><span style="color:#f92672">=</span><span style="color:#a6e22e">utf8</span>];
+</code></pre></div><p>删除数据库</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">DROP</span> <span style="color:#a6e22e">DATABASE</span> <span style="color:#a6e22e">mydb</span>;
+</code></pre></div><p>2、常用数据类型（列类型）:</p>
+<ul>
+<li>Int 整型</li>
+<li>double 浮点型，double(5,2)表示，最多五位，并且包含两位小数</li>
+<li>decimal 浮点型，在表单钱方面最好使用该类型，因为不会出现精度缺失</li>
+<li>char 固定长度字符串类型，最大char(255)，数据长度不是指定长度会补足到指定长度，例如时间、身份证</li>
+<li>varchar 可变长度字符串类型，最大varchar(65535)，需浪费一个字节记录长度，例如姓名、备注</li>
+</ul>
+<p>3、MySQL独有类型:</p>
+<ul>
+<li>text(clob) 字符串类型，分为很小 tinytext (2^8-1B)、小 text (2^16-1B)、中 mediumtext (2^24-1B)、大 longtext (2^32-1B)</li>
+<li>text(blob) 字节类型，分为tinyblob、blob、mediumblob、longblob</li>
+<li>date 日期类型，格式为：yyyy-MM-dd</li>
+<li>time 时间类型，格式为：hh:mm:ss</li>
+<li>timestamp 时间戳类型，日期加时间</li>
+</ul>
+<p>4、创建表</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">CREATE</span> <span style="color:#a6e22e">TABLE</span> <span style="color:#a6e22e">tb_stu</span>(
+<span style="color:#f92672">-&gt;</span> <span style="color:#a6e22e">number</span> <span style="color:#66d9ef">char</span>(<span style="color:#ae81ff">11</span>),
+<span style="color:#f92672">-&gt;</span> <span style="color:#a6e22e">name</span> <span style="color:#a6e22e">varchar</span>(<span style="color:#ae81ff">50</span>),
+<span style="color:#f92672">-&gt;</span> <span style="color:#a6e22e">age</span> <span style="color:#66d9ef">int</span>,
+<span style="color:#f92672">-&gt;</span> <span style="color:#a6e22e">gender</span> <span style="color:#a6e22e">varchar</span>(<span style="color:#ae81ff">10</span>)
+<span style="color:#f92672">-&gt;</span> );
+</code></pre></div><p>5、查看表结构</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">DESC</span> <span style="color:#a6e22e">tb_stu</span>;
+</code></pre></div><table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Null</th>
+<th>Key</th>
+<th>Default</th>
+<th>Extra</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>number</td>
+<td>char(11)</td>
+<td>YES</td>
+<td></td>
+<td>NULL</td>
+<td></td>
+</tr>
+<tr>
+<td>name</td>
+<td>varchar(50)</td>
+<td>YES</td>
+<td></td>
+<td>NULL</td>
+<td></td>
+</tr>
+<tr>
+<td>age</td>
+<td>int</td>
+<td>YES</td>
+<td></td>
+<td>NULL</td>
+<td></td>
+</tr>
+<tr>
+<td>gender</td>
+<td>varchar(10)</td>
+<td>YES</td>
+<td></td>
+<td>NULL</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>6、修改表之添加列</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">ALTER</span> <span style="color:#a6e22e">TABLE</span> <span style="color:#a6e22e">tb_stu</span>
+<span style="color:#f92672">-&gt;</span> <span style="color:#a6e22e">ADD</span>(
+<span style="color:#f92672">-&gt;</span> <span style="color:#a6e22e">education</span> <span style="color:#a6e22e">varchar</span>(<span style="color:#ae81ff">50</span>)
+<span style="color:#f92672">-&gt;</span> );
+<span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">DESC</span> <span style="color:#a6e22e">tb_stu</span>;
+</code></pre></div><table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Null</th>
+<th>Key</th>
+<th>Default</th>
+<th>Extra</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>number</td>
+<td>char(11)</td>
+<td>YES</td>
+<td></td>
+<td>NULL</td>
+<td></td>
+</tr>
+<tr>
+<td>name</td>
+<td>varchar(50)</td>
+<td>YES</td>
+<td></td>
+<td>NULL</td>
+<td></td>
+</tr>
+<tr>
+<td>age</td>
+<td>int</td>
+<td>YES</td>
+<td></td>
+<td>NULL</td>
+<td></td>
+</tr>
+<tr>
+<td>gender</td>
+<td>varchar(10)</td>
+<td>YES</td>
+<td></td>
+<td>NULL</td>
+<td></td>
+</tr>
+<tr>
+<td>education</td>
+<td>varchar(50)</td>
+<td>YES</td>
+<td></td>
+<td>NULL</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>7、修改表之修改列类型（注意不能同时修改多列，即不能<code>MODIFY</code>命令后不能加括号）</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">ALTER</span> <span style="color:#a6e22e">TABLE</span> <span style="color:#a6e22e">tb_stu</span>
+<span style="color:#f92672">-&gt;</span> <span style="color:#a6e22e">MODIFY</span> <span style="color:#a6e22e">education</span> <span style="color:#a6e22e">varchar</span>(<span style="color:#ae81ff">100</span>);
+<span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">DESC</span> <span style="color:#a6e22e">tb_stu</span>;
+</code></pre></div><table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Null</th>
+<th>Key</th>
+<th>Default</th>
+<th>Extra</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>number</td>
+<td>char(11)</td>
+<td>YES</td>
+<td></td>
+<td>NULL</td>
+<td></td>
+</tr>
+<tr>
+<td>name</td>
+<td>varchar(50)</td>
+<td>YES</td>
+<td></td>
+<td>NULL</td>
+<td></td>
+</tr>
+<tr>
+<td>age</td>
+<td>int</td>
+<td>YES</td>
+<td></td>
+<td>NULL</td>
+<td></td>
+</tr>
+<tr>
+<td>gender</td>
+<td>varchar(10)</td>
+<td>YES</td>
+<td></td>
+<td>NULL</td>
+<td></td>
+</tr>
+<tr>
+<td>education</td>
+<td>varchar(100)</td>
+<td>YES</td>
+<td></td>
+<td>NULL</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>8、修改表之删除列</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">ALTER</span> <span style="color:#a6e22e">TABLE</span> <span style="color:#a6e22e">tb_stu</span>
+<span style="color:#f92672">-&gt;</span> <span style="color:#a6e22e">DROP</span> <span style="color:#a6e22e">education</span>;
+<span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">DESC</span> <span style="color:#a6e22e">tb_stu</span>;
+</code></pre></div><table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Null</th>
+<th>Key</th>
+<th>Default</th>
+<th>Extra</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>number</td>
+<td>char(11)</td>
+<td>YES</td>
+<td></td>
+<td>NULL</td>
+<td></td>
+</tr>
+<tr>
+<td>name</td>
+<td>varchar(50)</td>
+<td>YES</td>
+<td></td>
+<td>NULL</td>
+<td></td>
+</tr>
+<tr>
+<td>age</td>
+<td>int</td>
+<td>YES</td>
+<td></td>
+<td>NULL</td>
+<td></td>
+</tr>
+<tr>
+<td>gender</td>
+<td>varchar(10)</td>
+<td>YES</td>
+<td></td>
+<td>NULL</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>9、修改表之表名的重命名</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">ALTER</span> <span style="color:#a6e22e">TABLE</span> <span style="color:#a6e22e">tb_stu</span>
+<span style="color:#f92672">-&gt;</span> <span style="color:#a6e22e">RENAME</span> <span style="color:#a6e22e">TO</span> <span style="color:#a6e22e">t_stu</span>;
+<span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">SHOW</span> <span style="color:#a6e22e">TABLES</span>;
+</code></pre></div><table>
+<thead>
+<tr>
+<th>Tables_in_test</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>t_stu</td>
+</tr>
+<tr>
+<td>websites</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="dml-数据操作语言">DML 数据操作语言</h3>
+<p>1、查询表记录（属于DQL）</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">select</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">from</span> <span style="color:#a6e22e">t_stu</span>;
+</code></pre></div><p>2、在数据库中所有的字符串类型，<strong>必须使用单引号</strong>，不能用双引号</p>
+<p>3、插入表记录</p>
+<p>指定所有列、指定部分列与不指定列，对于未指定的列，赋值<code>NULL</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">insert</span> <span style="color:#a6e22e">into</span> <span style="color:#a6e22e">stu</span>(
+<span style="color:#f92672">-&gt;</span> <span style="color:#a6e22e">number</span>, <span style="color:#a6e22e">name</span>, <span style="color:#a6e22e">age</span>, <span style="color:#a6e22e">gender</span>
+<span style="color:#f92672">-&gt;</span> )<span style="color:#a6e22e">values</span>(
+<span style="color:#f92672">-&gt;</span> <span style="color:#e6db74">&#39;ITCAST_0001&#39;</span>, <span style="color:#e6db74">&#39;zhangSan&#39;</span>, <span style="color:#ae81ff">28</span>, <span style="color:#e6db74">&#39;male&#39;</span>
+<span style="color:#f92672">-&gt;</span> );
+<span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">insert</span> <span style="color:#a6e22e">into</span> <span style="color:#a6e22e">stu</span>(
+<span style="color:#f92672">-&gt;</span> <span style="color:#a6e22e">number</span>, <span style="color:#a6e22e">name</span>
+<span style="color:#f92672">-&gt;</span> )<span style="color:#a6e22e">values</span>(
+<span style="color:#f92672">-&gt;</span> <span style="color:#e6db74">&#39;ITCAST_0002&#39;</span>, <span style="color:#e6db74">&#39;liSi&#39;</span>
+<span style="color:#f92672">-&gt;</span> );
+<span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">insert</span> <span style="color:#a6e22e">into</span> <span style="color:#a6e22e">stu</span> <span style="color:#a6e22e">values</span>(
+<span style="color:#f92672">-&gt;</span> <span style="color:#e6db74">&#39;ITCAST_0003&#39;</span>, <span style="color:#e6db74">&#39;wangWu&#39;</span>, <span style="color:#ae81ff">82</span>, <span style="color:#e6db74">&#39;female&#39;</span>
+<span style="color:#f92672">-&gt;</span> );
+<span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">select</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">from</span> <span style="color:#a6e22e">stu</span>;
+</code></pre></div><table>
+<thead>
+<tr>
+<th>number</th>
+<th>name</th>
+<th>age</th>
+<th>gender</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ITCAST_0001</td>
+<td>zhangSan</td>
+<td>28</td>
+<td>male</td>
+</tr>
+<tr>
+<td>ITCAST_0002</td>
+<td>liSi</td>
+<td>NULL</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>ITCAST_0003</td>
+<td>wangWu</td>
+<td>82</td>
+<td>female</td>
+</tr>
+</tbody>
+</table>
+<p>4、修改表记录
+若不加条件，<code>stu</code>表的<code>age</code>全部为18</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">update</span> <span style="color:#a6e22e">stu</span> <span style="color:#a6e22e">set</span> <span style="color:#a6e22e">age</span><span style="color:#f92672">=</span><span style="color:#ae81ff">18</span>
+</code></pre></div><p>将<code>number='ITCAST_0003'</code>的名字修改为<code>wangHu</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">update</span> <span style="color:#a6e22e">stu</span> <span style="color:#a6e22e">set</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#39;wangWu&#39;</span>
+<span style="color:#f92672">-&gt;</span> <span style="color:#a6e22e">where</span> <span style="color:#a6e22e">number</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#39;ITCAST_0003&#39;</span>;
+</code></pre></div><table>
+<thead>
+<tr>
+<th>number</th>
+<th>name</th>
+<th>age</th>
+<th>gender</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ITCAST_0001</td>
+<td>zhangSan</td>
+<td>28</td>
+<td>male</td>
+</tr>
+<tr>
+<td>ITCAST_0002</td>
+<td>liSi</td>
+<td>NULL</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>ITCAST_0003</td>
+<td>wangHu</td>
+<td>82</td>
+<td>female</td>
+</tr>
+</tbody>
+</table>
+<p><strong>或</strong>条件</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">update</span> <span style="color:#a6e22e">stu</span> <span style="color:#a6e22e">set</span> <span style="color:#a6e22e">age</span><span style="color:#f92672">=</span><span style="color:#ae81ff">18</span>
+<span style="color:#f92672">-&gt;</span> <span style="color:#a6e22e">where</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#39;wangHu&#39;</span> <span style="color:#a6e22e">or</span> <span style="color:#a6e22e">number</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#39;ITCAST_0003&#39;</span>;
+</code></pre></div><table>
+<thead>
+<tr>
+<th>number</th>
+<th>name</th>
+<th>age</th>
+<th>gender</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ITCAST_0001</td>
+<td>zhangSan</td>
+<td>28</td>
+<td>male</td>
+</tr>
+<tr>
+<td>ITCAST_0002</td>
+<td>liSi</td>
+<td>NULL</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>ITCAST_0003</td>
+<td>wangHu</td>
+<td>18</td>
+<td>female</td>
+</tr>
+</tbody>
+</table>
+<p><code>BETWEEN...AND...</code>条件</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">update</span> <span style="color:#a6e22e">stu</span> <span style="color:#a6e22e">set</span> <span style="color:#a6e22e">age</span><span style="color:#f92672">=</span><span style="color:#a6e22e">age</span><span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>
+<span style="color:#f92672">-&gt;</span> <span style="color:#a6e22e">where</span> <span style="color:#a6e22e">age</span> <span style="color:#a6e22e">between</span> <span style="color:#ae81ff">20</span> <span style="color:#a6e22e">and</span> <span style="color:#ae81ff">40</span>;
+<span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">update</span> <span style="color:#a6e22e">stu</span> <span style="color:#a6e22e">set</span> <span style="color:#a6e22e">age</span><span style="color:#f92672">=</span><span style="color:#a6e22e">age</span><span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>
+<span style="color:#f92672">-&gt;</span> <span style="color:#a6e22e">where</span> <span style="color:#a6e22e">age</span><span style="color:#f92672">&gt;=</span><span style="color:#ae81ff">20</span> <span style="color:#a6e22e">and</span> <span style="color:#a6e22e">age</span><span style="color:#f92672">&lt;=</span><span style="color:#ae81ff">40</span>;
+</code></pre></div><table>
+<thead>
+<tr>
+<th>number</th>
+<th>name</th>
+<th>age</th>
+<th>gender</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ITCAST_0001</td>
+<td>zhangSan</td>
+<td>29</td>
+<td>male</td>
+</tr>
+<tr>
+<td>ITCAST_0002</td>
+<td>liSi</td>
+<td>39</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>ITCAST_0003</td>
+<td>wangHu</td>
+<td>18</td>
+<td>female</td>
+</tr>
+</tbody>
+</table>
+<p><code>IN</code>条件</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">update</span> <span style="color:#a6e22e">stu</span> <span style="color:#a6e22e">set</span> <span style="color:#a6e22e">age</span><span style="color:#f92672">=</span><span style="color:#ae81ff">36</span>
+<span style="color:#f92672">-&gt;</span> <span style="color:#a6e22e">where</span> <span style="color:#a6e22e">name</span> <span style="color:#66d9ef">in</span> (<span style="color:#e6db74">&#39;zhangSan&#39;</span>, <span style="color:#e6db74">&#39;liSi&#39;</span>);
+</code></pre></div><table>
+<thead>
+<tr>
+<th>number</th>
+<th>name</th>
+<th>age</th>
+<th>gender</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ITCAST_0001</td>
+<td>zhangSan</td>
+<td>36</td>
+<td>male</td>
+</tr>
+<tr>
+<td>ITCAST_0002</td>
+<td>liSi</td>
+<td>36</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>ITCAST_0003</td>
+<td>wangHu</td>
+<td>18</td>
+<td>female</td>
+</tr>
+</tbody>
+</table>
+<p><code>is NULL</code>和<code>is not NULL</code>语句，注意<code>=NULL</code>一定返回<code>FALSE</code>，因此下述语句1错误</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">update</span> <span style="color:#a6e22e">stu</span> <span style="color:#a6e22e">set</span> <span style="color:#a6e22e">gender</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#39;male&#39;</span>
+<span style="color:#f92672">-&gt;</span> <span style="color:#a6e22e">where</span> <span style="color:#a6e22e">gender</span><span style="color:#f92672">=</span><span style="color:#a6e22e">NULL</span>;
+<span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">update</span> <span style="color:#a6e22e">stu</span> <span style="color:#a6e22e">set</span> <span style="color:#a6e22e">gender</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#39;male&#39;</span>
+<span style="color:#f92672">-&gt;</span> <span style="color:#a6e22e">where</span> <span style="color:#a6e22e">gender</span> <span style="color:#a6e22e">is</span> <span style="color:#66d9ef">null</span>;
+</code></pre></div><table>
+<thead>
+<tr>
+<th>number</th>
+<th>name</th>
+<th>age</th>
+<th>gender</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ITCAST_0001</td>
+<td>zhangSan</td>
+<td>36</td>
+<td>male</td>
+</tr>
+<tr>
+<td>ITCAST_0002</td>
+<td>liSi</td>
+<td>36</td>
+<td>male</td>
+</tr>
+<tr>
+<td>ITCAST_0003</td>
+<td>wangHu</td>
+<td>18</td>
+<td>female</td>
+</tr>
+</tbody>
+</table>
+<p>5、删除表记录</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">Delete</span> <span style="color:#a6e22e">from</span> <span style="color:#a6e22e">stu</span> <span style="color:#a6e22e">where</span> <span style="color:#a6e22e">条件</span><span style="color:#960050;background-color:#1e0010">；</span>
+</code></pre></div><p>若不加<code>where</code>条件，表记录全部删除</p>
+<hr>
+<h3 id="dcl-数据控制语言">DCL 数据控制语言</h3>
+<p>1、创建用户，通常一个项目创建一个用户，且一个项目对应一个数据库</p>
+<p>用户lym可在指定的localhost这一IP地址上登录</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">create</span> <span style="color:#a6e22e">user</span> <span style="color:#a6e22e">lym</span><span style="color:#960050;background-color:#1e0010">@</span><span style="color:#a6e22e">localhost</span> <span style="color:#a6e22e">identified</span> <span style="color:#a6e22e">by</span> <span style="color:#e6db74">&#39;123&#39;</span>;
+<span style="color:#a6e22e">MacBook</span><span style="color:#f92672">-</span><span style="color:#a6e22e">Pro</span><span style="color:#f92672">-</span><span style="color:#ae81ff">2</span><span style="color:#f92672">:~</span> <span style="color:#a6e22e">liuyiming$</span> <span style="color:#a6e22e">mysql</span> <span style="color:#f92672">-</span><span style="color:#a6e22e">u</span> <span style="color:#a6e22e">lym</span> <span style="color:#f92672">-</span><span style="color:#a6e22e">p</span> <span style="color:#960050;background-color:#1e0010">‘</span><span style="color:#ae81ff">123</span><span style="color:#960050;background-color:#1e0010">’</span>
+<span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">show</span> <span style="color:#a6e22e">databases</span>;
+</code></pre></div><table>
+<thead>
+<tr>
+<th>Database</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>information_schema</td>
+</tr>
+</tbody>
+</table>
+<p>注意，这样写该用户只能看见系统自带数据库，若想用户可在任意IP地址上登录，可写成</p>
+<p>Create user 用户名@‘%’ identified by ‘密码’</p>
+<p>2、用户授权</p>
+<p>先切换到超级用户</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">grant</span> <span style="color:#a6e22e">all</span> <span style="color:#a6e22e">on</span> <span style="color:#a6e22e">test</span>.<span style="color:#f92672">*</span> <span style="color:#a6e22e">to</span> <span style="color:#a6e22e">lym</span><span style="color:#960050;background-color:#1e0010">@</span><span style="color:#a6e22e">localhost</span>;
+</code></pre></div><p>再切换到lym用户</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">show</span> <span style="color:#a6e22e">databases</span>;
+</code></pre></div><table>
+<thead>
+<tr>
+<th>Database</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>information_schema</td>
+</tr>
+<tr>
+<td>test</td>
+</tr>
+</tbody>
+</table>
+<p>3、撤销权限</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">revoke</span> <span style="color:#66d9ef">delete</span> <span style="color:#a6e22e">on</span> <span style="color:#a6e22e">test</span>.<span style="color:#f92672">*</span> <span style="color:#a6e22e">from</span> <span style="color:#a6e22e">lym</span><span style="color:#960050;background-color:#1e0010">@</span><span style="color:#a6e22e">localhost</span>;
+</code></pre></div><p>4、查看权限</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">show</span> <span style="color:#a6e22e">grants</span> <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">lym</span><span style="color:#960050;background-color:#1e0010">@</span><span style="color:#a6e22e">localhost</span>;
+</code></pre></div><p>5、删除用户</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">drop</span> <span style="color:#a6e22e">user</span> <span style="color:#a6e22e">lym</span><span style="color:#960050;background-color:#1e0010">@</span><span style="color:#a6e22e">localhost</span>;
+</code></pre></div><hr>
+<h3 id="dql-数据查询语言">DQL 数据查询语言</h3>
+<p>1、查询所有列</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">select</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">from</span> <span style="color:#a6e22e">stu</span>;
+</code></pre></div><p>2、制定列查询</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">select</span> <span style="color:#a6e22e">ename</span>,<span style="color:#a6e22e">sal</span> <span style="color:#a6e22e">from</span> <span style="color:#a6e22e">emp</span>;
+</code></pre></div><p>3、完全重复的记录显示一次</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">select</span> <span style="color:#a6e22e">distinct</span> <span style="color:#a6e22e">deptno</span> <span style="color:#a6e22e">from</span> <span style="color:#a6e22e">emp</span>;
+</code></pre></div><p>4、列运算</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">select</span> <span style="color:#f92672">*</span>,<span style="color:#a6e22e">sal</span><span style="color:#f92672">*</span><span style="color:#ae81ff">1.5</span> <span style="color:#a6e22e">from</span> <span style="color:#a6e22e">emp</span>;
+</code></pre></div><table>
+<thead>
+<tr>
+<th>empno</th>
+<th>ename</th>
+<th>job</th>
+<th>mgr</th>
+<th>hiredate</th>
+<th>sal</th>
+<th>comm</th>
+<th>deptno</th>
+<th>sal*1.5</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1002</td>
+<td>黛绮丝</td>
+<td>销售员</td>
+<td>1006</td>
+<td>2001-02-20</td>
+<td>16000.00</td>
+<td>3000.00</td>
+<td>30</td>
+<td>24000.00</td>
+</tr>
+<tr>
+<td>1001</td>
+<td>甘宁</td>
+<td>文员</td>
+<td>1013</td>
+<td>2000-12-17</td>
+<td>8000.00</td>
+<td>NULL</td>
+<td>20</td>
+<td>12000.00</td>
+</tr>
+<tr>
+<td>1003</td>
+<td>殷天正</td>
+<td>销售员</td>
+<td>1006</td>
+<td>2001-02-22</td>
+<td>12500.00</td>
+<td>5000.00</td>
+<td>30</td>
+<td>18750.00</td>
+</tr>
+<tr>
+<td>1004</td>
+<td>刘备</td>
+<td>经理</td>
+<td>1009</td>
+<td>2001-04-02</td>
+<td>29750.00</td>
+<td>NULL</td>
+<td>20</td>
+<td>44625.00</td>
+</tr>
+<tr>
+<td>1005</td>
+<td>谢逊</td>
+<td>销售员</td>
+<td>1006</td>
+<td>2001-09-28</td>
+<td>12500.00</td>
+<td>14000.00</td>
+<td>30</td>
+<td>18750.00</td>
+</tr>
+<tr>
+<td>1006</td>
+<td>关羽</td>
+<td>经理</td>
+<td>1009</td>
+<td>2001-05-01</td>
+<td>28500.00</td>
+<td>NULL</td>
+<td>30</td>
+<td>42750.00</td>
+</tr>
+<tr>
+<td>1007</td>
+<td>张飞</td>
+<td>经理</td>
+<td>1009</td>
+<td>2001-09-01</td>
+<td>24500.00</td>
+<td>NULL</td>
+<td>10</td>
+<td>36750.00</td>
+</tr>
+<tr>
+<td>1008</td>
+<td>诸葛亮</td>
+<td>分析师</td>
+<td>1004</td>
+<td>2007-04-19</td>
+<td>30000.00</td>
+<td>NULL</td>
+<td>20</td>
+<td>45000.00</td>
+</tr>
+<tr>
+<td>1009</td>
+<td>曾阿牛</td>
+<td>董事长</td>
+<td>NULL</td>
+<td>2001-11-17</td>
+<td>50000.00</td>
+<td>NULL</td>
+<td>10</td>
+<td>75000.00</td>
+</tr>
+<tr>
+<td>1010</td>
+<td>韦一笑</td>
+<td>销售员</td>
+<td>1006</td>
+<td>2001-09-08</td>
+<td>15000.00</td>
+<td>0.00</td>
+<td>30</td>
+<td>22500.00</td>
+</tr>
+<tr>
+<td>1011</td>
+<td>周泰</td>
+<td>文员</td>
+<td>1008</td>
+<td>2007-05-23</td>
+<td>11000.00</td>
+<td>NULL</td>
+<td>20</td>
+<td>16500.00</td>
+</tr>
+<tr>
+<td>1012</td>
+<td>程普</td>
+<td>文员</td>
+<td>1006</td>
+<td>2001-12-03</td>
+<td>9500.00</td>
+<td>NULL</td>
+<td>30</td>
+<td>14250.00</td>
+</tr>
+<tr>
+<td>1013</td>
+<td>庞统</td>
+<td>分析师</td>
+<td>1004</td>
+<td>2001-12-03</td>
+<td>30000.00</td>
+<td>NULL</td>
+<td>20</td>
+<td>45000.00</td>
+</tr>
+<tr>
+<td>1014</td>
+<td>黄盖</td>
+<td>文员</td>
+<td>1007</td>
+<td>2002-01-23</td>
+<td>13000.00</td>
+<td>NULL</td>
+<td>10</td>
+<td>19500.00</td>
+</tr>
+<tr>
+<td>1015</td>
+<td>张三</td>
+<td>保洁员</td>
+<td>1001</td>
+<td>2013-05-01</td>
+<td>80000.00</td>
+<td>50000.00</td>
+<td>50</td>
+<td>120000.00</td>
+</tr>
+</tbody>
+</table>
+<p>若字符串无法被转换成数值时，默认为0，如员工姓名列<code>ename+100=100</code></p>
+<p>任何东西和NULL相加等于NULL，如工资列<code>16000+NULL=NULL</code></p>
+<p>把NULL转换成某东西</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">select</span> <span style="color:#f92672">*</span>,<span style="color:#a6e22e">sal</span><span style="color:#f92672">+</span><span style="color:#a6e22e">ifnull</span>(<span style="color:#a6e22e">comm</span>,<span style="color:#ae81ff">0</span>) <span style="color:#a6e22e">from</span> <span style="color:#a6e22e">emp</span>;
+</code></pre></div><p><strong>MySQL中不能用加号连接字符串</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">select</span> <span style="color:#a6e22e">concat</span>(<span style="color:#a6e22e">ename</span>, <span style="color:#a6e22e">job</span>) <span style="color:#a6e22e">from</span> <span style="color:#a6e22e">emp</span>;
+</code></pre></div><table>
+<thead>
+<tr>
+<th>concat(ename, job)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>黛绮丝销售员</td>
+</tr>
+<tr>
+<td>甘宁文员</td>
+</tr>
+<tr>
+<td>殷天正销售员</td>
+</tr>
+<tr>
+<td>刘备经理</td>
+</tr>
+<tr>
+<td>谢逊销售员</td>
+</tr>
+<tr>
+<td>关羽经理</td>
+</tr>
+<tr>
+<td>张飞经理</td>
+</tr>
+<tr>
+<td>诸葛亮分析师</td>
+</tr>
+<tr>
+<td>曾阿牛董事长</td>
+</tr>
+<tr>
+<td>韦一笑销售员</td>
+</tr>
+<tr>
+<td>周泰文员</td>
+</tr>
+<tr>
+<td>程普文员</td>
+</tr>
+<tr>
+<td>庞统分析师</td>
+</tr>
+<tr>
+<td>黄盖文员</td>
+</tr>
+<tr>
+<td>张三保洁员</td>
+</tr>
+</tbody>
+</table>
+<p>给列起别名（注意<code>as</code>前没有逗号，<code>as</code>也可以省略）</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">select</span> <span style="color:#a6e22e">ename</span> <span style="color:#a6e22e">as</span> <span style="color:#a6e22e">姓名</span>, <span style="color:#a6e22e">job</span> <span style="color:#a6e22e">as</span> <span style="color:#a6e22e">工作</span> <span style="color:#a6e22e">from</span> <span style="color:#a6e22e">emp</span>;
+<span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">select</span> <span style="color:#a6e22e">ename</span>  <span style="color:#a6e22e">姓名</span>, <span style="color:#a6e22e">job</span> <span style="color:#a6e22e">工作</span> <span style="color:#a6e22e">from</span> <span style="color:#a6e22e">emp</span>;
+</code></pre></div><p>SQL题：mysql&gt; select empno, ename job, sal from emp;这条语句是正确的</p>
+<p>5、条件控制</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">select</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">from</span> <span style="color:#a6e22e">emp</span> <span style="color:#a6e22e">where</span> <span style="color:#a6e22e">sal</span><span style="color:#f92672">&gt;</span><span style="color:#ae81ff">20000</span>;
+<span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">select</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">from</span> <span style="color:#a6e22e">emp</span> <span style="color:#a6e22e">where</span> <span style="color:#a6e22e">comm</span> <span style="color:#a6e22e">is</span> <span style="color:#a6e22e">not</span> <span style="color:#66d9ef">null</span>;
+<span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">select</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">from</span> <span style="color:#a6e22e">emp</span> <span style="color:#a6e22e">where</span> <span style="color:#a6e22e">sal</span> <span style="color:#a6e22e">between</span> <span style="color:#ae81ff">20000</span> <span style="color:#a6e22e">and</span> <span style="color:#ae81ff">30000</span>;
+<span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">select</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">from</span> <span style="color:#a6e22e">emp</span> <span style="color:#a6e22e">where</span> <span style="color:#a6e22e">job</span> <span style="color:#66d9ef">in</span> (<span style="color:#e6db74">&#39;经理&#39;</span>, <span style="color:#e6db74">&#39;分析师&#39;</span>);
+</code></pre></div><p>6、模糊查询</p>
+<p>人名中有两个字，并且第一个字是’张’，注意<code>_</code>匹配一个字符，以张为姓的三个字的人名是查不出来的</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">select</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">from</span> <span style="color:#a6e22e">emp</span> <span style="color:#a6e22e">where</span> <span style="color:#a6e22e">ename</span> <span style="color:#a6e22e">like</span> <span style="color:#e6db74">&#39;张_&#39;</span>;
+</code></pre></div><p>人名中有三个字，并且第一个字是’张’</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">select</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">from</span> <span style="color:#a6e22e">emp</span> <span style="color:#a6e22e">where</span> <span style="color:#a6e22e">ename</span> <span style="color:#a6e22e">like</span> <span style="color:#e6db74">&#39;张__&#39;</span>;
+</code></pre></div><p>人名中有三个字</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">select</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">from</span> <span style="color:#a6e22e">emp</span> <span style="color:#a6e22e">where</span> <span style="color:#a6e22e">ename</span> <span style="color:#a6e22e">like</span> <span style="color:#e6db74">&#39;___&#39;</span>;
+</code></pre></div><p>人名以’刚’结尾，<code>%</code>指匹配0个或多个字符</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">select</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">from</span> <span style="color:#a6e22e">emp</span> <span style="color:#a6e22e">where</span> <span style="color:#a6e22e">ename</span> <span style="color:#a6e22e">like</span> <span style="color:#e6db74">&#39;%刚&#39;</span>;
+</code></pre></div><p>人名包含’小’</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">select</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">from</span> <span style="color:#a6e22e">emp</span> <span style="color:#a6e22e">where</span> <span style="color:#a6e22e">ename</span> <span style="color:#a6e22e">like</span> <span style="color:#960050;background-color:#1e0010">‘</span><span style="color:#f92672">%</span><span style="color:#a6e22e">小</span><span style="color:#f92672">%</span><span style="color:#960050;background-color:#1e0010">&#39;</span>;
+</code></pre></div><p>7、排序</p>
+<p>升序，默认升序</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">select</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">from</span> <span style="color:#a6e22e">emp</span> <span style="color:#a6e22e">order</span> <span style="color:#a6e22e">by</span> <span style="color:#a6e22e">sal</span> <span style="color:#a6e22e">asc</span>;
+<span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">select</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">from</span> <span style="color:#a6e22e">emp</span> <span style="color:#a6e22e">order</span> <span style="color:#a6e22e">by</span> <span style="color:#a6e22e">sal</span>;
+</code></pre></div><p>降序</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">select</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">from</span> <span style="color:#a6e22e">emp</span> <span style="color:#a6e22e">order</span> <span style="color:#a6e22e">by</span> <span style="color:#a6e22e">sal</span> <span style="color:#a6e22e">desc</span>;
+</code></pre></div><p>两条件排序</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">select</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">from</span> <span style="color:#a6e22e">emp</span> <span style="color:#a6e22e">order</span> <span style="color:#a6e22e">by</span> <span style="color:#a6e22e">sal</span> <span style="color:#a6e22e">asc</span>, <span style="color:#a6e22e">comm</span> <span style="color:#a6e22e">desc</span>;
+</code></pre></div><p>三条件排序</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">select</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">from</span> <span style="color:#a6e22e">emp</span> <span style="color:#a6e22e">order</span> <span style="color:#a6e22e">by</span> <span style="color:#a6e22e">sal</span> <span style="color:#a6e22e">asc</span>, <span style="color:#a6e22e">comm</span> <span style="color:#a6e22e">desc</span>, <span style="color:#a6e22e">empno</span> <span style="color:#a6e22e">asc</span>;
+</code></pre></div><p>8、聚合函数</p>
+<p>查询总员工数或称查询有效行数，NULL不计数</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">select</span> <span style="color:#a6e22e">count</span>(<span style="color:#f92672">*</span>) <span style="color:#a6e22e">from</span> <span style="color:#a6e22e">emp</span>;
+</code></pre></div><p>SQL题：mysql&gt; select count(1) from emp;这条语句与count(*)的查询结果相同，并不是错的，即<code>1</code>和<code>*</code>的等价，没有特殊意义。</p>
+<p>总工资数，NULL记为0</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">select</span> <span style="color:#a6e22e">sum</span>(<span style="color:#a6e22e">sal</span>) <span style="color:#a6e22e">from</span> <span style="color:#a6e22e">emp</span>;
+<span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">select</span> <span style="color:#a6e22e">max</span>(<span style="color:#a6e22e">sal</span>) <span style="color:#a6e22e">from</span> <span style="color:#a6e22e">emp</span>;
+<span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">select</span> <span style="color:#a6e22e">min</span>(<span style="color:#a6e22e">sal</span>) <span style="color:#a6e22e">from</span> <span style="color:#a6e22e">emp</span>;
+<span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">select</span> <span style="color:#a6e22e">avg</span>(<span style="color:#a6e22e">sal</span>) <span style="color:#a6e22e">from</span> <span style="color:#a6e22e">emp</span>;
+<span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">select</span> <span style="color:#a6e22e">count</span>(<span style="color:#f92672">*</span>) <span style="color:#a6e22e">人数</span>, <span style="color:#a6e22e">sum</span>(<span style="color:#a6e22e">sal</span>) <span style="color:#a6e22e">总和</span>, <span style="color:#a6e22e">max</span>(<span style="color:#a6e22e">sal</span>) <span style="color:#a6e22e">最高</span>, <span style="color:#a6e22e">min</span>(<span style="color:#a6e22e">sal</span>) <span style="color:#a6e22e">最低</span>, <span style="color:#a6e22e">avg</span>(<span style="color:#a6e22e">sal</span>) <span style="color:#a6e22e">平均</span> <span style="color:#a6e22e">from</span> <span style="color:#a6e22e">emp</span>;
+</code></pre></div><table>
+<thead>
+<tr>
+<th>人数</th>
+<th>总和</th>
+<th>最高</th>
+<th>最低</th>
+<th>平均</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>15</td>
+<td>370250.00</td>
+<td>80000.00</td>
+<td>8000.00</td>
+<td>24683.333333</td>
+</tr>
+</tbody>
+</table>
+<p>9、分组查询（和R语言分组查询类似）</p>
+<p>不同工种的人数</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">select</span> <span style="color:#a6e22e">job</span>, <span style="color:#a6e22e">count</span>(<span style="color:#f92672">*</span>) <span style="color:#a6e22e">from</span> <span style="color:#a6e22e">emp</span> <span style="color:#a6e22e">group</span> <span style="color:#a6e22e">by</span> <span style="color:#a6e22e">job</span>;
+</code></pre></div><p>以下是错误的，ename不是组信息或聚合函数</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">select</span> <span style="color:#a6e22e">job</span>, <span style="color:#a6e22e">count</span>(<span style="color:#f92672">*</span>), <span style="color:#a6e22e">ename</span> <span style="color:#a6e22e">from</span> <span style="color:#a6e22e">emp</span> <span style="color:#a6e22e">group</span> <span style="color:#a6e22e">by</span> <span style="color:#a6e22e">job</span>;
+</code></pre></div><p>不同工种的人数和最大工薪</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">select</span> <span style="color:#a6e22e">job</span>, <span style="color:#a6e22e">count</span>(<span style="color:#f92672">*</span>), <span style="color:#a6e22e">max</span>(<span style="color:#a6e22e">sal</span>) <span style="color:#a6e22e">from</span> <span style="color:#a6e22e">emp</span> <span style="color:#a6e22e">group</span> <span style="color:#a6e22e">by</span> <span style="color:#a6e22e">job</span>;
+</code></pre></div><p>每个部门中工薪大于15000的员工个数</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">select</span> <span style="color:#a6e22e">deptno</span>, <span style="color:#a6e22e">count</span>(<span style="color:#f92672">*</span>) <span style="color:#a6e22e">from</span> <span style="color:#a6e22e">emp</span> <span style="color:#a6e22e">where</span> <span style="color:#a6e22e">sal</span><span style="color:#f92672">&gt;</span><span style="color:#ae81ff">15000</span> <span style="color:#a6e22e">group</span> <span style="color:#a6e22e">by</span> <span style="color:#a6e22e">deptno</span>;
+</code></pre></div><p>每个部门中工薪大于15000的员工个数，并且个数大于等于2的部门（此题注意分组前条件和分组后条件，先删去工薪&gt;15000的人，再统计每个部门人数，再显示总人数&gt;=2的部门，因此分组后条件都用<code>having</code>且条件内容都是聚合函数）</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">select</span> <span style="color:#a6e22e">deptno</span>, <span style="color:#a6e22e">count</span>(<span style="color:#f92672">*</span>) <span style="color:#a6e22e">from</span> <span style="color:#a6e22e">emp</span> <span style="color:#a6e22e">where</span> <span style="color:#a6e22e">sal</span><span style="color:#f92672">&gt;</span><span style="color:#ae81ff">15000</span> <span style="color:#a6e22e">group</span> <span style="color:#a6e22e">by</span> <span style="color:#a6e22e">deptno</span> <span style="color:#a6e22e">having</span> <span style="color:#a6e22e">count</span>(<span style="color:#f92672">*</span>)<span style="color:#f92672">&gt;=</span><span style="color:#ae81ff">2</span>;
+</code></pre></div><hr>
+<h3 id="总结">总结</h3>
+<p>以上查询语句的重要性以及执行顺序排序：Select、 from、 where、 group by、 having、 order by</p>
+<hr>
+<h3 id="mysql特有语句">MySQL特有语句</h3>
+<p>limit（常用在分页查询）</p>
+<p>查询第1-5行</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">select</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">from</span> <span style="color:#a6e22e">emp</span> <span style="color:#a6e22e">limit</span> <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">5</span>;
+</code></pre></div><p>查询第9-13行</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">select</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">from</span> <span style="color:#a6e22e">emp</span> <span style="color:#a6e22e">limit</span> <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">5</span>;
+</code></pre></div><p>查询第14-18行</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">select</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">from</span> <span style="color:#a6e22e">emp</span> <span style="color:#a6e22e">limit</span> <span style="color:#ae81ff">13</span>, <span style="color:#ae81ff">5</span>;
+</code></pre></div><p>一页记录10行，查询第3页</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">mysql</span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">select</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">from</span> <span style="color:#a6e22e">emp</span> <span style="color:#a6e22e">limit</span> <span style="color:#ae81ff">20</span>, <span style="color:#ae81ff">10</span>;
+</code></pre></div><p>(当前页-1)*每页记录数</p>
+
+    </div>
+
+    <div class="post-copyright">
+            
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>Yiming </span>
+                </p>
+            
+
+            
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://ymingliu.github.io/2021/sql-basic/>https://ymingliu.github.io/2021/sql-basic/</span>
+            </p>
+            
+            
+    </div>
+
+
+    <div class="post-tags">
+        
+            <section>
+            <i class="iconfont icon-tag"></i>Tag(s):
+            
+            <span class="tag"><a href="https://ymingliu.github.io/tags/mysql/">
+                    #MySQL</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> ·
+                <span><a href="https://ymingliu.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        
+        <a href="https://ymingliu.github.io/2021/sql-basic-practice/" class="next" rel="next" title="Basic MySQL For Practice">Basic MySQL For Practice&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+        
+            
+                <div id="gitalk-container"></div>
+<link rel="stylesheet" href="https://cdn.bootcss.com/gitalk/1.5.2/gitalk.css">
+<script src="https://cdn.bootcss.com/gitalk/1.5.2/gitalk.min.js"></script>
+<script>
+    const gitalk = new Gitalk({
+
+        clientID: '',
+        clientSecret: '',
+        repo: '',
+        owner: 'ymingliu',
+        admin: ['ymingliu'],
+        id: location.pathname, 
+        distractionFreeMode: false 
+    });
+    (function () {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('gitalk-container').innerHTML = 'Gitalk comments not available by default when the website is previewed locally.';
+            return;
+        }
+        gitalk.render('gitalk-container');
+    })();
+</script>
+
+            
+        
+    </div>
+</article>
+                </div>
+            </main>
+            <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span itemprop="copyrightYear">2021 - 2021</span>
+        
+        <span class="with-love">
+    	 <i class="iconfont icon-love"></i>
+         </span>
+         
+            <span class="author" itemprop="copyrightHolder"><a href="https://ymingliu.github.io">Yiming</a> | </span>
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/Mogeko/Mogege" target="_blank" rel="external nofollow">Mogege</a></span>
+    </div>
+</footer>
+
+
+
+
+
+
+<script defer src="/js/vendor_main.min.js"></script>
+
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script> pangu.spacingPage();</script>
+
+
+
+
+
+        </div>
+    </body>
+</html>

@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noodp"/>
+    <meta name="author" content="Yiming">
+    <meta name="description" content="Yiming`s Blog">
+    
+    
+    <link rel="prev" href="https://ymingliu.github.io/2021/sql-transaction-processing/" />
+    <link rel="next" href="https://ymingliu.github.io/2021/sql-exercises-practice-solution-1/" />
+    <link rel="canonical" href="https://ymingliu.github.io/2021/sql-quick-guide/" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+    <title>
+        
+        
+            MySQL Quick Guide | Yiming`s Blog
+        
+    </title>
+    <meta name="title" content="MySQL Quick Guide | Yiming`s Blog">
+    
+<link rel="stylesheet" href="/css/main.min.css">
+
+
+    
+    
+ 
+
+<script type="application/ld+json">
+{
+    "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/ymingliu.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "MySQL Quick Guide",
+    "headline" : "MySQL Quick Guide",
+    "description" : "MySQL速查手册 DDL 查看数据库 SHOW DATABASES; 切换数据库 USE 数据库名; 创建数据库 CREATE DATABASE 数据库名; 删除数据库 DROP DATABASE 数据库名; 查看数据库中的表 SHOW TABLES; 创建表 CREATE TABLE 表名(",
+    "inLanguage" : "zh-cn",
+    "author" : "Yiming",
+    "creator" : "Yiming",
+    "publisher": "Yiming",
+    "accountablePerson" : "Yiming",
+    "copyrightHolder" : "Yiming",
+    "copyrightYear" : "2021",
+    "datePublished": "2021-03-20 21:40:24 \x2b0800 CST",
+    "dateModified" : "2021-03-20 21:40:24 \x2b0800 CST",
+    "url" : "https:\/\/ymingliu.github.io\/2021\/sql-quick-guide\/",
+    "wordCount" : "2059",
+    "keywords" : [ "MySQL", "Yiming`s Blog"]
+}
+</script>
+
+  </head>
+    <body class="">
+        <div class="wrapper">
+            <nav class="navbar">
+    
+        <progress class="content_progress" max="0" value="0"></progress>
+    
+    <div class="container">
+        
+            <div class="navbar-header header-back2home-logo">
+                <span class="logo_mark" >>$</span>
+                <a href="https://ymingliu.github.io">
+                    <span class="logo_text" >cd /home/</span>
+                    <span class="logo_cursor" ></span>
+                </a>
+            </div>
+        
+        <div class="navbar-right">
+                
+                <span class="menu">
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+                <span class="divide"></span>
+                <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-dark-mode"></i></a>
+                </span>
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+    
+        <progress class="content_progress" max="0" value="0"></progress>
+    
+     <div class="container">
+        <div class="navbar">
+            <div class="navbar-header header-logo">
+                    <a href="https://ymingliu.github.io">Yiming`s Blog</a>
+            </div>
+            <div class="navbar-right">
+                <div><a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-dark-mode"></i></a></div>
+                <div class="menu-toggle">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                <nav class="mb-md">
+                    
+                    
+                        <a class="menu-item" href="/posts/" title="">
+                            <h3>Blog</h3>
+                            <div class="menu-active"></div>
+                        </a>
+                    
+                        <a class="menu-item" href="/categories/" title="">
+                            <h3>Categories</h3>
+                            <div class="menu-active"></div>
+                        </a>
+                    
+                        <a class="menu-item" href="/tags/" title="">
+                            <h3>Tags</h3>
+                            <div class="menu-active"></div>
+                        </a>
+                    
+                        <a class="menu-item" href="/about/" title="">
+                            <h3>About</h3>
+                            <div class="menu-active"></div>
+                        </a>
+                    
+                </nav>
+        </div>
+    </div>
+</nav>
+            <main class="main">
+                <div class="container">
+                    
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">MySQL Quick Guide</h1>
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://ymingliu.github.io" rel="author">Yiming</a> with ♥
+                <span class="post-time">
+                on <time datetime=2021-03-20 itemprop="datePublished">March 20, 2021</time>
+                </span>
+                in
+                
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        
+                        
+                        
+                          <a href="https://ymingliu.github.io/categories/mysql/"> MySQL, </a>
+                        
+                        
+                </span>
+                <span class="post-word-count">2059 words</span>
+        </div>
+    </header>
+
+    <div class="post-content">
+        
+
+        
+        
+
+        
+        
+        
+        
+        
+
+        
+        
+        
+
+        <h2 id="mysql速查手册">MySQL速查手册</h2>
+<h3 id="ddl">DDL</h3>
+<h4 id="查看数据库">查看数据库</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">SHOW DATABASES;
+</code></pre></div><h4 id="切换数据库">切换数据库</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">USE 数据库名;
+</code></pre></div><h4 id="创建数据库">创建数据库</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">CREATE DATABASE 数据库名;
+</code></pre></div><h4 id="删除数据库">删除数据库</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">DROP DATABASE 数据库名;
+</code></pre></div><h4 id="查看数据库中的表">查看数据库中的表</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">SHOW TABLES;
+</code></pre></div><h4 id="创建表">创建表</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">CREATE TABLE 表名(
+列名<span style="color:#ae81ff">1</span> 列类型 PRIMARY KEY AUTO_INCREMENT,
+列名<span style="color:#ae81ff">2</span> <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">INT</span>(a) <span style="color:#f92672">|</span> DOUBLE <span style="color:#f92672">|</span> <span style="color:#a6e22e">DECIMAL</span>(a, b) <span style="color:#f92672">|</span> <span style="color:#a6e22e">CHAR</span>(a) <span style="color:#f92672">|</span> <span style="color:#a6e22e">VARCHAR</span>(a)<span style="color:#f92672">&gt;</span> UNSIGNED NOT <span style="color:#66d9ef">NULL</span> UNIQUE DEFAULT 默认值,
+<span style="color:#66d9ef">...</span>
+)COMENT
+</code></pre></div><h4 id="查看表结构">查看表结构</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">DESC 表名;
+</code></pre></div><h4 id="修改表之添加列">修改表之添加列</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">ALTER TABLE 表名 <span style="color:#a6e22e">ADD</span>(
+列名<span style="color:#ae81ff">1</span> 列类型,
+列名<span style="color:#ae81ff">2</span> 列类型,
+<span style="color:#66d9ef">...</span>
+);
+</code></pre></div><h4 id="修改表之修改列类型一次只能修改一列不能同时修改多列">修改表之修改列类型（一次只能修改一列，不能同时修改多列）</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">ALTER TABLE 表名 <span style="color:#a6e22e">MODIFY</span>(列名, 列类型);
+</code></pre></div><h4 id="修改表之删除列一次只能删除一列不能同时删除多列">修改表之删除列（一次只能删除一列，不能同时删除多列）</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">ALTER TABLE 表名 DROP 列名;
+</code></pre></div><h4 id="修改表之表名的重命名">修改表之表名的重命名</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">ALTER TABLE 表名 RENAME [TO] 新表名;
+</code></pre></div><h4 id="修改表之列名的重命名">修改表之列名的重命名</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">ALTER TABLE 表名 CHANGE 旧列名 新列名 新列类型;
+</code></pre></div><p>如果旧列名和新列名相同，则可实现只修改了列类型，相当于MODIFY</p>
+<h4 id="alter小结">ALTER小结</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">ALTER TABLE 表名
+ADD <span style="color:#f92672">--&gt;</span> 添加列
+MODIFY <span style="color:#f92672">--&gt;</span> 修改列名和列类型
+CHANGE <span style="color:#f92672">--&gt;</span> 修改列名
+DROP <span style="color:#f92672">--&gt;</span> 删除列
+RENAME [TO] <span style="color:#f92672">--&gt;</span> 修改表名
+ADD PRIMARY <span style="color:#a6e22e">KEY</span>(列名) <span style="color:#f92672">--&gt;</span> 为列添加主键
+DROP PRIMARY KEY  <span style="color:#f92672">--&gt;</span> 删除主键
+DROP FOREIGN KEY  <span style="color:#f92672">--&gt;</span> 删除外键
+</code></pre></div><h3 id="dml">DML</h3>
+<h4 id="查询表记录dql">查询表记录（DQL）</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">SELECT <span style="color:#f92672">*</span> FROM 表名;
+</code></pre></div><h4 id="插入表记录">插入表记录</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">INSERT INTO 表名(
+列名<span style="color:#ae81ff">1</span>, 列名<span style="color:#ae81ff">2</span>, <span style="color:#66d9ef">...</span>
+)<span style="color:#a6e22e">VALUES</span>(
+列<span style="color:#ae81ff">1</span>值, 列<span style="color:#ae81ff">2</span>值, <span style="color:#66d9ef">...</span>
+)
+</code></pre></div><ul>
+<li>若存在自增的主键列，插入第一条记录时该列可以不用给值，若只是主键列，是要给的，否则会违背主键约束的三个性质之一，非空。</li>
+<li>可以指定所有列、指定部分列与不指定列，对于未指定的列，赋值NULL</li>
+</ul>
+<h4 id="修改表记录">修改表记录</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">UPDATE 表名 SET 列名<span style="color:#f92672">=</span>值 WHERE 修改条件
+</code></pre></div><h4 id="修改表记录之修改条件">修改表记录之修改条件</h4>
+<ul>
+<li>OR 或</li>
+<li>AND 且</li>
+<li>BETWEEN &hellip; AND &hellip; 值在两者之间，多用于数值型</li>
+<li>IN() 值在内部，多用于字符型</li>
+<li>IS [NOT] NULL 是否为空，注意任何值=NULL都返回FALSE</li>
+</ul>
+<h4 id="删除表记录">删除表记录</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">DELETE FROM 表名 WHERE 删除条件;
+</code></pre></div><ul>
+<li>不加WHERE条件，表记录会全部删除</li>
+<li>删除表记录是DELETE，删除表是DROP</li>
+</ul>
+<h3 id="dql">DQL</h3>
+<h4 id="查询时去掉重复列">查询时去掉重复列</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">SELECT DISTINCT 列名 FROM 表名;
+</code></pre></div><h4 id="对null值转换">对NULL值转换</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#a6e22e">IFNULL</span>(列名, 转换值)
+</code></pre></div><h4 id="连接字符串">连接字符串</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#a6e22e">CONCAT</span>(列名, 列名)
+</code></pre></div><h4 id="模糊查询">模糊查询</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">LIKE 语句，<span style="color:#e6db74">&#39;_&#39;</span>匹配一个字符，<span style="color:#e6db74">&#39;%&#39;</span>匹配<span style="color:#ae81ff">0</span>个或多个字符
+</code></pre></div><h4 id="排序">排序</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">ORDER BY 列名 <span style="color:#f92672">&lt;</span>ASC <span style="color:#f92672">|</span> DESC<span style="color:#f92672">&gt;</span> 默认ASC升序
+</code></pre></div><h4 id="聚合函数">聚合函数</h4>
+<ul>
+<li>COUNT 计数</li>
+<li>SUM 求和</li>
+<li>MAX 最大</li>
+<li>MIN 最小</li>
+<li>AVG 平均</li>
+</ul>
+<h4 id="分组">分组</h4>
+<p>GROUP BY 分组列必须出现在查询列中</p>
+<p>HAVING 后是分组后的条件，条件内容都是聚合函数，也即若查询语句中涉及聚合函数条件，一定是放在GROUP BY后的HAVING中，而不是WHERE后。</p>
+<h4 id="dql语句执行顺序">DQL语句执行顺序</h4>
+<p>SELECT，FROM，WHERE，GROUP BY，HAVING，ORDER BY，LIMIT</p>
+<ul>
+<li>注意MySQL的机读顺序FROM，WHERE，GROUP BY，HAVING，SELECT，ORDER BY，LIMIT</li>
+</ul>
+<h4 id="显示部分查询结果">显示部分查询结果</h4>
+<p>LIMIT a 从第1条至第a条</p>
+<p>LIMIT a, b 从第a+1条至第a+b条</p>
+<ul>
+<li>若一页记录m行，查询第n页，则为LIMIT m*(n-1), m;</li>
+</ul>
+<h3 id="其他">其他</h3>
+<h4 id="主键约束">主键约束</h4>
+<ul>
+<li>创建表时指定主键</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">CREATE TABLE 表名(
+列名 列类型 PRIMARY KEY,
+<span style="color:#66d9ef">...</span>
+)
+</code></pre></div><p>或者</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">CREATE TABLE 表名(
+列名 列类型,
+<span style="color:#66d9ef">...</span>
+PRIMARY <span style="color:#a6e22e">KEY</span>(列名)
+)
+</code></pre></div><ul>
+<li>表已存在时添加主键</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">ALTER TABLE 表名 ADD PRIMARY <span style="color:#a6e22e">KEY</span>(列名);
+</code></pre></div><ul>
+<li>删除主键</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">ALTER TABLE 表名 DROP PRIMARY KEY;
+</code></pre></div><h4 id="主键自增长">主键自增长</h4>
+<p>AUTO_INCREMENT</p>
+<ul>
+<li>由于唯一、非空的特点，通常将主键列定义为整型，并设置自增长，不用再手动插入。</li>
+<li>表格内容删除后，再插入新内容时主键依旧保持自增长。</li>
+<li>设置了NOT NULL和UNIQUE的列依然不是主键列，因为不能被外键引用</li>
+</ul>
+<h4 id="外键约束">外键约束</h4>
+<p>一张表有一个主键，同时也可能包含一个外键，它是另一张表（或者本表）的主键</p>
+<ul>
+<li>外键列必须引用主键、可以重复、可以为空、一张表可以有多个外键</li>
+<li>主要用于防止无效数据插入外键列，因为其值必须是它引用的主键列的值之一。</li>
+</ul>
+<p>创建表时添加外键列</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">CONSTRAINT 外键约束名
+FOREIGN KEY 外键名 (主键列<span style="color:#ae81ff">1</span>, 主键列<span style="color:#ae81ff">2</span>,<span style="color:#66d9ef">...</span>)
+REFERENCES 外键所依赖的表(外键列<span style="color:#ae81ff">1</span>, 外键列<span style="color:#ae81ff">2</span>,<span style="color:#66d9ef">...</span>)
+ON DELETE <span style="color:#f92672">&lt;</span>SET <span style="color:#66d9ef">NULL</span><span style="color:#f92672">|</span>NO ACTION<span style="color:#f92672">|</span>RESTRICT<span style="color:#f92672">&gt;</span>
+ON UPDATE <span style="color:#f92672">&lt;</span>SET <span style="color:#66d9ef">NULL</span><span style="color:#f92672">|</span>NO ACTION<span style="color:#f92672">|</span>RESTRICT<span style="color:#f92672">&gt;</span>
+</code></pre></div><ul>
+<li>ON DELETE/UPDATE 设置级联删除/更新操作，以便父表信息删除时子表也进行相关操作。</li>
+<li>SET NULL 将子表外键列值设置为NULL，NO ACTION和RESTRICT表示拒绝删除子表相关联的数据。</li>
+<li>如不命名 FOREIGN KEY 约束，则&rsquo;CONSTRAINT 外键约束名&rsquo;一同省略。</li>
+</ul>
+<p>为已有表添加外键列</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">ALTER TABLE 表名 ADD
+CONSTRAINT 外键约束名
+FOREIGN KEY 外键名 (主键列<span style="color:#ae81ff">1</span>, 主键列<span style="color:#ae81ff">2</span>,<span style="color:#66d9ef">...</span>)
+REFERENCES 外键所依赖的表(外键列<span style="color:#ae81ff">1</span>, 外键列<span style="color:#ae81ff">2</span>,<span style="color:#66d9ef">...</span>)
+ON DELETE <span style="color:#f92672">&lt;</span>SET <span style="color:#66d9ef">NULL</span><span style="color:#f92672">|</span>NO ACTION<span style="color:#f92672">|</span>RESTRICT<span style="color:#f92672">&gt;</span>
+ON UPDATE <span style="color:#f92672">&lt;</span>SET <span style="color:#66d9ef">NULL</span><span style="color:#f92672">|</span>NO ACTION<span style="color:#f92672">|</span>RESTRICT<span style="color:#f92672">&gt;</span>
+</code></pre></div><h4 id="查看表约束">查看表约束</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">SHOW CREATE TABLE 表名;
+</code></pre></div><h4 id="多表查询之合并结果集">多表查询之合并结果集</h4>
+<p>UNION/UNION ALL 前者完全相同的行不会被去除，后者会</p>
+<h4 id="多表查询之连接查询">多表查询之连接查询</h4>
+<p>内连接、左[外]连接和右[外]连接</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">表<span style="color:#ae81ff">1</span> INNER JOIN 表<span style="color:#ae81ff">2</span> ON 连接条件
+表<span style="color:#ae81ff">1</span> LEFT [OUTER] JOIN 表<span style="color:#ae81ff">2</span> ON 连接条件
+表<span style="color:#ae81ff">1</span> RIGHT [OUTER] JOIN 表<span style="color:#ae81ff">2</span> ON 连接条件
+</code></pre></div><p>一张表可以实现与多表的外连接</p>
+<h4 id="与多条件对比">与多条件对比</h4>
+<p>ALL/ANY 返回符合所有/任意结果的记录。</p>
+<p>IN 返回符合其中一个结果的记录。</p>
+<h3 id="索引">索引</h3>
+<h4 id="创建索引">创建索引</h4>
+<p>CREATE INDEX 索引名 ON 表名(列名1, 列名2,&hellip;);</p>
+<h4 id="添加索引">添加索引</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#75715e"># 为某列（或多列）添加一个主键（或联合主键），这时的主键可以又作为索引，由主键的特性可知，该索引值是唯一的且不能为NULL</span>
+ALTER TABLE tableName ADD PRIMARY <span style="color:#a6e22e">KEY</span>(columnName_list)；
+<span style="color:#75715e"># 该语句创建的索引是唯一的，但可以有NULL，且NULL可以有多个</span>
+ALTER TABLE tableName ADD UNIQUE <span style="color:#a6e22e">indexName</span>(columnName_list);
+<span style="color:#75715e"># 添加普通索引，索引值不唯一且可为NULL</span>
+ALTER TABLE tableName ADD <span style="color:#a6e22e">indexName</span>(columnName_list);
+<span style="color:#75715e"># 指定添加的索引为FULLTEXT，用于全文索引</span>
+ALTER TABLE tableName ADD FULLTEXT <span style="color:#a6e22e">indexName</span>(columnName_list);
+</code></pre></div><h4 id="删除索引">删除索引</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">DROP INDEX ON 表名;
+</code></pre></div><h4 id="查看索引">查看索引</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">SHOW INDEX FROM 表名;
+</code></pre></div><h4 id="索引优化">索引优化</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">EXPLAIN SELECT语句
+</code></pre></div><h3 id="函数">函数</h3>
+<h4 id="创建函数">创建函数</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">CREATE FUNCTION 函数名(输入参数 参数类型) RETURNS 返回值类型 BEGIN <span style="color:#66d9ef">...</span> RETURN 返回值;
+</code></pre></div><h4 id="删除函数">删除函数</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">DROP FUNCTION 函数名;
+</code></pre></div>
+    </div>
+
+    <div class="post-copyright">
+            
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>Yiming </span>
+                </p>
+            
+
+            
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://ymingliu.github.io/2021/sql-quick-guide/>https://ymingliu.github.io/2021/sql-quick-guide/</span>
+            </p>
+            
+            
+    </div>
+
+
+    <div class="post-tags">
+        
+            <section>
+            <i class="iconfont icon-tag"></i>Tag(s):
+            
+            <span class="tag"><a href="https://ymingliu.github.io/tags/mysql/">
+                    #MySQL</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> ·
+                <span><a href="https://ymingliu.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://ymingliu.github.io/2021/sql-transaction-processing/" class="prev" rel="prev" title="MySQL Transaction Processing"><i class="iconfont icon-left"></i>&nbsp;MySQL Transaction Processing</a>
+        
+        
+        <a href="https://ymingliu.github.io/2021/sql-exercises-practice-solution-1/" class="next" rel="next" title="MySQL Exercises, Practice and Solution 1">MySQL Exercises, Practice and Solution 1&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+        
+            
+                <div id="gitalk-container"></div>
+<link rel="stylesheet" href="https://cdn.bootcss.com/gitalk/1.5.2/gitalk.css">
+<script src="https://cdn.bootcss.com/gitalk/1.5.2/gitalk.min.js"></script>
+<script>
+    const gitalk = new Gitalk({
+
+        clientID: '',
+        clientSecret: '',
+        repo: '',
+        owner: 'ymingliu',
+        admin: ['ymingliu'],
+        id: location.pathname, 
+        distractionFreeMode: false 
+    });
+    (function () {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('gitalk-container').innerHTML = 'Gitalk comments not available by default when the website is previewed locally.';
+            return;
+        }
+        gitalk.render('gitalk-container');
+    })();
+</script>
+
+            
+        
+    </div>
+</article>
+                </div>
+            </main>
+            <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span itemprop="copyrightYear">2021 - 2021</span>
+        
+        <span class="with-love">
+    	 <i class="iconfont icon-love"></i>
+         </span>
+         
+            <span class="author" itemprop="copyrightHolder"><a href="https://ymingliu.github.io">Yiming</a> | </span>
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/Mogeko/Mogege" target="_blank" rel="external nofollow">Mogege</a></span>
+    </div>
+</footer>
+
+
+
+
+
+
+<script defer src="/js/vendor_main.min.js"></script>
+
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script> pangu.spacingPage();</script>
+
+
+
+
+
+        </div>
+    </body>
+</html>

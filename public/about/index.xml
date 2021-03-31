@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Abouts on Yiming`s Blog</title>
+    <link>https://ymingliu.github.io/about/</link>
+    <description>Recent content in Abouts on Yiming`s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Fri, 05 Mar 2021 08:52:29 +0800</lastBuildDate>
+    
+	<atom:link href="https://ymingliu.github.io/about/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>About</title>
+      <link>https://ymingliu.github.io/about/about/</link>
+      <pubDate>Fri, 05 Mar 2021 08:52:29 +0800</pubDate>
+      
+      <guid>https://ymingliu.github.io/about/about/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Start My Own Blog</title>
+      <link>https://ymingliu.github.io/about/start-my-own-blog/</link>
+      <pubDate>Fri, 05 Mar 2021 08:52:29 +0800</pubDate>
+      
+      <guid>https://ymingliu.github.io/about/start-my-own-blog/</guid>
+      <description>Start My Own Blog Today I build my own blog. I hope I can keep updating and have a good track record.</description>
+    </item>
+    
+  </channel>
+</rss>

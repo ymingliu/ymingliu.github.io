@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>TensorFlow on Yiming`s Blog</title>
+    <link>https://ymingliu.github.io/tags/tensorflow/</link>
+    <description>Recent content in TensorFlow on Yiming`s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Tue, 16 Mar 2021 08:56:10 +0800</lastBuildDate>
+    
+	<atom:link href="https://ymingliu.github.io/tags/tensorflow/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Getting Started with TensorFlow</title>
+      <link>https://ymingliu.github.io/2021/tensorflow-getting-started/</link>
+      <pubDate>Tue, 16 Mar 2021 08:56:10 +0800</pubDate>
+      
+      <guid>https://ymingliu.github.io/2021/tensorflow-getting-started/</guid>
+      <description>课程参考 中国大学MOOC——TensorFlow入门实操课程 阿里云开发者社区——人工智能学习路线</description>
+    </item>
+    
+  </channel>
+</rss>

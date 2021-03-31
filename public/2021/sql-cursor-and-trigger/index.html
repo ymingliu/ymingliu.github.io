@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noodp"/>
+    <meta name="author" content="Yiming">
+    <meta name="description" content="Yiming`s Blog">
+    
+    
+    <link rel="prev" href="https://ymingliu.github.io/2021/pytorch-getting-started/" />
+    <link rel="next" href="https://ymingliu.github.io/2021/sql-transaction-processing/" />
+    <link rel="canonical" href="https://ymingliu.github.io/2021/sql-cursor-and-trigger/" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+    <title>
+        
+        
+            MySQL Cursor and Trigger | Yiming`s Blog
+        
+    </title>
+    <meta name="title" content="MySQL Cursor and Trigger | Yiming`s Blog">
+    
+<link rel="stylesheet" href="/css/main.min.css">
+
+
+    
+    
+ 
+
+<script type="application/ld+json">
+{
+    "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/ymingliu.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "MySQL Cursor and Trigger",
+    "headline" : "MySQL Cursor and Trigger",
+    "description" : "资料参考 《MySQL必知必会》Ben Forta著，刘晓霞 钟鸣译，人民邮电出版社 MySQL教程——易百教程 MySQL游标 1、什么是游标 游标实际",
+    "inLanguage" : "zh-cn",
+    "author" : "Yiming",
+    "creator" : "Yiming",
+    "publisher": "Yiming",
+    "accountablePerson" : "Yiming",
+    "copyrightHolder" : "Yiming",
+    "copyrightYear" : "2021",
+    "datePublished": "2021-03-18 17:46:17 \x2b0800 CST",
+    "dateModified" : "2021-03-18 17:46:17 \x2b0800 CST",
+    "url" : "https:\/\/ymingliu.github.io\/2021\/sql-cursor-and-trigger\/",
+    "wordCount" : "3794",
+    "keywords" : [ "MySQL", "Yiming`s Blog"]
+}
+</script>
+
+  </head>
+    <body class="">
+        <div class="wrapper">
+            <nav class="navbar">
+    
+        <progress class="content_progress" max="0" value="0"></progress>
+    
+    <div class="container">
+        
+            <div class="navbar-header header-back2home-logo">
+                <span class="logo_mark" >>$</span>
+                <a href="https://ymingliu.github.io">
+                    <span class="logo_text" >cd /home/</span>
+                    <span class="logo_cursor" ></span>
+                </a>
+            </div>
+        
+        <div class="navbar-right">
+                
+                <span class="menu">
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+                <span class="divide"></span>
+                <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-dark-mode"></i></a>
+                </span>
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+    
+        <progress class="content_progress" max="0" value="0"></progress>
+    
+     <div class="container">
+        <div class="navbar">
+            <div class="navbar-header header-logo">
+                    <a href="https://ymingliu.github.io">Yiming`s Blog</a>
+            </div>
+            <div class="navbar-right">
+                <div><a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-dark-mode"></i></a></div>
+                <div class="menu-toggle">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                <nav class="mb-md">
+                    
+                    
+                        <a class="menu-item" href="/posts/" title="">
+                            <h3>Blog</h3>
+                            <div class="menu-active"></div>
+                        </a>
+                    
+                        <a class="menu-item" href="/categories/" title="">
+                            <h3>Categories</h3>
+                            <div class="menu-active"></div>
+                        </a>
+                    
+                        <a class="menu-item" href="/tags/" title="">
+                            <h3>Tags</h3>
+                            <div class="menu-active"></div>
+                        </a>
+                    
+                        <a class="menu-item" href="/about/" title="">
+                            <h3>About</h3>
+                            <div class="menu-active"></div>
+                        </a>
+                    
+                </nav>
+        </div>
+    </div>
+</nav>
+            <main class="main">
+                <div class="container">
+                    
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">MySQL Cursor and Trigger</h1>
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://ymingliu.github.io" rel="author">Yiming</a> with ♥
+                <span class="post-time">
+                on <time datetime=2021-03-18 itemprop="datePublished">March 18, 2021</time>
+                </span>
+                in
+                
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        
+                        
+                        
+                          <a href="https://ymingliu.github.io/categories/mysql/"> MySQL, </a>
+                        
+                        
+                </span>
+                <span class="post-word-count">3794 words</span>
+        </div>
+    </header>
+
+    <div class="post-content">
+        
+
+        
+        
+
+        
+        
+        
+        
+        
+
+        
+        
+        
+
+        <h2 id="资料参考">资料参考</h2>
+<p>《MySQL必知必会》Ben Forta著，刘晓霞 钟鸣译，人民邮电出版社</p>
+<p><a href="https://www.yiibai.com/mysql">MySQL教程——易百教程</a></p>
+<h2 id="mysql游标">MySQL游标</h2>
+<h3 id="1什么是游标">1、什么是游标</h3>
+<p>游标实际上是一种能从包括多条数据记录的结果集中每次提取一条记录的机制。可以被看作是一个查询结果集（可以是零条、一条或由相关的选择语句检索出的多条记录）和结果集中指向特定记录的游标位置组成的一个临时文件，提供了在查询结果集中向前或向后浏览数据、处理结果集中数据的能力。</p>
+<ul>
+<li>游标特点</li>
+</ul>
+<p>只读、不可滚动、敏感</p>
+<ul>
+<li>为什么使用游标？</li>
+</ul>
+<p>关系数据库管理系统实质是面向集合的，在 MySQL 中并没有一种描述表中单一记录的表达形式，除非使用 WHERE 子句来限制只有一条记录被选中。所以有时我们必须借助于游标来进行单条记录的数据处理。</p>
+<ul>
+<li>何时使用游标？</li>
+</ul>
+<p>游标一般用于处理存储过程或函数中的结果集，它允许迭代查询返回一行数据，这样我们可以实现逐行的数据处理。</p>
+<ul>
+<li>游标使用注意事项</li>
+</ul>
+<p>游标不再使用时必须关闭，否则会占用内部内存和资源。</p>
+<p>游标只能用于存储过程和函数。</p>
+<p>FORWARD_ONLY（默认参数）表示只能顺序读取，SCROLL表示游标可以向任何方向移动读取。</p>
+<p>在存储过程中，先声明变量，再声明游标，最后声明处理程序。</p>
+<h3 id="2使用游标">2、使用游标</h3>
+<p>1）创建游标</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">DELIMITER <span style="color:#f92672">$$</span>
+CREATE PROCEDURE <span style="color:#a6e22e">showEmpSal</span>()
+BEGIN
+   DECLARE empsal CURSOR
+   FOR
+   SELECT sal FROM emp;
+   OPEN empsal;
+   CLOSE empsal;
+END <span style="color:#f92672">$$</span>
+DELIMITER ;
+</code></pre></div><p>OPEN和CLOSE语句不能在存储函数之外输入，否则报错。</p>
+<p>2）使用游标检索单个行</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">DELIMITER <span style="color:#f92672">$$</span>
+CREATE PROCEDURE <span style="color:#a6e22e">showEmpSal</span>(OUT t DOUBLE)
+BEGIN
+   DECLARE o DOUBLE;
+   DECLARE empsal CURSOR
+   FOR
+   SELECT sal FROM emp;
+   OPEN empsal;
+   FETCH empsal INTO o;
+   CLOSE empsal;
+   SELECT o INTO t;
+END <span style="color:#f92672">$$</span>
+DELIMITER ;
+</code></pre></div><p>游标打开后，可以用FENCH语句分别访问它的每一行。FENCH指定检索哪个数据，检索出的数据存储在什么地方。以上代码表示检索sal列，因为默认从第一行开始，且FENCH没有重复操作，因此结果是将sal列的第一行数据传递到一个名为o的局部声明的变量中。本代码原来没有输出参数t，做此修改只是为了更好的解释游标的使用。</p>
+<p>3）使用游标检索多个行</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">DELIMITER <span style="color:#f92672">$$</span>
+CREATE PROCEDURE <span style="color:#a6e22e">showEmpSal</span>()
+BEGIN
+   DECLARE done BOOLEAN DEFAULT <span style="color:#ae81ff">0</span>;
+   DECLARE o DOUBLE;
+   DECLARE empsal CURSOR
+   FOR
+   SELECT sal FROM emp;
+   DECLARE CONTINUE HANDLER FOR SQLSTATE <span style="color:#e6db74">&#39;02000&#39;</span> SET done<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>;
+   OPEN empsal;
+   REPEAT
+      FETCH empsal INTO o;
+   UNTIL done END REPEAT;
+   CLOSE empsal;
+END <span style="color:#f92672">$$</span>
+DELIMITER ;
+</code></pre></div><p>以上代码将FENCH语句放在了 REPEAT &hellip; UNTIL &lt;终止条件&gt; END REPEAT 结构中，是为了遍历检索sal列的每一行值，直至done为真。CONTINUE HANDLER表示FOR后面的条件出现时执行SET后的语句。SQLSTATE &lsquo;02000&rsquo;是MySQL中的未找到条件，当检索到最后一行后没有行可供循环，执行done=1。<code>SQLSTATE '02000'</code>还可以改为<code>NOT FOUND</code>。布尔值为BOOLEAN。</p>
+<p>4）创建一个复杂的游标存储过程</p>
+<p>逐行检索emp的员工号，利用newSal()计算员工的涨薪后的总薪资，并保存在新表empNewSal中</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">DELIMITER <span style="color:#f92672">$$</span>
+CREATE PROCEDURE <span style="color:#a6e22e">newSal</span>(
+   IN number INT,
+   OUT wage double
+)
+BEGIN
+   SELECT sal<span style="color:#f92672">*</span><span style="color:#ae81ff">1.1</span> FROM emp WHERE empno<span style="color:#f92672">=</span>number INTO wage;
+END <span style="color:#f92672">$$</span>
+DELIMITER ;
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">DELIMITER <span style="color:#f92672">$$</span>
+CREATE PROCEDURE <span style="color:#a6e22e">showEmpNewSal</span>()
+BEGIN
+   DECLARE done BOOLEAN DEFAULT <span style="color:#ae81ff">0</span>;
+   DECLARE o INT;
+   DECLARE wage DOUBLE;
+   DECLARE enumber CURSOR
+   FOR
+   SELECT empno FROM emp;
+   DECLARE CONTINUE HANDLER FOR SQLSTATE <span style="color:#e6db74">&#39;02000&#39;</span> SET done<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>;
+   CREATE TABLE IF NOT EXISTS <span style="color:#a6e22e">empNewSal</span>(emp_numb INT, new_sal double);
+   OPEN enumber;
+   REPEAT
+      FETCH enumber INTO o;
+      CALL <span style="color:#a6e22e">newSal</span>(o, wage);
+      INSERT INTO <span style="color:#a6e22e">empNewSal</span>(emp_numb, new_sal) <span style="color:#a6e22e">VALUES </span>(o, wage);
+   UNTIL done END REPEAT;
+   CLOSE enumber;
+END <span style="color:#f92672">$$</span>
+DELIMITER ;
+</code></pre></div><p>注意<code>CREATE TABLE</code>要在<code>DECLARE CONTINUE HANDLER</code>之后，否则报错（原因待找）。在存储过程中调用另一个存储过程，如果输入参数提前被声明，则传递时不需要加&rsquo;@&lsquo;前缀。</p>
+<p>调用并查询新表中的结果</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> CALL <span style="color:#a6e22e">showEmpNewSal</span>();
+Query OK, <span style="color:#ae81ff">1</span> row <span style="color:#a6e22e">affected </span>(<span style="color:#ae81ff">0.10</span> sec)
+mysql<span style="color:#f92672">&gt;</span> SELECT <span style="color:#f92672">*</span> FROM empNewSal LIMIT <span style="color:#ae81ff">5</span>;
+</code></pre></div><table>
+<thead>
+<tr>
+<th>emp_numb</th>
+<th>new_sal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1001</td>
+<td>8800</td>
+</tr>
+<tr>
+<td>1002</td>
+<td>17600</td>
+</tr>
+<tr>
+<td>1003</td>
+<td>13750.000000000002</td>
+</tr>
+<tr>
+<td>1004</td>
+<td>32725.000000000004</td>
+</tr>
+<tr>
+<td>1005</td>
+<td>13750.000000000002</td>
+</tr>
+</tbody>
+</table>
+<p>本例包含了存储过程、游标、逐行处理以及存储过程调用存储过程。</p>
+<h2 id="mysql触发器">MySQL触发器</h2>
+<h3 id="1什么是触发器">1、什么是触发器</h3>
+<p>触发器是MySQL响应删除DELECT、插入INSERT、更新UPDATE操作时自动执行的一条MySQL语句。与存储过程不同，触发器的执行不需要CALL调用，也不需要手动启用，而是通过对数据表的相关操作来触发、激活从而实现执行。注意除前述三种操作外，其他语句不支持触发器。</p>
+<h3 id="2触发器优点">2、触发器优点</h3>
+<p>1）自动执行：触发器在对表的数据作了任何修改之后立即被激活。</p>
+<p>2）强化约束：可以引用多个表，强制复杂业务的规则和要求，能实现比check语句更为复杂的约束。</p>
+<p>3）跟踪变化：触发器可以侦测数据库内的操作，从而禁止数据库中未经许可的更新和变化。</p>
+<p>4）级联运行：侦测数据库内的操作时，可自动地级联影响整个数据库的各项内容。</p>
+<p>5）嵌套调用：触发器可以调用一个或多个存储过程。触发器最多可以嵌套32层。（细节待补充）</p>
+<h3 id="2创建触发器">2、创建触发器</h3>
+<blockquote>
+<p>CREATE TRIGGER &lt;触发器名&gt;</p>
+<p>&lt; BEFORE | AFTER &gt; &lt;INSERT | UPDATE | DELETE &gt; ON &lt;表名&gt;</p>
+<p>FOR EACH ROW</p>
+<p>&lt;触发器主体&gt;</p>
+</blockquote>
+<p>需要有</p>
+<ul>
+<li>唯一的触发器名</li>
+<li>触发器关联的表</li>
+<li>触发器应该响应的活动（DELECT、INSERT或UPDATE）</li>
+<li>触发器何时执行（处理之前或之后）</li>
+</ul>
+<p>举例，向stu表插入数据后，返回&rsquo;Student added&rsquo;。但下述语句错误</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">CREATE TRIGGER newStu
+AFTER INSERT ON stu
+FOR EACH ROW
+SELECT <span style="color:#e6db74">&#39;Student added&#39;</span>;
+</code></pre></div><p>因为MySQL5以后不允许触发器返回任何结果，因此使用into @变量名，将结果赋值到变量中，用select调用即可。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">CREATE TRIGGER newStu
+AFTER INSERT ON stu
+FOR EACH ROW
+SELECT <span style="color:#e6db74">&#39;Student added&#39;</span> INTO <span style="color:#f92672">@</span>tmp;
+</code></pre></div><p>显示结果</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> SELECT <span style="color:#f92672">@</span>tmp;
+</code></pre></div><table>
+<thead>
+<tr>
+<th>@tmp</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0x</td>
+</tr>
+</tbody>
+</table>
+<p>现在插入一条语句，再次显示tmp</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> INSERT INTO <span style="color:#a6e22e">stu</span>(number, name, age, gender) <span style="color:#a6e22e">VALUES</span>(<span style="color:#e6db74">&#39;ITCAST_0004&#39;</span>, <span style="color:#e6db74">&#39;zhaoLiu&#39;</span>, <span style="color:#ae81ff">20</span>, <span style="color:#e6db74">&#39;male&#39;</span>);
+mysql<span style="color:#f92672">&gt;</span> SELECT <span style="color:#f92672">@</span>tmp;
+</code></pre></div><table>
+<thead>
+<tr>
+<th>@tmp</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Student added</td>
+</tr>
+</tbody>
+</table>
+<h3 id="3删除触发器">3、删除触发器</h3>
+<p>触发器不能更新和覆盖，只能删除再新建</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> DROP TRIGGER newStu;
+</code></pre></div><h3 id="4使用触发器">4、使用触发器</h3>
+<p>1）INSERT触发器</p>
+<p>举例 ，AFTER INSERT触发器，利用INSERT触发器实现插入数据时返回AUTO_INCREMENT列的自动赋值（MySQL5以后触发器不能返回结果，本例实现不了，必须人为把变量显示出来）。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">CREATE TRIGGER autoEmptno
+AFTER INSERT ON mydb
+FOR EACH ROW
+SELECT NEW.emptno INTO <span style="color:#f92672">@</span>ee;
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> INSERT INTO <span style="color:#a6e22e">mydb</span>(ename) <span style="color:#a6e22e">VALUES </span>(<span style="color:#e6db74">&#39;wangWu&#39;</span>);
+mysql<span style="color:#f92672">&gt;</span> SELECT <span style="color:#f92672">@</span>ee;
+</code></pre></div><p>但本例可以学习的地方是，首先，在INSERT触发器代码内，可以引用一个名为NEW的虚拟表，访问被插入的行；其次，若为BEFORE INSERT触发器，NEW中的值也可以被更新，即允许更改被插入的值；最后，对于AUTO_INCREMENT列，NEW在INSERT执行之前包含0，在INSERT执行之后包含自动生成的值。</p>
+<p>举例，BEFORE INSERT触发器，创建商品表和订单表，实现向订单表中插入数据时商品表的库存数量要更新，注意避免出现爆库，即订单数量大于库存时，要讲订单数量修改为库存数量。</p>
+<p>创建商品表和订单表，此时订单表为空</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> CREATE TABLE <span style="color:#a6e22e">goods </span>(gid INT PRIMARY KEY, gname <span style="color:#a6e22e">VARCHAR</span>(<span style="color:#ae81ff">50</span>), gnum INT);
+mysql<span style="color:#f92672">&gt;</span> CREATE TABLE <span style="color:#a6e22e">orders </span>(oid INT PRIMARY KEY, gid INT, onum INT);
+mysql<span style="color:#f92672">&gt;</span> SELECT <span style="color:#f92672">*</span> FROM goods;
+</code></pre></div><table>
+<thead>
+<tr>
+<th>gid</th>
+<th>gname</th>
+<th>gnum</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>商品1</td>
+<td>20</td>
+</tr>
+<tr>
+<td>2</td>
+<td>商品2</td>
+<td>15</td>
+</tr>
+<tr>
+<td>3</td>
+<td>商品3</td>
+<td>35</td>
+</tr>
+</tbody>
+</table>
+<p>创建BEFORE INSERT触发器，在将新订单插入订单表前，要先判断订单数量是否大于库存数量，若是，修改后再插入订单表，同时，再将商品表的库存数量更新。注意学会NEW虚拟表的使用，同时定义触发器时不要忘了<code>FOR EACH ROW</code>语句。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">DELIMITER <span style="color:#f92672">$$</span>
+CREATE TRIGGER ifStockSufficient
+BEFORE INSERT ON orders
+FOR EACH ROW
+BEGIN
+   DECLARE stock INT;
+   SELECT gnum INTO stock FROM goods WHERE gid <span style="color:#f92672">=</span> NEW.gid;
+   IF NEW.onum <span style="color:#f92672">&gt;</span> stock THEN
+      SET NEW.onum <span style="color:#f92672">=</span> stock;
+   END IF;
+   UPDATE goods SET gnum <span style="color:#f92672">=</span> gnum <span style="color:#f92672">-</span> NEW.onum WHERE gid <span style="color:#f92672">=</span> NEW.gid;
+END <span style="color:#f92672">$$</span>
+DELIMITER ;
+</code></pre></div><p>现在往订单表中插入数据，商品2订单12个，即订单量小于库存量的情况，并查询商品表的变化</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> INSERT INTO <span style="color:#a6e22e">orders</span>(oid, gid, onum) <span style="color:#a6e22e">VALUES</span>(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">12</span>);
+mysql<span style="color:#f92672">&gt;</span> SELECT <span style="color:#f92672">*</span> FROM goods;
+</code></pre></div><table>
+<thead>
+<tr>
+<th>gid</th>
+<th>gname</th>
+<th>gnum</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>商品1</td>
+<td>20</td>
+</tr>
+<tr>
+<td>2</td>
+<td>商品2</td>
+<td>3</td>
+</tr>
+<tr>
+<td>3</td>
+<td>商品3</td>
+<td>35</td>
+</tr>
+</tbody>
+</table>
+<p>再往订单表中插入数据，商品3订单50个，即订单量大于库存量的情况，并查询商品表的变化</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> INSERT INTO <span style="color:#a6e22e">orders</span>(oid, gid, onum) <span style="color:#a6e22e">VALUES</span>(<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">50</span>);
+mysql<span style="color:#f92672">&gt;</span> SELECT <span style="color:#f92672">*</span> FROM goods;
+</code></pre></div><table>
+<thead>
+<tr>
+<th>gid</th>
+<th>gname</th>
+<th>gnum</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>商品1</td>
+<td>20</td>
+</tr>
+<tr>
+<td>2</td>
+<td>商品2</td>
+<td>3</td>
+</tr>
+<tr>
+<td>3</td>
+<td>商品3</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p>注意该问题不能用如下AFTER INSERT触发器，因为插入订单表后，库存量为负，出现爆库。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">DELIMITER <span style="color:#f92672">$$</span>
+CREATE INSERT ifStockSufficient
+AFTER INSERT ON orders
+BEGIN
+   UPDATE goods SET gnum <span style="color:#f92672">=</span> gnum <span style="color:#f92672">-</span> NEW.onum WHERE gid <span style="color:#f92672">=</span> NEW.gid;
+END <span style="color:#f92672">$$</span>
+DELIMITER ;
+</code></pre></div><p>2）DELETE触发器</p>
+<p>在DELETE触发器代码内，可以引用一个名为OLD的虚拟表，访问被删除的行。此外，OLD中的值是只读的，不能被更新。</p>
+<p>举例，BEFORE DELECT触发器，当顾客删除订单时，将删除数据保存在备份订单表backupOrders中。注意backupOrders的表结构要和orders的一致。</p>
+<p>创建备份订单表</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> CREATE TABLE <span style="color:#a6e22e">backupOrders</span>(oid INT PRIMARY KEY, gid INT, onum INT);
+</code></pre></div><p>创建触发器</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">DELIMITER <span style="color:#f92672">$$</span>
+CREATE TRIGGER delOrders
+BEFORE DELETE ON orders
+FOR EACH ROW
+BEGIN
+   INSERT INTO <span style="color:#a6e22e">backupOrders</span>(oid, gid, onum) <span style="color:#a6e22e">VALUES</span>(OLD.oid, OLD.gid, OLD.onum);
+END <span style="color:#f92672">$$</span>
+DELIMITER ;
+</code></pre></div><p>现在的订单表记录为</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> SELECT <span style="color:#f92672">*</span> FROM orders;
+</code></pre></div><table>
+<thead>
+<tr>
+<th>oid</th>
+<th>gid</th>
+<th>onum</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>2</td>
+<td>12</td>
+</tr>
+<tr>
+<td>2</td>
+<td>3</td>
+<td>35</td>
+</tr>
+</tbody>
+</table>
+<p>删除第二条订单后，查询备份订单表</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> DELETE FROM orders WHERE oid <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>;
+mysql<span style="color:#f92672">&gt;</span> SELECT <span style="color:#f92672">*</span> FROM backupOrders;
+</code></pre></div><table>
+<thead>
+<tr>
+<th>oid</th>
+<th>gid</th>
+<th>onum</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2</td>
+<td>3</td>
+<td>35</td>
+</tr>
+</tbody>
+</table>
+<p>3）UPDATE触发器</p>
+<p>需要注意三点，一是在UPDATE触发器代码中，可以引用一个名为OLD的虚拟表访问更新前的值，也可引用NEW表访问更新后的值。二是在BEFORE UPDATE触发器中，NEW中的值也能被更新。三是OLD中的值为只读，不能更新。</p>
+<p>举例，BEFORE UPDATE触发器，创建一张新表stockChangeLog，实现商家进货后商品表的库存数量发生变更时，向stockChangeLog表中插入库存变化的商品id、旧库存，新库存和变更时间。</p>
+<p>创建库存变更日志表</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> CREATE TABLE <span style="color:#a6e22e">stockChangeLog</span>(cid INT PRIMARY KEY AUTO_INCREMENT, gid INT, old_num INT, new_num INT, ctime <span style="color:#a6e22e">VARCHAR</span>(<span style="color:#ae81ff">20</span>));
+</code></pre></div><p>创建触发器</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">DELIMITER <span style="color:#f92672">$$</span>
+CREATE TRIGGER stockChange
+BEFORE UPDATE ON goods
+FOR EACH ROW
+BEGIN
+   INSERT INTO <span style="color:#a6e22e">stockChangeLog</span>(gid, old_num, new_num, ctime) <span style="color:#a6e22e">VALUES</span>(NEW.gid, OLD.gnum, NEW.gnum, <span style="color:#a6e22e">NOW</span>());
+END <span style="color:#f92672">$$</span>
+DELIMITER ;
+</code></pre></div><p>更新商品3的库存量为100</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> UPDATE goods SET gnum <span style="color:#f92672">=</span> <span style="color:#ae81ff">100</span> WHERE gid <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>;
+Query OK, <span style="color:#ae81ff">1</span> row <span style="color:#a6e22e">affected </span>(<span style="color:#ae81ff">0.00</span> sec)
+Rows matched<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>  Changed<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>  Warnings<span style="color:#f92672">:</span> <span style="color:#ae81ff">0</span>
+</code></pre></div><p>查看更新后的商品表和库存更新日志</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> SELECT <span style="color:#f92672">*</span> FROM goods;
+</code></pre></div><table>
+<thead>
+<tr>
+<th>gid</th>
+<th>gname</th>
+<th>gnum</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>商品1</td>
+<td>20</td>
+</tr>
+<tr>
+<td>2</td>
+<td>商品2</td>
+<td>3</td>
+</tr>
+<tr>
+<td>3</td>
+<td>商品3</td>
+<td>100</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> SELECT <span style="color:#f92672">*</span> FROM stockChangeLog;
+</code></pre></div><table>
+<thead>
+<tr>
+<th>cid</th>
+<th>gid</th>
+<th>old_num</th>
+<th>new_num</th>
+<th>ctime</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>3</td>
+<td>0</td>
+<td>100</td>
+<td>2021-03-19 10:38:36</td>
+</tr>
+</tbody>
+</table>
+<p>补充：如果触发器关联的表和发出活动相应的表尾同一张，则触发器内部更新语句只用写<code>SET 更新条件</code>，不用再写<code>UPDATE</code></p>
+<p>举例，更新stu表的学生名字时设置输入格式都为大写</p>
+<p>查询stu表</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> SELECT <span style="color:#f92672">*</span> FROM stu;
+</code></pre></div><table>
+<thead>
+<tr>
+<th>number</th>
+<th>name</th>
+<th>age</th>
+<th>gender</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ITCAST_0001</td>
+<td>zhangSan</td>
+<td>36</td>
+<td>male</td>
+</tr>
+<tr>
+<td>ITCAST_0002</td>
+<td>liSi</td>
+<td>36</td>
+<td>male</td>
+</tr>
+<tr>
+<td>ITCAST_0003</td>
+<td>wangHu</td>
+<td>18</td>
+<td>female</td>
+</tr>
+<tr>
+<td>ITCAST_0004</td>
+<td>zhaoLiu</td>
+<td>20</td>
+<td>male</td>
+</tr>
+</tbody>
+</table>
+<p>创建触发器，注意UPPER函数可以实现小写字符串转换为大写</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">DELIMITER <span style="color:#f92672">$$</span>
+CREATE TRIGGER nameFormat
+BEFORE UPDATE ON stu
+FOR EACH ROW
+BEGIN
+   SET NEW.name <span style="color:#f92672">=</span> <span style="color:#a6e22e">UPPER</span>(NEW.name);
+END <span style="color:#f92672">$$</span>
+DELIMITER ;
+</code></pre></div><p>更新学生名字</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> UPDATE stu SET name<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Marry&#39;</span> WHERE number<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;ITCAST_0004&#39;</span>;
+mysql<span style="color:#f92672">&gt;</span> SELECT <span style="color:#f92672">*</span> FROM stu;
+</code></pre></div><table>
+<thead>
+<tr>
+<th>number</th>
+<th>name</th>
+<th>age</th>
+<th>gender</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ITCAST_0001</td>
+<td>zhangSan</td>
+<td>36</td>
+<td>male</td>
+</tr>
+<tr>
+<td>ITCAST_0002</td>
+<td>liSi</td>
+<td>36</td>
+<td>male</td>
+</tr>
+<tr>
+<td>ITCAST_0003</td>
+<td>wangHu</td>
+<td>18</td>
+<td>female</td>
+</tr>
+<tr>
+<td>ITCAST_0004</td>
+<td>MARRY</td>
+<td>20</td>
+<td>male</td>
+</tr>
+</tbody>
+</table>
+<p>5）触发器其他操作</p>
+<p>查看创建触发器</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> SHOW TRIGGERS;
+</code></pre></div><p>或者</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> SELECT <span style="color:#f92672">*</span> FROM information_schema.triggers WHERE trigger_name<span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;nameFormat&#39;</span>\G
+<span style="color:#f92672">***************************</span> <span style="color:#ae81ff">1</span>. row <span style="color:#f92672">***************************</span>
+TRIGGER_CATALOG<span style="color:#f92672">:</span> def
+TRIGGER_SCHEMA<span style="color:#f92672">:</span> test
+TRIGGER_NAME<span style="color:#f92672">:</span> nameFormat
+EVENT_MANIPULATION<span style="color:#f92672">:</span> UPDATE
+EVENT_OBJECT_CATALOG<span style="color:#f92672">:</span> def
+EVENT_OBJECT_SCHEMA<span style="color:#f92672">:</span> test
+EVENT_OBJECT_TABLE<span style="color:#f92672">:</span> stu
+ACTION_ORDER<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+ACTION_CONDITION<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+ACTION_STATEMENT<span style="color:#f92672">:</span> BEGIN
+SET NEW.name <span style="color:#f92672">=</span> <span style="color:#a6e22e">UPPER</span>(NEW.name);
+END
+ACTION_ORIENTATION<span style="color:#f92672">:</span> ROW
+ACTION_TIMING<span style="color:#f92672">:</span> BEFORE
+ACTION_REFERENCE_OLD_TABLE<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+ACTION_REFERENCE_NEW_TABLE<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+ACTION_REFERENCE_OLD_ROW<span style="color:#f92672">:</span> OLD
+ACTION_REFERENCE_NEW_ROW<span style="color:#f92672">:</span> NEW
+CREATED<span style="color:#f92672">:</span> <span style="color:#ae81ff">2021-03-19</span> <span style="color:#ae81ff">10</span><span style="color:#f92672">:</span><span style="color:#ae81ff">51</span><span style="color:#f92672">:</span><span style="color:#ae81ff">25.63</span>
+SQL_MODE<span style="color:#f92672">:</span> ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION
+DEFINER<span style="color:#f92672">:</span> root<span style="color:#f92672">@</span>localhost
+CHARACTER_SET_CLIENT<span style="color:#f92672">:</span> utf8mb4
+COLLATION_CONNECTION<span style="color:#f92672">:</span> utf8mb4_0900_ai_ci
+DATABASE_COLLATION<span style="color:#f92672">:</span> utf8_general_ci
+<span style="color:#ae81ff">1</span> row in <span style="color:#a6e22e">set </span>(<span style="color:#ae81ff">0.00</span> sec)
+</code></pre></div>
+    </div>
+
+    <div class="post-copyright">
+            
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>Yiming </span>
+                </p>
+            
+
+            
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://ymingliu.github.io/2021/sql-cursor-and-trigger/>https://ymingliu.github.io/2021/sql-cursor-and-trigger/</span>
+            </p>
+            
+            
+    </div>
+
+
+    <div class="post-tags">
+        
+            <section>
+            <i class="iconfont icon-tag"></i>Tag(s):
+            
+            <span class="tag"><a href="https://ymingliu.github.io/tags/mysql/">
+                    #MySQL</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> ·
+                <span><a href="https://ymingliu.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://ymingliu.github.io/2021/pytorch-getting-started/" class="prev" rel="prev" title="Getting Started with Pytorch"><i class="iconfont icon-left"></i>&nbsp;Getting Started with Pytorch</a>
+        
+        
+        <a href="https://ymingliu.github.io/2021/sql-transaction-processing/" class="next" rel="next" title="MySQL Transaction Processing">MySQL Transaction Processing&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+        
+            
+                <div id="gitalk-container"></div>
+<link rel="stylesheet" href="https://cdn.bootcss.com/gitalk/1.5.2/gitalk.css">
+<script src="https://cdn.bootcss.com/gitalk/1.5.2/gitalk.min.js"></script>
+<script>
+    const gitalk = new Gitalk({
+
+        clientID: '',
+        clientSecret: '',
+        repo: '',
+        owner: 'ymingliu',
+        admin: ['ymingliu'],
+        id: location.pathname, 
+        distractionFreeMode: false 
+    });
+    (function () {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('gitalk-container').innerHTML = 'Gitalk comments not available by default when the website is previewed locally.';
+            return;
+        }
+        gitalk.render('gitalk-container');
+    })();
+</script>
+
+            
+        
+    </div>
+</article>
+                </div>
+            </main>
+            <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span itemprop="copyrightYear">2021 - 2021</span>
+        
+        <span class="with-love">
+    	 <i class="iconfont icon-love"></i>
+         </span>
+         
+            <span class="author" itemprop="copyrightHolder"><a href="https://ymingliu.github.io">Yiming</a> | </span>
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/Mogeko/Mogege" target="_blank" rel="external nofollow">Mogege</a></span>
+    </div>
+</footer>
+
+
+
+
+
+
+<script defer src="/js/vendor_main.min.js"></script>
+
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script> pangu.spacingPage();</script>
+
+
+
+
+
+        </div>
+    </body>
+</html>

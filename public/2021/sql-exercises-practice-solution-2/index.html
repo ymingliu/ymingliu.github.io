@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noodp"/>
+    <meta name="author" content="Yiming">
+    <meta name="description" content="Yiming`s Blog">
+    
+    
+    <link rel="prev" href="https://ymingliu.github.io/2021/big-data-analytics-industry/" />
+    
+    <link rel="canonical" href="https://ymingliu.github.io/2021/sql-exercises-practice-solution-2/" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+    <title>
+        
+        
+            MySQL Exercises, Practice and Solution 2 | Yiming`s Blog
+        
+    </title>
+    <meta name="title" content="MySQL Exercises, Practice and Solution 2 | Yiming`s Blog">
+    
+<link rel="stylesheet" href="/css/main.min.css">
+
+
+    
+    
+ 
+
+<script type="application/ld+json">
+{
+    "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/ymingliu.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "MySQL Exercises, Practice and Solution 2",
+    "headline" : "MySQL Exercises, Practice and Solution 2",
+    "description" : "题库参考 LeeCode 数据库题库 数据库SQL实战——牛客网 MySQL习题总结 6、从不订购的客户 某网站包含两个表，Customers 表和 Orders 表。编写一个 SQL 查",
+    "inLanguage" : "zh-cn",
+    "author" : "Yiming",
+    "creator" : "Yiming",
+    "publisher": "Yiming",
+    "accountablePerson" : "Yiming",
+    "copyrightHolder" : "Yiming",
+    "copyrightYear" : "2021",
+    "datePublished": "2021-03-30 21:08:43 \x2b0800 CST",
+    "dateModified" : "2021-03-30 21:08:43 \x2b0800 CST",
+    "url" : "https:\/\/ymingliu.github.io\/2021\/sql-exercises-practice-solution-2\/",
+    "wordCount" : "632",
+    "keywords" : [ "MySQL", "Yiming`s Blog"]
+}
+</script>
+
+  </head>
+    <body class="">
+        <div class="wrapper">
+            <nav class="navbar">
+    
+        <progress class="content_progress" max="0" value="0"></progress>
+    
+    <div class="container">
+        
+            <div class="navbar-header header-back2home-logo">
+                <span class="logo_mark" >>$</span>
+                <a href="https://ymingliu.github.io">
+                    <span class="logo_text" >cd /home/</span>
+                    <span class="logo_cursor" ></span>
+                </a>
+            </div>
+        
+        <div class="navbar-right">
+                
+                <span class="menu">
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+                <span class="divide"></span>
+                <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-dark-mode"></i></a>
+                </span>
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+    
+        <progress class="content_progress" max="0" value="0"></progress>
+    
+     <div class="container">
+        <div class="navbar">
+            <div class="navbar-header header-logo">
+                    <a href="https://ymingliu.github.io">Yiming`s Blog</a>
+            </div>
+            <div class="navbar-right">
+                <div><a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-dark-mode"></i></a></div>
+                <div class="menu-toggle">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                <nav class="mb-md">
+                    
+                    
+                        <a class="menu-item" href="/posts/" title="">
+                            <h3>Blog</h3>
+                            <div class="menu-active"></div>
+                        </a>
+                    
+                        <a class="menu-item" href="/categories/" title="">
+                            <h3>Categories</h3>
+                            <div class="menu-active"></div>
+                        </a>
+                    
+                        <a class="menu-item" href="/tags/" title="">
+                            <h3>Tags</h3>
+                            <div class="menu-active"></div>
+                        </a>
+                    
+                        <a class="menu-item" href="/about/" title="">
+                            <h3>About</h3>
+                            <div class="menu-active"></div>
+                        </a>
+                    
+                </nav>
+        </div>
+    </div>
+</nav>
+            <main class="main">
+                <div class="container">
+                    
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">MySQL Exercises, Practice and Solution 2</h1>
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://ymingliu.github.io" rel="author">Yiming</a> with ♥
+                <span class="post-time">
+                on <time datetime=2021-03-30 itemprop="datePublished">March 30, 2021</time>
+                </span>
+                in
+                
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        
+                        
+                        
+                          <a href="https://ymingliu.github.io/categories/mysql/"> MySQL, </a>
+                        
+                        
+                </span>
+                <span class="post-word-count">632 words</span>
+        </div>
+    </header>
+
+    <div class="post-content">
+        
+
+        
+        
+
+        
+        
+        
+        
+        
+
+        
+        
+        
+
+        <h2 id="题库参考">题库参考</h2>
+<p><a href="https://leetcode-cn.com/">LeeCode 数据库题库</a></p>
+<p><a href="https://www.nowcoder.com/ta/sql">数据库SQL实战——牛客网</a></p>
+<h2 id="mysql习题总结">MySQL习题总结</h2>
+<h3 id="6从不订购的客户">6、从不订购的客户</h3>
+<p>某网站包含两个表，Customers 表和 Orders 表。编写一个 SQL 查询，找出所有从不订购任何东西的客户。</p>
+<p>Customers 表:</p>
+<table>
+<thead>
+<tr>
+<th>Id</th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Joe</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Henry</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Sam</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Max</td>
+</tr>
+</tbody>
+</table>
+<p>Orders 表：</p>
+<table>
+<thead>
+<tr>
+<th>Id</th>
+<th>CustomerId</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>3</td>
+</tr>
+<tr>
+<td>2</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<p>应返回
+| Customers |
+|&mdash;&mdash;&mdash;&ndash;|
+| Henry     |
+| Max       ||</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">select c.`Name` as `Customers` from Customers c left join Orders o on c.Id<span style="color:#f92672">=</span>o.CustomerId where o.Id is null;
+</code></pre></div><hr>
+<p>1）本题扩展：查找不在表里的数据</p>
+<p>查询在表A但不在表B的数据，使用SELECT &hellip; FROM 表A AS a LEFT JOIN 表B AS b ON a.列名=b.列名 WHERE b.列名 IS NULL;</p>
+<h3 id="7部门工资最高的员工">7、部门工资最高的员工</h3>
+<p>Employee 表包含所有员工信息，每个员工有其对应的 Id, salary 和 department Id。</p>
+<table>
+<thead>
+<tr>
+<th>Id</th>
+<th>Name</th>
+<th>Salary</th>
+<th>DepartmentId</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Joe</td>
+<td>70000</td>
+<td>1</td>
+</tr>
+<tr>
+<td>2  </td>
+<td>Jim  </td>
+<td>90000  </td>
+<td>1            </td>
+</tr>
+<tr>
+<td>3</td>
+<td>Henry</td>
+<td>80000</td>
+<td>2</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Sam</td>
+<td>60000</td>
+<td>2</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Max</td>
+<td>90000</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<p>Department 表包含公司所有部门的信息。</p>
+<table>
+<thead>
+<tr>
+<th>Id</th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>IT</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Sales</td>
+</tr>
+</tbody>
+</table>
+<p>编写一个 SQL 查询，找出每个部门工资最高的员工。对于上述表，要求返回以下行（行的顺序无关紧要）。</p>
+<table>
+<thead>
+<tr>
+<th>Department</th>
+<th>Employee</th>
+<th>Salary</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>IT</td>
+<td>Max</td>
+<td>90000</td>
+</tr>
+<tr>
+<td>IT        </td>
+<td>Jim      </td>
+<td>90000  </td>
+</tr>
+<tr>
+<td>Sales</td>
+<td>Henry</td>
+<td>80000</td>
+</tr>
+</tbody>
+</table>
+<p>下述语句的解题思路是：第一，把每个部门的最高薪资查出来作为一张临时表；第二，将员工表，部门表，部门最高薪资表做三个内连接（这里用左外连接也可，因为没有说有的员工的部门不存在的情况）</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">select d.`Name` as Department, e.`Name` as `Employee`, e.Salary from testEmployee e inner <span style="color:#a6e22e">join </span>(select DepartmentId, <span style="color:#a6e22e">max</span>(Salary) maxSalary from testEmployee group by DepartmentId) a on e.Salary<span style="color:#f92672">=</span>a.maxSalary inner join testDepartment d on e.DepartmentId<span style="color:#f92672">=</span>d.Id;
+</code></pre></div><p>另外解法，把与部门最高薪资表的内连接换成IN函数</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">SELECT
+   testDepartment.name AS <span style="color:#e6db74">&#39;Department&#39;</span>,
+   testEmployee.name AS <span style="color:#e6db74">&#39;Employee&#39;</span>,
+   Salary
+FROM
+   testEmployee
+   JOIN
+   testDepartment ON testEmployee.DepartmentId <span style="color:#f92672">=</span> testDepartment.Id
+<span style="color:#a6e22e">WHERE
+</span><span style="color:#a6e22e">   </span>(testEmployee.DepartmentId , Salary) <span style="color:#a6e22e">IN
+</span><span style="color:#a6e22e">   </span>(   SELECT
+          DepartmentId, <span style="color:#a6e22e">MAX</span>(Salary)
+       FROM
+          testEmployee
+       GROUP BY DepartmentId
+);
+</code></pre></div><hr>
+<p>1）本题考点：GROUP BY</p>
+<p>2）必须用GROUP BY生成一张临时表，因为可能同一个部门有两个员工都是最高薪资。采用下述语句是错的</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">select d.`Name` as `Department`, e.`Name` as `Employee`, e.Salary from Employee e, Department d where e.DepartmentId<span style="color:#f92672">=</span>d.Id group by e.DepartmentId having e.Salary<span style="color:#f92672">=</span><span style="color:#a6e22e">max</span>(e.Salary);
+</code></pre></div><p>下述错误</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">select <span style="color:#f92672">*</span> from testEmployee group by DepartmentId;
+</code></pre></div><p>下述正确</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">select DepartmentId from testEmployee group by DepartmentId;
+</code></pre></div><p>下述正确</p>
+
+    </div>
+
+    <div class="post-copyright">
+            
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>Yiming </span>
+                </p>
+            
+
+            
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://ymingliu.github.io/2021/sql-exercises-practice-solution-2/>https://ymingliu.github.io/2021/sql-exercises-practice-solution-2/</span>
+            </p>
+            
+            
+    </div>
+
+
+    <div class="post-tags">
+        
+            <section>
+            <i class="iconfont icon-tag"></i>Tag(s):
+            
+            <span class="tag"><a href="https://ymingliu.github.io/tags/mysql/">
+                    #MySQL</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> ·
+                <span><a href="https://ymingliu.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://ymingliu.github.io/2021/big-data-analytics-industry/" class="prev" rel="prev" title="Big Data Analytics Industry"><i class="iconfont icon-left"></i>&nbsp;Big Data Analytics Industry</a>
+        
+        
+    </div>
+
+    <div class="post-comment">
+        
+            
+                <div id="gitalk-container"></div>
+<link rel="stylesheet" href="https://cdn.bootcss.com/gitalk/1.5.2/gitalk.css">
+<script src="https://cdn.bootcss.com/gitalk/1.5.2/gitalk.min.js"></script>
+<script>
+    const gitalk = new Gitalk({
+
+        clientID: '',
+        clientSecret: '',
+        repo: '',
+        owner: 'ymingliu',
+        admin: ['ymingliu'],
+        id: location.pathname, 
+        distractionFreeMode: false 
+    });
+    (function () {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('gitalk-container').innerHTML = 'Gitalk comments not available by default when the website is previewed locally.';
+            return;
+        }
+        gitalk.render('gitalk-container');
+    })();
+</script>
+
+            
+        
+    </div>
+</article>
+                </div>
+            </main>
+            <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span itemprop="copyrightYear">2021 - 2021</span>
+        
+        <span class="with-love">
+    	 <i class="iconfont icon-love"></i>
+         </span>
+         
+            <span class="author" itemprop="copyrightHolder"><a href="https://ymingliu.github.io">Yiming</a> | </span>
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/Mogeko/Mogege" target="_blank" rel="external nofollow">Mogege</a></span>
+    </div>
+</footer>
+
+
+
+
+
+
+<script defer src="/js/vendor_main.min.js"></script>
+
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script> pangu.spacingPage();</script>
+
+
+
+
+
+        </div>
+    </body>
+</html>

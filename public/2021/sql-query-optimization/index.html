@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noodp"/>
+    <meta name="author" content="Yiming">
+    <meta name="description" content="Yiming`s Blog">
+    
+    
+    <link rel="prev" href="https://ymingliu.github.io/2021/sql-index-optimization-case/" />
+    <link rel="next" href="https://ymingliu.github.io/2021/sql-innodb-locking/" />
+    <link rel="canonical" href="https://ymingliu.github.io/2021/sql-query-optimization/" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+    <title>
+        
+        
+            MySQL Query Optimization | Yiming`s Blog
+        
+    </title>
+    <meta name="title" content="MySQL Query Optimization | Yiming`s Blog">
+    
+<link rel="stylesheet" href="/css/main.min.css">
+
+
+    
+    
+ 
+
+<script type="application/ld+json">
+{
+    "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/ymingliu.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "MySQL Query Optimization",
+    "headline" : "MySQL Query Optimization",
+    "description" : "课程参考 阿里云开发者社区——数据库学习路线 MySQL查询截取分析 一般的SQL语句优化过程分为4步：第一，慢查询的开启并捕获；第二，EXPLA",
+    "inLanguage" : "zh-cn",
+    "author" : "Yiming",
+    "creator" : "Yiming",
+    "publisher": "Yiming",
+    "accountablePerson" : "Yiming",
+    "copyrightHolder" : "Yiming",
+    "copyrightYear" : "2021",
+    "datePublished": "2021-03-13 21:36:03 \x2b0800 CST",
+    "dateModified" : "2021-03-13 21:36:03 \x2b0800 CST",
+    "url" : "https:\/\/ymingliu.github.io\/2021\/sql-query-optimization\/",
+    "wordCount" : "5194",
+    "keywords" : [ "MySQL", "Yiming`s Blog"]
+}
+</script>
+
+  </head>
+    <body class="">
+        <div class="wrapper">
+            <nav class="navbar">
+    
+        <progress class="content_progress" max="0" value="0"></progress>
+    
+    <div class="container">
+        
+            <div class="navbar-header header-back2home-logo">
+                <span class="logo_mark" >>$</span>
+                <a href="https://ymingliu.github.io">
+                    <span class="logo_text" >cd /home/</span>
+                    <span class="logo_cursor" ></span>
+                </a>
+            </div>
+        
+        <div class="navbar-right">
+                
+                <span class="menu">
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+                <span class="divide"></span>
+                <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-dark-mode"></i></a>
+                </span>
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+    
+        <progress class="content_progress" max="0" value="0"></progress>
+    
+     <div class="container">
+        <div class="navbar">
+            <div class="navbar-header header-logo">
+                    <a href="https://ymingliu.github.io">Yiming`s Blog</a>
+            </div>
+            <div class="navbar-right">
+                <div><a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-dark-mode"></i></a></div>
+                <div class="menu-toggle">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                <nav class="mb-md">
+                    
+                    
+                        <a class="menu-item" href="/posts/" title="">
+                            <h3>Blog</h3>
+                            <div class="menu-active"></div>
+                        </a>
+                    
+                        <a class="menu-item" href="/categories/" title="">
+                            <h3>Categories</h3>
+                            <div class="menu-active"></div>
+                        </a>
+                    
+                        <a class="menu-item" href="/tags/" title="">
+                            <h3>Tags</h3>
+                            <div class="menu-active"></div>
+                        </a>
+                    
+                        <a class="menu-item" href="/about/" title="">
+                            <h3>About</h3>
+                            <div class="menu-active"></div>
+                        </a>
+                    
+                </nav>
+        </div>
+    </div>
+</nav>
+            <main class="main">
+                <div class="container">
+                    
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">MySQL Query Optimization</h1>
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://ymingliu.github.io" rel="author">Yiming</a> with ♥
+                <span class="post-time">
+                on <time datetime=2021-03-13 itemprop="datePublished">March 13, 2021</time>
+                </span>
+                in
+                
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        
+                        
+                        
+                          <a href="https://ymingliu.github.io/categories/mysql/"> MySQL, </a>
+                        
+                        
+                </span>
+                <span class="post-word-count">5194 words</span>
+        </div>
+    </header>
+
+    <div class="post-content">
+        
+
+        
+        
+
+        
+        
+        
+        
+        
+
+        
+        
+        
+
+        <h2 id="课程参考">课程参考</h2>
+<p><a href="https://developer.aliyun.com/learning/roadmap/database?spm=5176.12901015.0.i12901015.4ea8525cMC1llR">阿里云开发者社区——数据库学习路线</a></p>
+<h2 id="mysql查询截取分析">MySQL查询截取分析</h2>
+<p>一般的SQL语句优化过程分为4步：第一，慢查询的开启并捕获；第二，EXPLAIN+慢SQL分析；第三，Show Profile查询SQL语句在MySQL服务器里面的执行细节和生命周期情况；第四，SQL数据库服务器参数调优。</p>
+<h3 id="1查询优化">1、查询优化</h3>
+<p>共3部分</p>
+<p>1）遵循法则：永远小表驱动大表，即小的数据集驱动大的数据集</p>
+<p>对比<code>IN</code>和<code>EXIST</code>使用法则</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> SELECT <span style="color:#f92672">*</span> FROM A WHERE id <span style="color:#a6e22e">IN </span>(SELECT id FROM B);
+</code></pre></div><p>上述语句含义为，首先在B表中查询出id的取值范围，再输出A表中id在该范围中的记录。即外循环为B表，内循环为A表。显然当B表数据集小于A表数据集时，用此语法加<code>IN</code>条件较好。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> SELECT <span style="color:#f92672">*</span> FROM A WHERE <span style="color:#a6e22e">EXISTS </span>(SELECT <span style="color:#ae81ff">1</span> FROM B WHERE B.id<span style="color:#f92672">=</span>A.id);
+</code></pre></div><p>上述语句将连接条件放在了内部，即B表为内循环，A表在外部逐个判断是否存在于B表的查询结果中，<code>EXISTS</code>返回TRUE和FALSE。因此当A表数据集小于B表数据集时，用此语法加<code>EXISTS</code>条件较好。</p>
+<p>注意第二条语句中的<code>1</code>可换成任意常量。且使用如上两条语句时A、B两表的id字段应建立索引。</p>
+<p><strong>总结</strong></p>
+<ul>
+<li>EXISTS</li>
+</ul>
+<p>SELECT &hellip; FROM table WHERE EXISTS (subquery)</p>
+<p>该语法可以理解为，将主查询的数据放在子查询中做条件验证，根据验证结果（TRUE或FALSE）来决定主查询的数据结果是否得以保留。</p>
+<p>EXISTS（subquery）只返回TRUE和FALSE，因此子查询中的SELECT *也可以是SELECT 1或其他常量，执行时会忽略SELECT 清单，因此无区别。</p>
+<p><strong>若目标返回A表结果，B表作为条件，则若B表小于A表，用<code>IN</code>，若A表小于B表，用<code>EXISTS</code>。</strong></p>
+<p>2）ORDER BY关键字优化</p>
+<p>使用<code>ORDER BY</code>子句时，尽量使用Index方式排序，避免使用Filesort，即Extra最好返回Using Index而不是Using Filesort。例如若创建索引&rsquo;idx_A_ageBirth&rsquo;，则下述语句的Extra会出现Using Filesort。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> EXPLAIN SELECT <span style="color:#f92672">*</span> FROM A WHERE age<span style="color:#f92672">&gt;</span><span style="color:#ae81ff">20</span> ORDER BY birth\G
+</code></pre></div><p>因为age为索引列的起始列却使用range条件，索引失效，ORDER BY不能利用birth索引列做排序。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> EXPLAIN SELECT <span style="color:#f92672">*</span> FROM A WHERE age<span style="color:#f92672">=</span><span style="color:#ae81ff">20</span> ORDER BY birth, age\G
+</code></pre></div><p>上述语句ORDER BY后的列与索引列顺序不一致，会出现Using Filesort。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> EXPLAIN SELECT <span style="color:#f92672">*</span> FROM A ORDER BY birth\G
+</code></pre></div><p>ORDER BY后的起始列不是age，违背最佳左前缀法则，索引失效。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> EXPLAIN SELECT <span style="color:#f92672">*</span> FROM A WHERE birth<span style="color:#f92672">&gt;</span><span style="color:#e6db74">&#39;2021-03-12 00:00:00&#39;</span> ORDER BY birth\G
+</code></pre></div><p>产生Filesort原因不是<code>&gt;</code>导致的，而是没有age列，违背最佳左前缀法则。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> EXPLAIN SELECT <span style="color:#f92672">*</span> FROM A WHERE birth<span style="color:#f92672">&gt;</span><span style="color:#e6db74">&#39;2021-03-12 00:00:00&#39;</span> ORDER BY age\G
+</code></pre></div><p>上述语句不会出现Filesort（重点！）</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> EXPLAIN SELECT <span style="color:#f92672">*</span> FROM A ORDER BY age ASC, birth DESC\G
+</code></pre></div><p>会产生Filesort，ORDER BY默认升序，条件列要保证同升同降。</p>
+<p>综上，MySQL支持两种方式的排序，Filesort和Index，Index效率高，它指MySQL扫描索引本身完成排序，Filesort效率低。ORDER BY满足两种情况会使用Index排序：一是ORDER BY语句使用索引的最左前列，二是将Where子句和ORDER BY子句的条件列组合后满足索引最左前列。因此要尽可能在索引列上完成排序操作，遵照索引建的最佳左前缀法则。</p>
+<p>如果条件列不在索引列中，或者需要降序排序，或者不需要查询起始列等，则Filesort有两种算法，MySQL就要启动双路排序和单路排序。</p>
+<p>双路排序：MySQL4.1之前使用，读一批数据需要对磁盘进行两次扫描。具体解释略。</p>
+<p>单路排序：读一批数据对磁盘进行一次扫描，优于双路。但是单路排序需要从磁盘一次性读取查询需要的所有列。按照ORDER BY列在buffer对其进行排序，然后扫描排序后的列表将结果输出，这样就需要sort_buffer提供够足够的内存。如果一次读取的数据超出了sort_buffer的容量，则会导致每次排序只取sort_buffer容量大小的数据，进行排序，然后再读取，再排序&hellip;最后还要将多次排序结果合并，进行多次I/O操作。</p>
+<p>因此ORDER BY优化策略为：为排序创建合适的索引，尽量不要SLEECT * 只查询需要的列，增大sort_buffer_size和max_length_for_sort_data参数。</p>
+<hr>
+<p><strong>小结</strong></p>
+<ul>
+<li>MySQL有两种排序方式：文件排序（Using Filesort）和扫描有序索引排序（Using Index）</li>
+<li>MySQL能为排序与查询使用相同的索引</li>
+</ul>
+<p>假设有索引&rsquo;idx_A_abc&rsquo;</p>
+<table>
+<thead>
+<tr>
+<th>ORDER BY语句</th>
+<th>Extra返回值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ORDER BY a</td>
+<td>Using index</td>
+</tr>
+<tr>
+<td>ORDER BY a, b</td>
+<td>Using index</td>
+</tr>
+<tr>
+<td>ORDER BY a DESC, b DESC</td>
+<td>Backward index scan; Using index</td>
+</tr>
+<tr>
+<td>WHERE a=const ORDER BY b</td>
+<td>Using where; Using index</td>
+</tr>
+<tr>
+<td>WHERE a=const ORDER BY a, b</td>
+<td>Using where; Using index</td>
+</tr>
+<tr>
+<td>WHERE a=const ORDER BY b, a</td>
+<td>Using where; Using index</td>
+</tr>
+<tr>
+<td>WHERE a=const ORDER BY b, c</td>
+<td>Using where; Using index</td>
+</tr>
+<tr>
+<td>WHERE a=const AND b=const ORDER BY c</td>
+<td>Using where; Using index</td>
+</tr>
+<tr>
+<td>WHERE a=const AND b=const ORDER BY a, c</td>
+<td>Using where; Using index</td>
+</tr>
+<tr>
+<td>WHERE a=const AND b&gt;const ORDER BY b, c</td>
+<td>Using where; Using index</td>
+</tr>
+<tr>
+<td>WHERE a&gt;const ORDER BY a, b</td>
+<td>Using where; Using index</td>
+</tr>
+<tr>
+<td>WHERE a&gt;const AND b=const ORDER BY a, c</td>
+<td>Using where; Using index</td>
+</tr>
+<tr>
+<td>WHERE a&gt;const AND b=const ORDER BY b, a, c</td>
+<td>Using where; Using index</td>
+</tr>
+<tr>
+<td>WHERE a&gt;const AND b&gt;const ORDER BY a, b, c</td>
+<td>Using where; Using index</td>
+</tr>
+<tr>
+<td>ORDER BY b</td>
+<td>Using index; Using filesort</td>
+</tr>
+<tr>
+<td>ORDER BY b, a</td>
+<td>Using index; Using filesort</td>
+</tr>
+<tr>
+<td>ORDER BY a, c</td>
+<td>Using index; Using filesort</td>
+</tr>
+<tr>
+<td>ORDER BY a ASC, b DESC</td>
+<td>Using index; Using filesort</td>
+</tr>
+<tr>
+<td>WHERE a=const ORDER BY c</td>
+<td>Using where; Using index; Using filesort</td>
+</tr>
+<tr>
+<td>WHERE a=const ORDER BY c, b</td>
+<td>Using where; Using index; Using filesort</td>
+</tr>
+<tr>
+<td>WHERE a=const AND b&gt;const ORDER BY c</td>
+<td>Using where; Using index; Using filesort</td>
+</tr>
+<tr>
+<td>WHERE a=const AND b&gt;const ORDER BY c, b</td>
+<td>Using where; Using index; Using filesort</td>
+</tr>
+<tr>
+<td>WHERE a&gt;const ORDER BY b</td>
+<td>Using where; Using index; Using filesort</td>
+</tr>
+<tr>
+<td>WHERE a in (&hellip;) ORDER BY b</td>
+<td>Using where; Using index; Using filesort</td>
+</tr>
+<tr>
+<td>WHERE a&gt;const AND b=const ORDER BY c</td>
+<td>Using where; Using index; Using filesort</td>
+</tr>
+<tr>
+<td>WHERE a&gt;const AND b&gt;const ORDER BY c</td>
+<td>Using where; Using index; Using filesort</td>
+</tr>
+<tr>
+<td>ORDER BY d</td>
+<td>Using filesort</td>
+</tr>
+<tr>
+<td>ORDER BY a, d</td>
+<td>Using filesort</td>
+</tr>
+<tr>
+<td>WHERE d=const ORDER BY a</td>
+<td>Using where; Using filesort</td>
+</tr>
+</tbody>
+</table>
+<p>注意：对于排序来说，多个相等条件查询也是范围查询。出现Filesort还有一个原因，ORDER BY的索引列有重复值！</p>
+<hr>
+<p>3）GROUP BY关键字优化</p>
+<p>GROUP BY实质上是先排序后分组，遵照索引建的最佳左前缀法则。因此当优化ORDER BY后无法使用索引列时，增大max_length_for_sort_data和sort_buffer_size的参数设置。最后注意WHERE优先级高于HAVING，因此能写在WHERE限定条件的语句不要写在HAVING中。</p>
+<h3 id="2慢查询日志">2、慢查询日志</h3>
+<p>MySQL的慢查询日志是MySQL提供的一种日志记录，用来记录MySQL中响应时间超过阈值的语句，集体指运行时间超过long_query_time值（最大忍耐时间值）的SQL，则会被记录到慢查询日志中，随后可以利用EXPLAIN进行全面分析。long_query_time默认为10秒。注意运行时间等于long_query_time的不会被记录，大于的才会被记录。</p>
+<p>默认情况下MySQL数据库没有开启慢查询日志，需要手动开启。若不是调优需要，一般不建议启动该参数。慢查询日志支持将日志记录写入文件。</p>
+<p>查看是否开启</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> SHOW VARIABLES LIKE <span style="color:#e6db74">&#39;%slow_query_log%&#39;</span>;
+</code></pre></div><table>
+<thead>
+<tr>
+<th>Variable_name</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>slow_query_log</td>
+<td>OFF</td>
+</tr>
+<tr>
+<td>slow_query_log_file</td>
+<td>/usr/local/mysql/data/MacBook-Pro-2-slow.log</td>
+</tr>
+</tbody>
+</table>
+<p>OFF表示慢查询日志关闭，slow_query_log_file显示默认文件路径和文件名。</p>
+<p>开启</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> SET GLOBAL slow_query_log<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>;
+</code></pre></div><p>但须注意用以上语句开启慢查询日志只对当前数据库生效，MySQL重启后则失效。若要永久生效，需要修改my.cnf配置文件，具体修改方式略。</p>
+<p>修改阈值时间并查看</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> SET GLOBAL long_query_time<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>;
+mysql<span style="color:#f92672">&gt;</span> SHOW VARIABLES LIKE <span style="color:#e6db74">&#39;%long_query_time%&#39;</span>;
+</code></pre></div><p>注意用如上语句查看设置会发现还是10秒，没有改为3秒。这时需要重新连接或新开一个会话并输入如上查询语句才能看到修改值，或者在本会话框输入</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> SHOW GLOBAL VARIABLES LIKE <span style="color:#e6db74">&#39;%long_query_time%&#39;</span>;
+</code></pre></div><p>接下来测试一下查询过程，假设有一条语句</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> SELECT <span style="color:#a6e22e">SLEEP</span>(<span style="color:#ae81ff">4</span>);
+</code></pre></div><p>新开启一个Linux窗口输入</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">$</span> cat <span style="color:#f92672">/</span>usr<span style="color:#f92672">/</span>local<span style="color:#f92672">/</span>mysql<span style="color:#f92672">/</span>data<span style="color:#f92672">/</span>MacBook<span style="color:#f92672">-</span>Pro<span style="color:#ae81ff">-2</span><span style="color:#f92672">-</span>slow.log
+</code></pre></div><p>即可显示大于3秒的SQL语句，运行时间戳，实际查询时间，所在数据库等。</p>
+<p>查询慢SQL语句的个数</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> SHOW GLOBAL STATUS LIKE <span style="color:#e6db74">&#39;%Slow_queries%&#39;</span>;
+</code></pre></div><table>
+<thead>
+<tr>
+<th>Variable_name</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Slow_queries</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<p>MySQL还提供了日志分析工具mysqldumpslow，用一下语句查看帮助信息</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">$</span> mysqldumpslow <span style="color:#f92672">--</span>help
+</code></pre></div><p>s | 表示按照何种方式排序</p>
+<p>c | 访问次数</p>
+<p>l | 锁定时间</p>
+<p>r | 返回记录</p>
+<p>t | 查询时间</p>
+<p>al | 平均锁定时间</p>
+<p>ar | 平均返回记录数</p>
+<p>at | 平均查询时间</p>
+<p>t | 设置返回前面多少条数据</p>
+<p>g | 后面搭配一个正则匹配模式，大小写不敏感</p>
+<p>例如，得到返回记录集最多的10个SQL</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">$</span> mysqldumpslow <span style="color:#f92672">-</span>s r <span style="color:#f92672">-</span>t <span style="color:#ae81ff">10</span> <span style="color:#f92672">/</span>usr<span style="color:#f92672">/</span>local<span style="color:#f92672">/</span>mysql<span style="color:#f92672">/</span>data<span style="color:#f92672">/</span>MacBook<span style="color:#f92672">-</span>Pro<span style="color:#ae81ff">-2</span><span style="color:#f92672">-</span>slow.log
+</code></pre></div><p>得到访问次数最多的10个SQL</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">$</span> mysqldumpslow <span style="color:#f92672">-</span>s c <span style="color:#f92672">-</span>t <span style="color:#ae81ff">10</span> <span style="color:#f92672">/</span>usr<span style="color:#f92672">/</span>local<span style="color:#f92672">/</span>mysql<span style="color:#f92672">/</span>data<span style="color:#f92672">/</span>MacBook<span style="color:#f92672">-</span>Pro<span style="color:#ae81ff">-2</span><span style="color:#f92672">-</span>slow.log
+</code></pre></div><p>得到按照时间排序的前10条语句里含有左连接的查询语句</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">$</span> mysqldumpslow <span style="color:#f92672">-</span>s t <span style="color:#f92672">-</span>t <span style="color:#ae81ff">10</span> <span style="color:#f92672">-</span>g <span style="color:#e6db74">&#34;left join&#34;</span> <span style="color:#f92672">/</span>usr<span style="color:#f92672">/</span>local<span style="color:#f92672">/</span>mysql<span style="color:#f92672">/</span>data<span style="color:#f92672">/</span>MacBook<span style="color:#f92672">-</span>Pro<span style="color:#ae81ff">-2</span><span style="color:#f92672">-</span>slow.log
+</code></pre></div><p>另外建议在使用这些命令时结合 “| more” 使用，否则查询出的结果过多而出现爆屏</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">$</span> mysqldumpslow <span style="color:#f92672">-</span>s t <span style="color:#f92672">-</span>t <span style="color:#ae81ff">10</span> <span style="color:#f92672">/</span>usr<span style="color:#f92672">/</span>local<span style="color:#f92672">/</span>mysql<span style="color:#f92672">/</span>data<span style="color:#f92672">/</span>MacBook<span style="color:#f92672">-</span>Pro<span style="color:#ae81ff">-2</span><span style="color:#f92672">-</span>slow.log <span style="color:#f92672">|</span> more
+</code></pre></div><h3 id="3批量数据脚本">3、批量数据脚本</h3>
+<p>比如需要向MySQL中插入1000万条记录，可编写一个脚本实现每次插入50万条记录，共进行20次的批量插入过程。</p>
+<p>第一步，建表deptBigData和empBigData（如果有需要也可建库）</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> CREATE DATABASE bigData;
+mysql<span style="color:#f92672">&gt;</span> USE bigData;
+mysql<span style="color:#f92672">&gt;</span> CREATE TABLE <span style="color:#a6e22e">deptBigData</span>(id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT, deptno MEDIUMINT UNSIGNED NOT <span style="color:#66d9ef">NULL</span> DEFAULT <span style="color:#ae81ff">0</span>, dname <span style="color:#a6e22e">VARCHAR</span>(<span style="color:#ae81ff">20</span>) NOT <span style="color:#66d9ef">NULL</span> DEFAULT <span style="color:#e6db74">&#34;&#34;</span>, loc <span style="color:#a6e22e">VARCHAR</span>(<span style="color:#ae81ff">13</span>) NOT <span style="color:#66d9ef">NULL</span> DEFAULT <span style="color:#e6db74">&#34;&#34;</span>);
+mysql<span style="color:#f92672">&gt;</span> CREATE TABLE <span style="color:#a6e22e">empBigData</span>(id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT, empno MEDIUMINT UNSIGNED NOT <span style="color:#66d9ef">NULL</span> DEFAULT <span style="color:#ae81ff">0</span>, ename <span style="color:#a6e22e">VARCHAR</span>(<span style="color:#ae81ff">20</span>) NOT <span style="color:#66d9ef">NULL</span> DEFAULT <span style="color:#e6db74">&#34;&#34;</span>, job <span style="color:#a6e22e">VARCHAR</span>(<span style="color:#ae81ff">9</span>) NOT <span style="color:#66d9ef">NULL</span> DEFAULT <span style="color:#e6db74">&#34;&#34;</span>, mgr MEDIUMINT UNSIGNED NOT <span style="color:#66d9ef">NULL</span> DEFAULT <span style="color:#ae81ff">0</span>, hiredate DATE NOT <span style="color:#66d9ef">NULL</span>, sal <span style="color:#a6e22e">DECIMAL</span>(<span style="color:#ae81ff">7</span>,<span style="color:#ae81ff">2</span>) NOT <span style="color:#66d9ef">NULL</span>, comm <span style="color:#a6e22e">DECIMAL</span>(<span style="color:#ae81ff">7</span>,<span style="color:#ae81ff">2</span>) NOT <span style="color:#66d9ef">NULL</span>, deptno MEDIUMINT UNSIGNED NOT <span style="color:#66d9ef">NULL</span> DEFAULT <span style="color:#ae81ff">0</span>);
+</code></pre></div><p>第二步，查看并设置如下参数，否则创建函数后会报错：This functions has none of DETERMINISTIC&hellip;&hellip;</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> SHOW VARIABLES LIKE <span style="color:#e6db74">&#39;log_bin_trust_function_creators&#39;</span>;
+mysql<span style="color:#f92672">&gt;</span> SET GLOBAL log_bin_trust_function_creators<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>;
+</code></pre></div><p>注意如果mysqld重启，上述参数又会回到默认OFF，永久办法是修改my.cnf配置文件。</p>
+<p>第三步，创建函数，随机产生字符串作为ename，将如下语句输入mysql</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">DELIMITER <span style="color:#f92672">$$</span>
+CREATE FUNCTION <span style="color:#a6e22e">rand_string</span>(n INT) RETURNS <span style="color:#a6e22e">VARCHAR</span>(<span style="color:#ae81ff">255</span>)
+BEGIN
+DECLARE chars_str <span style="color:#a6e22e">VARCHAR</span>(<span style="color:#ae81ff">100</span>) DEFAULT <span style="color:#e6db74">&#39;abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ&#39;</span>;
+DECLARE return_str <span style="color:#a6e22e">VARCHAR</span>(<span style="color:#ae81ff">255</span>) DEFAULT <span style="color:#e6db74">&#39;&#39;</span>;
+DECLARE i INT DEFAULT <span style="color:#ae81ff">0</span>;
+WHILE i<span style="color:#f92672">&lt;</span>n DO
+SET return_str<span style="color:#f92672">=</span><span style="color:#a6e22e">CONCAT</span>(return_str, <span style="color:#a6e22e">SUBSTRING</span>(chars_str, <span style="color:#a6e22e">FLOOR</span>(<span style="color:#ae81ff">1</span><span style="color:#f92672">+</span><span style="color:#a6e22e">RAND</span>()<span style="color:#f92672">*</span><span style="color:#ae81ff">52</span>), <span style="color:#ae81ff">1</span>));
+SET i<span style="color:#f92672">=</span>i<span style="color:#ae81ff">+1</span>;
+END WHILE;
+RETURN return_str;
+END <span style="color:#f92672">$$</span>
+DELIMITER ;
+</code></pre></div><p><code>DELIMITER $$ ... END $$</code>表示其中的语句不再以&rsquo;;&lsquo;结尾，而是以'$$'结尾，也可单独使用<code>DELIMITER $$</code>，设置从此以后的SQL语句结束方式。</p>
+<p><code>DELIMITER ;</code>恢复以&rsquo;;&lsquo;结束的SQL语句方式。</p>
+<p><code>CREATE FUNCTION 函数名(输入参数 参数类型) RETURNS 返回值类型 BEGIN ... RETURN 返回值;</code>为创建函数格式。<strong>注意“输入参数”和“参数类型”之间没有&rsquo;,'！</strong></p>
+<p>定义两个变量chars_str和return_str，都是字符串类型，前者默认为小写加大写的英文字母，后者默认为空。</p>
+<p><code>WHILE 运行条件 DO ... END WHILE;</code>循环语句，用来生成长度为n的字符串return_str。</p>
+<p><code>CONCAT</code>是连接字符串，每次从chars_str中抽一个字母，抽n次。</p>
+<p>补充：删除被加载的自定义函数</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> DROP FUNCTION rand_string;
+</code></pre></div><p>再创建函数，随机产生部门编号作为deptno，将如下语句输入mysql</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">DELIMITER <span style="color:#f92672">$$</span>
+CREATE FUNCTION <span style="color:#a6e22e">rand_num</span>() RETURNS <span style="color:#a6e22e">INT</span>(<span style="color:#ae81ff">5</span>)
+BEGIN
+DECLARE i INT DEFAULT <span style="color:#ae81ff">0</span>;
+SET i<span style="color:#f92672">=</span><span style="color:#a6e22e">FLOOR</span>(<span style="color:#ae81ff">100</span><span style="color:#f92672">+</span><span style="color:#a6e22e">RAND</span>()<span style="color:#f92672">*</span><span style="color:#ae81ff">10</span>);
+RETURN i;
+END <span style="color:#f92672">$$</span>
+DELIMITER ;
+</code></pre></div><p>第四步，创建存储过程，首先创建往empBigData表中插入数据的存储过程</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">DELIMITER <span style="color:#f92672">$$</span>
+CREATE PROCEDURE <span style="color:#a6e22e">insert_empBigData</span>(IN START <span style="color:#a6e22e">INT</span>(<span style="color:#ae81ff">10</span>), IN max_num <span style="color:#a6e22e">INT</span>(<span style="color:#ae81ff">10</span>))
+BEGIN
+DECLARE i INT DEFAULT <span style="color:#ae81ff">0</span>;
+SET autocommit<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>;
+REPEAT
+SET i<span style="color:#f92672">=</span>i<span style="color:#ae81ff">+1</span>;
+INSERT INTO <span style="color:#a6e22e">empBigData</span>(empno, ename, job, mgr, hiredate, sal, comm, deptno) <span style="color:#a6e22e">VALUES </span>((START<span style="color:#f92672">+</span>i), <span style="color:#a6e22e">rand_string</span>(<span style="color:#ae81ff">6</span>), <span style="color:#e6db74">&#39;SALESMAN&#39;</span>, <span style="color:#ae81ff">0001</span>, <span style="color:#a6e22e">CURDATE</span>(), <span style="color:#ae81ff">2000</span>, <span style="color:#ae81ff">400</span>, <span style="color:#a6e22e">rand_num</span>());
+UNTIL i<span style="color:#f92672">=</span>max_num
+END REPEAT;
+COMMIT;
+END <span style="color:#f92672">$$</span>
+DELIMITER ;
+</code></pre></div><p><code>CREATE PROCEDURE 函数名(IN 输入参数 参数类型, IN 输入参数 参数类型) BEGIN ... ;</code>创建过程，因为没有返回值，索引没有输出参数，也没有RETURN。</p>
+<p><code>autocommit</code>设置为0防止一句一句提交记录。</p>
+<p><code>REPEAT ... UNTIL 终止条件 END REPEAT;</code>重复循环过程指导终止条件满足。</p>
+<p><code>COMMIT;</code>编译循环后一起提交。</p>
+<p>其次创建往deptBigData表中插入数据的存储过程</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">DELIMITER <span style="color:#f92672">$$</span>
+CREATE PROCEDURE <span style="color:#a6e22e">insert_deptBigData</span>(IN START <span style="color:#a6e22e">INT</span>(<span style="color:#ae81ff">10</span>), IN max_num <span style="color:#a6e22e">INT</span>(<span style="color:#ae81ff">10</span>))
+BEGIN
+DECLARE i INT DEFAULT <span style="color:#ae81ff">0</span>;
+SET autocommit<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>;
+REPEAT
+SET i<span style="color:#f92672">=</span>i<span style="color:#ae81ff">+1</span>;
+INSERT INTO <span style="color:#a6e22e">deptBigData</span>(deptno, dname, loc) <span style="color:#a6e22e">VALUES </span>((START<span style="color:#f92672">+</span>i), <span style="color:#a6e22e">rand_string</span>(<span style="color:#ae81ff">10</span>), <span style="color:#a6e22e">rand_string</span>(<span style="color:#ae81ff">8</span>));
+UNTIL i<span style="color:#f92672">=</span>max_num
+END REPEAT;
+COMMIT;
+END <span style="color:#f92672">$$</span>
+DELIMITER ;
+</code></pre></div><p>第五步，调用存储过程，由于员工表的所在部门必须被包含在部门表中，因此先插入deptBigData表，运行如下语句，实现部门编号从101-110，部门名为10个字母，部门地址为8个字母。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> CALL <span style="color:#a6e22e">insert_deptBigData</span>(<span style="color:#ae81ff">100</span>,<span style="color:#ae81ff">10</span>);
+</code></pre></div><p>再插入empBigData表，运行如下语句，实现员工编号从100001-100100。这里插入了100个做测试。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> CALL <span style="color:#a6e22e">insert_empBigData</span>(<span style="color:#ae81ff">100000</span>, <span style="color:#ae81ff">100</span>);
+</code></pre></div><h3 id="4show-profile">4、Show Profile</h3>
+<p>Show Profile是MySQL提供的可以用来分析当前会话中语句执行的<strong>资源消耗情况</strong>。可以用于SQL的调优测量。具体细节可参考官方网站<a href="https://dev.mysql.com/doc/refman/8.0/en/show-profile.html">SHOW PROFILE Statement</a>。默认情况下，参数处于关闭状态，并保存最近15次的运行结果。分析步骤如下</p>
+<p>第一步，查看是否开启</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> SHOW VARIABLES LIKE <span style="color:#e6db74">&#39;profiling&#39;</span>;
+mysql<span style="color:#f92672">&gt;</span> SHOW VARIABLES LIKE <span style="color:#e6db74">&#39;profiling%&#39;</span>;
+</code></pre></div><table>
+<thead>
+<tr>
+<th>Variable_name</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>profiling</td>
+<td>OFF</td>
+</tr>
+</tbody>
+</table>
+<p>默认关闭</p>
+<p>第二步，开启</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> SET profiling<span style="color:#f92672">=</span>on;
+</code></pre></div><p>第三步，运行SQL
+第四步，查看结果</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> SHOW profiles;
+</code></pre></div><table>
+<thead>
+<tr>
+<th>Query_ID</th>
+<th>Duration</th>
+<th>Query</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>0.00527200</td>
+<td>select * from emp</td>
+</tr>
+<tr>
+<td>2</td>
+<td>0.00624600</td>
+<td>select * from dept</td>
+</tr>
+<tr>
+<td>3</td>
+<td>0.00140100</td>
+<td>select * from deptBigData</td>
+</tr>
+<tr>
+<td>4</td>
+<td>0.00485400</td>
+<td>select * from emp group by id%10 limit 100</td>
+</tr>
+<tr>
+<td>5</td>
+<td>0.00345300</td>
+<td>select * from empBigData group by id%10 limit 100</td>
+</tr>
+<tr>
+<td>6</td>
+<td>0.00358400</td>
+<td>select * from empBigData</td>
+</tr>
+<tr>
+<td>7</td>
+<td>0.00037800</td>
+<td>select * from empBigData group by id%10 limit 50</td>
+</tr>
+<tr>
+<td>8</td>
+<td>0.00009300</td>
+<td>select id, * from empBigData group by id%10 limit 50</td>
+</tr>
+<tr>
+<td>9</td>
+<td>0.00022400</td>
+<td>select id, empno from empBigData group by id%10 limit 50</td>
+</tr>
+<tr>
+<td>10</td>
+<td>0.00011900</td>
+<td>select m, empno from empBigData group by id%10 m limit 50</td>
+</tr>
+</tbody>
+</table>
+<p>第五步，诊断SQL，比如诊断Query_ID为2的SQL语句</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> SHOW profile cpu, block io for query <span style="color:#ae81ff">2</span>;
+</code></pre></div><table>
+<thead>
+<tr>
+<th>Status</th>
+<th>Duration</th>
+<th>CPU_user</th>
+<th>CPU_system</th>
+<th>Block_ops_in</th>
+<th>Block_ops_out</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>starting</td>
+<td>0.000078</td>
+<td>0.000070</td>
+<td>0.000008</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Executing hook on transaction</td>
+<td>0.000012</td>
+<td>0.000006</td>
+<td>0.000006</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>starting</td>
+<td>0.000013</td>
+<td>0.000009</td>
+<td>0.000003</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>checking permissions</td>
+<td>0.000010</td>
+<td>0.000008</td>
+<td>0.000003</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Opening tables</td>
+<td>0.005999</td>
+<td>0.001338</td>
+<td>0.004056</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>end</td>
+<td>0.000014</td>
+<td>0.000007</td>
+<td>0.000007</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>query end</td>
+<td>0.000008</td>
+<td>0.000006</td>
+<td>0.000002</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>closing tables</td>
+<td>0.000006</td>
+<td>0.000005</td>
+<td>0.000002</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>freeing items</td>
+<td>0.000023</td>
+<td>0.000012</td>
+<td>0.000010</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>cleaning up</td>
+<td>0.000083</td>
+<td>0.000031</td>
+<td>0.000051</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p>还可查询：ALL，所有的开销信息；BLOCK IO，块IO相关开销；CONTEXT SWITCHES，上下文切换相关开销；CPU，CPU相关开销；IPC，发送和接受的相关开销；MEMORY，内存相关开销；PAGE FAULTS，页面错误相关开销；SOURCE，和Source_function、Source_file、Source_line相关的开销信息；SWAPS，交换次数相关开销。</p>
+<p>第六步，常用的四个Status需要注意</p>
+<p>i. converting HEAP to MyISAM 查询结果太大，内存不够用</p>
+<p>ii. Creating tmp table 创建临时表，临时表的使用需要先拷贝数据到表中，用完再将表删除，如果数据量很大，几十万条记录在临时表中处理，很耗时也很占内存</p>
+<p>iii. Coping to tmp table on disk 把内存中的临时表复制到磁盘中，这一步很危险！</p>
+<p>iv. locked</p>
+<h3 id="5全局查询日志">5、全局查询日志</h3>
+<p>永远不要在生产环境开启这个功能，只用于测试。两种方式启用：一是修改在my.cnf配置文件，二是编码启用，输入如下语句</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> SET GLOBAL general_log<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>;
+mysql<span style="color:#f92672">&gt;</span> SET GLOBAL log_output<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;TABLE&#39;</span>;
+</code></pre></div><p>此后所有的MySQL语句将会记录在MySQL库里的general_log表，可用如下命令查看</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> SELECT <span style="color:#f92672">*</span> FROM mysql.general_log;
+</code></pre></div>
+    </div>
+
+    <div class="post-copyright">
+            
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>Yiming </span>
+                </p>
+            
+
+            
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://ymingliu.github.io/2021/sql-query-optimization/>https://ymingliu.github.io/2021/sql-query-optimization/</span>
+            </p>
+            
+            
+    </div>
+
+
+    <div class="post-tags">
+        
+            <section>
+            <i class="iconfont icon-tag"></i>Tag(s):
+            
+            <span class="tag"><a href="https://ymingliu.github.io/tags/mysql/">
+                    #MySQL</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> ·
+                <span><a href="https://ymingliu.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://ymingliu.github.io/2021/sql-index-optimization-case/" class="prev" rel="prev" title="MySQL Index Optimization Case"><i class="iconfont icon-left"></i>&nbsp;MySQL Index Optimization Case</a>
+        
+        
+        <a href="https://ymingliu.github.io/2021/sql-innodb-locking/" class="next" rel="next" title="MySQL Innodb Locking">MySQL Innodb Locking&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+        
+            
+                <div id="gitalk-container"></div>
+<link rel="stylesheet" href="https://cdn.bootcss.com/gitalk/1.5.2/gitalk.css">
+<script src="https://cdn.bootcss.com/gitalk/1.5.2/gitalk.min.js"></script>
+<script>
+    const gitalk = new Gitalk({
+
+        clientID: '',
+        clientSecret: '',
+        repo: '',
+        owner: 'ymingliu',
+        admin: ['ymingliu'],
+        id: location.pathname, 
+        distractionFreeMode: false 
+    });
+    (function () {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('gitalk-container').innerHTML = 'Gitalk comments not available by default when the website is previewed locally.';
+            return;
+        }
+        gitalk.render('gitalk-container');
+    })();
+</script>
+
+            
+        
+    </div>
+</article>
+                </div>
+            </main>
+            <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span itemprop="copyrightYear">2021 - 2021</span>
+        
+        <span class="with-love">
+    	 <i class="iconfont icon-love"></i>
+         </span>
+         
+            <span class="author" itemprop="copyrightHolder"><a href="https://ymingliu.github.io">Yiming</a> | </span>
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/Mogeko/Mogege" target="_blank" rel="external nofollow">Mogege</a></span>
+    </div>
+</footer>
+
+
+
+
+
+
+<script defer src="/js/vendor_main.min.js"></script>
+
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script> pangu.spacingPage();</script>
+
+
+
+
+
+        </div>
+    </body>
+</html>

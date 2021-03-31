@@ -1,0 +1,2067 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noodp"/>
+    <meta name="author" content="Yiming">
+    <meta name="description" content="Yiming`s Blog">
+    
+    
+    <link rel="prev" href="https://ymingliu.github.io/2021/sql-advanced-application/" />
+    <link rel="next" href="https://ymingliu.github.io/2021/sql-query-optimization/" />
+    <link rel="canonical" href="https://ymingliu.github.io/2021/sql-index-optimization-case/" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+    <title>
+        
+        
+            MySQL Index Optimization Case | Yiming`s Blog
+        
+    </title>
+    <meta name="title" content="MySQL Index Optimization Case | Yiming`s Blog">
+    
+<link rel="stylesheet" href="/css/main.min.css">
+
+
+    
+    
+ 
+
+<script type="application/ld+json">
+{
+    "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/ymingliu.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "MySQL Index Optimization Case",
+    "headline" : "MySQL Index Optimization Case",
+    "description" : "课程参考 阿里云开发者社区——数据库学习路线 索引优化案例 案例一：单表优化 mysql\x26gt; SELECT * FROM article; id auther_id category_id views comments title content 1 1 1 1 1 0x31 1 2 2 2 2 2 0x32 2 3 1 1 3 3 0x33 3 问题",
+    "inLanguage" : "zh-cn",
+    "author" : "Yiming",
+    "creator" : "Yiming",
+    "publisher": "Yiming",
+    "accountablePerson" : "Yiming",
+    "copyrightHolder" : "Yiming",
+    "copyrightYear" : "2021",
+    "datePublished": "2021-03-12 17:27:39 \x2b0800 CST",
+    "dateModified" : "2021-03-12 17:27:39 \x2b0800 CST",
+    "url" : "https:\/\/ymingliu.github.io\/2021\/sql-index-optimization-case\/",
+    "wordCount" : "8303",
+    "keywords" : [ "MySQL", "Yiming`s Blog"]
+}
+</script>
+
+  </head>
+    <body class="">
+        <div class="wrapper">
+            <nav class="navbar">
+    
+        <progress class="content_progress" max="0" value="0"></progress>
+    
+    <div class="container">
+        
+            <div class="navbar-header header-back2home-logo">
+                <span class="logo_mark" >>$</span>
+                <a href="https://ymingliu.github.io">
+                    <span class="logo_text" >cd /home/</span>
+                    <span class="logo_cursor" ></span>
+                </a>
+            </div>
+        
+        <div class="navbar-right">
+                
+                <span class="menu">
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+                <span class="divide"></span>
+                <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-dark-mode"></i></a>
+                </span>
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+    
+        <progress class="content_progress" max="0" value="0"></progress>
+    
+     <div class="container">
+        <div class="navbar">
+            <div class="navbar-header header-logo">
+                    <a href="https://ymingliu.github.io">Yiming`s Blog</a>
+            </div>
+            <div class="navbar-right">
+                <div><a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-dark-mode"></i></a></div>
+                <div class="menu-toggle">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                <nav class="mb-md">
+                    
+                    
+                        <a class="menu-item" href="/posts/" title="">
+                            <h3>Blog</h3>
+                            <div class="menu-active"></div>
+                        </a>
+                    
+                        <a class="menu-item" href="/categories/" title="">
+                            <h3>Categories</h3>
+                            <div class="menu-active"></div>
+                        </a>
+                    
+                        <a class="menu-item" href="/tags/" title="">
+                            <h3>Tags</h3>
+                            <div class="menu-active"></div>
+                        </a>
+                    
+                        <a class="menu-item" href="/about/" title="">
+                            <h3>About</h3>
+                            <div class="menu-active"></div>
+                        </a>
+                    
+                </nav>
+        </div>
+    </div>
+</nav>
+            <main class="main">
+                <div class="container">
+                    
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">MySQL Index Optimization Case</h1>
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://ymingliu.github.io" rel="author">Yiming</a> with ♥
+                <span class="post-time">
+                on <time datetime=2021-03-12 itemprop="datePublished">March 12, 2021</time>
+                </span>
+                in
+                
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        
+                        
+                        
+                          <a href="https://ymingliu.github.io/categories/mysql/"> MySQL, </a>
+                        
+                        
+                </span>
+                <span class="post-word-count">8303 words</span>
+        </div>
+    </header>
+
+    <div class="post-content">
+        
+
+        
+        
+
+        
+        
+        
+        
+        
+
+        
+        
+        
+
+        <h2 id="课程参考">课程参考</h2>
+<p><a href="https://developer.aliyun.com/learning/roadmap/database?spm=5176.12901015.0.i12901015.4ea8525cMC1llR">阿里云开发者社区——数据库学习路线</a></p>
+<h2 id="索引优化案例">索引优化案例</h2>
+<h4 id="案例一单表优化"><strong>案例一：单表优化</strong></h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> SELECT <span style="color:#f92672">*</span> FROM article;
+</code></pre></div><table>
+<thead>
+<tr>
+<th>id</th>
+<th>auther_id</th>
+<th>category_id</th>
+<th>views</th>
+<th>comments</th>
+<th>title</th>
+<th>content</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>0x31</td>
+<td>1</td>
+</tr>
+<tr>
+<td>2</td>
+<td>2</td>
+<td>2</td>
+<td>2</td>
+<td>2</td>
+<td>0x32</td>
+<td>2</td>
+</tr>
+<tr>
+<td>3</td>
+<td>1</td>
+<td>1</td>
+<td>3</td>
+<td>3</td>
+<td>0x33</td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+<p>问题：查询category_id为1且comments大于1的情况下，views最多的auther_id</p>
+<p>若用以下SQL语句查询（注意<code>LIMIT</code>用法）</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> SELECT id, auther_id FROM article WHERE category_id<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> AND comments<span style="color:#f92672">&gt;</span><span style="color:#ae81ff">1</span> ORDER BY views DESC LIMIT <span style="color:#ae81ff">1</span>;
+</code></pre></div><table>
+<thead>
+<tr>
+<th>id</th>
+<th>auther_id</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>3</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<p>诊断该语句发现Extra中包含Using filesort</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> EXPLAIN SELECT id, auther_id FROM article WHERE category_id<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> AND comments<span style="color:#f92672">&gt;</span><span style="color:#ae81ff">1</span> ORDER BY views DESC LIMIT <span style="color:#ae81ff">1</span>\G
+<span style="color:#f92672">***************************</span> <span style="color:#ae81ff">1</span>. row <span style="color:#f92672">***************************</span>
+id<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+select_type<span style="color:#f92672">:</span> SIMPLE
+table<span style="color:#f92672">:</span> article
+partitions<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+type<span style="color:#f92672">:</span> ALL
+possible_keys<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+key<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+key_len<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+ref<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+rows<span style="color:#f92672">:</span> <span style="color:#ae81ff">2</span>
+filtered<span style="color:#f92672">:</span> <span style="color:#ae81ff">50.00</span>
+Extra<span style="color:#f92672">:</span> Using where; Using filesort
+<span style="color:#ae81ff">1</span> row in set, <span style="color:#ae81ff">1</span> <span style="color:#a6e22e">warning </span>(<span style="color:#ae81ff">0.00</span> sec)
+</code></pre></div><p>考虑创建索引，由于<code>WHERE</code>语句后涉及category_id、comments、views三个列，尝试建立复合索引</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> CREATE INDEX idx_article_ccv ON <span style="color:#a6e22e">article</span>(category_id, comments, views);
+mysql<span style="color:#f92672">&gt;</span> EXPLAIN SELECT id, auther_id FROM article WHERE category_id<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> AND comments<span style="color:#f92672">&gt;</span><span style="color:#ae81ff">1</span> ORDER BY views DESC LIMIT <span style="color:#ae81ff">1</span>\G
+<span style="color:#f92672">***************************</span> <span style="color:#ae81ff">1</span>. row <span style="color:#f92672">***************************</span>
+id<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+select_type<span style="color:#f92672">:</span> SIMPLE
+table<span style="color:#f92672">:</span> article
+partitions<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+type<span style="color:#f92672">:</span> range
+possible_keys<span style="color:#f92672">:</span> idx_article_ccv
+key<span style="color:#f92672">:</span> idx_article_ccv
+key_len<span style="color:#f92672">:</span> <span style="color:#ae81ff">8</span>
+ref<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+rows<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+filtered<span style="color:#f92672">:</span> <span style="color:#ae81ff">100.00</span>
+Extra<span style="color:#f92672">:</span> Using index condition; Using filesort
+<span style="color:#ae81ff">1</span> row in set, <span style="color:#ae81ff">1</span> <span style="color:#a6e22e">warning </span>(<span style="color:#ae81ff">0.00</span> sec)
+</code></pre></div><p>虽然用到了索引（反映在possible_keys和key中），解决了全表扫描问题（type变为range），但是Extra还包含Using filesort。进一步，若将条件comments改为等于1，则诊断结果如下</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> EXPLAIN SELECT id, auther_id FROM article WHERE category_id<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> AND comments<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> ORDER BY views DESC LIMIT <span style="color:#ae81ff">1</span>\G
+<span style="color:#f92672">***************************</span> <span style="color:#ae81ff">1</span>. row <span style="color:#f92672">***************************</span>
+id<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+select_type<span style="color:#f92672">:</span> SIMPLE
+table<span style="color:#f92672">:</span> article
+partitions<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+type<span style="color:#f92672">:</span> ref
+possible_keys<span style="color:#f92672">:</span> idx_article_ccv
+key<span style="color:#f92672">:</span> idx_article_ccv
+key_len<span style="color:#f92672">:</span> <span style="color:#ae81ff">8</span>
+ref<span style="color:#f92672">:</span> const,const
+rows<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+filtered<span style="color:#f92672">:</span> <span style="color:#ae81ff">100.00</span>
+Extra<span style="color:#f92672">:</span> Backward index scan
+<span style="color:#ae81ff">1</span> row in set, <span style="color:#ae81ff">1</span> <span style="color:#a6e22e">warning </span>(<span style="color:#ae81ff">0.00</span> sec)
+</code></pre></div><p>type由range变成了ref，Extra不再包含Using filesort信息。由此可知，<em><strong>范围以后的索引会失效</strong></em>，目前建立的索引不是最优索引（按照BTree索引的工作原理，先排序category_id，如果遇到相同的category_id再排序comments，如果遇到相同的comments再排序views，当comments字段在联合索引里处于中间位置时，由于comments&gt;1是一个范围，MySQL无法利用范围对后面的views进行检索，即range类型查询字段后面的索引无效）。因此，将旧索引删除，尝试只利用category_id、views创建复合索引</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> DROP INDEX idx_article_ccv ON article;
+mysql<span style="color:#f92672">&gt;</span> CREATE INDEX idx_article_cv ON <span style="color:#a6e22e">article</span>(category_id, views);
+mysql<span style="color:#f92672">&gt;</span> EXPLAIN SELECT id, auther_id FROM article WHERE category_id<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> AND comments<span style="color:#f92672">&gt;</span><span style="color:#ae81ff">1</span> ORDER BY views DESC LIMIT <span style="color:#ae81ff">1</span>\G
+<span style="color:#f92672">***************************</span> <span style="color:#ae81ff">1</span>. row <span style="color:#f92672">***************************</span>
+id<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+select_type<span style="color:#f92672">:</span> SIMPLE
+table<span style="color:#f92672">:</span> article
+partitions<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+type<span style="color:#f92672">:</span> ref
+possible_keys<span style="color:#f92672">:</span> idx_article_cv
+key<span style="color:#f92672">:</span> idx_article_cv
+key_len<span style="color:#f92672">:</span> <span style="color:#ae81ff">4</span>
+ref<span style="color:#f92672">:</span> const
+rows<span style="color:#f92672">:</span> <span style="color:#ae81ff">2</span>
+filtered<span style="color:#f92672">:</span> <span style="color:#ae81ff">50.00</span>
+Extra<span style="color:#f92672">:</span> Using where; Backward index scan
+<span style="color:#ae81ff">1</span> row in set, <span style="color:#ae81ff">1</span> <span style="color:#a6e22e">warning </span>(<span style="color:#ae81ff">0.00</span> sec)
+</code></pre></div><p>即没有全表扫描，又没有外部排序，检索和排序都用到了索引。</p>
+<p>当然本题还有其他SQL语句写法</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> EXPLAIN SELECT auther_id FROM article WHERE category_id<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> AND comments<span style="color:#f92672">&gt;</span><span style="color:#ae81ff">1</span> AND views<span style="color:#f92672">=</span>(SELECT <span style="color:#a6e22e">MAX</span>(views) FROM article)\G
+<span style="color:#f92672">***************************</span> <span style="color:#ae81ff">1</span>. row <span style="color:#f92672">***************************</span>
+id<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+select_type<span style="color:#f92672">:</span> PRIMARY
+table<span style="color:#f92672">:</span> article
+partitions<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+type<span style="color:#f92672">:</span> ALL
+possible_keys<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+key<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+key_len<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+ref<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+rows<span style="color:#f92672">:</span> <span style="color:#ae81ff">2</span>
+filtered<span style="color:#f92672">:</span> <span style="color:#ae81ff">50.00</span>
+Extra<span style="color:#f92672">:</span> Using where
+<span style="color:#f92672">***************************</span> <span style="color:#ae81ff">2</span>. row <span style="color:#f92672">***************************</span>
+id<span style="color:#f92672">:</span> <span style="color:#ae81ff">2</span>
+select_type<span style="color:#f92672">:</span> SUBQUERY
+table<span style="color:#f92672">:</span> article
+partitions<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+type<span style="color:#f92672">:</span> ALL
+possible_keys<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+key<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+key_len<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+ref<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+rows<span style="color:#f92672">:</span> <span style="color:#ae81ff">2</span>
+filtered<span style="color:#f92672">:</span> <span style="color:#ae81ff">100.00</span>
+Extra<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+<span style="color:#ae81ff">2</span> rows in set, <span style="color:#ae81ff">1</span> <span style="color:#a6e22e">warning </span>(<span style="color:#ae81ff">0.00</span> sec)
+</code></pre></div><p>但本语句type为ALL，如果数据量增加会十分耗时，并不是最佳查询语句。</p>
+<h4 id="案例二两表优化"><strong>案例二：两表优化</strong></h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> SELECT <span style="color:#f92672">*</span> FROM class;
+</code></pre></div><table>
+<thead>
+<tr>
+<th>id</th>
+<th>card</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>12</td>
+</tr>
+<tr>
+<td>2</td>
+<td>3</td>
+</tr>
+<tr>
+<td>3</td>
+<td>5</td>
+</tr>
+<tr>
+<td>4</td>
+<td>11</td>
+</tr>
+<tr>
+<td>5</td>
+<td>15</td>
+</tr>
+<tr>
+<td>6</td>
+<td>8</td>
+</tr>
+<tr>
+<td>7</td>
+<td>6</td>
+</tr>
+<tr>
+<td>8</td>
+<td>2</td>
+</tr>
+<tr>
+<td>9</td>
+<td>19</td>
+</tr>
+<tr>
+<td>10</td>
+<td>17</td>
+</tr>
+</tbody>
+</table>
+<p>class表保存的是图书分类编号，id为主键列，表示一共有10种图书分类，card表示具体的图书分类编号。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> SELECT <span style="color:#f92672">*</span> FROM book;
+</code></pre></div><table>
+<thead>
+<tr>
+<th>bookid</th>
+<th>card</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>6</td>
+</tr>
+<tr>
+<td>2</td>
+<td>16</td>
+</tr>
+<tr>
+<td>3</td>
+<td>20</td>
+</tr>
+<tr>
+<td>4</td>
+<td>14</td>
+</tr>
+<tr>
+<td>5</td>
+<td>10</td>
+</tr>
+<tr>
+<td>6</td>
+<td>5</td>
+</tr>
+<tr>
+<td>7</td>
+<td>16</td>
+</tr>
+<tr>
+<td>8</td>
+<td>3</td>
+</tr>
+<tr>
+<td>9</td>
+<td>7</td>
+</tr>
+<tr>
+<td>10</td>
+<td>4</td>
+</tr>
+<tr>
+<td>11</td>
+<td>1</td>
+</tr>
+<tr>
+<td>12</td>
+<td>12</td>
+</tr>
+<tr>
+<td>13</td>
+<td>14</td>
+</tr>
+<tr>
+<td>14</td>
+<td>17</td>
+</tr>
+<tr>
+<td>15</td>
+<td>20</td>
+</tr>
+<tr>
+<td>16</td>
+<td>11</td>
+</tr>
+<tr>
+<td>17</td>
+<td>14</td>
+</tr>
+<tr>
+<td>18</td>
+<td>17</td>
+</tr>
+<tr>
+<td>19</td>
+<td>2</td>
+</tr>
+<tr>
+<td>20</td>
+<td>17</td>
+</tr>
+</tbody>
+</table>
+<p>book表保存的是20本图书以及对应的分类编号。现检查一下书籍分类编号与实际分类编号相对应的图书个数。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> SELECT book inner join class ON book.card<span style="color:#f92672">=</span>class.card;
+</code></pre></div><table>
+<thead>
+<tr>
+<th>bookid</th>
+<th>card</th>
+<th>id</th>
+<th>card</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>6</td>
+<td>7</td>
+<td>6</td>
+</tr>
+<tr>
+<td>6</td>
+<td>5</td>
+<td>3</td>
+<td>5</td>
+</tr>
+<tr>
+<td>8</td>
+<td>3</td>
+<td>2</td>
+<td>3</td>
+</tr>
+<tr>
+<td>12</td>
+<td>12</td>
+<td>1</td>
+<td>12</td>
+</tr>
+<tr>
+<td>14</td>
+<td>17</td>
+<td>10</td>
+<td>17</td>
+</tr>
+<tr>
+<td>16</td>
+<td>11</td>
+<td>4</td>
+<td>11</td>
+</tr>
+<tr>
+<td>18</td>
+<td>17</td>
+<td>10</td>
+<td>17</td>
+</tr>
+<tr>
+<td>19</td>
+<td>2</td>
+<td>8</td>
+<td>2</td>
+</tr>
+<tr>
+<td>20</td>
+<td>17</td>
+<td>10</td>
+<td>17</td>
+</tr>
+</tbody>
+</table>
+<p>由上可知，只有9本图书在编，其余11本图书不在实际编号范围内。诊断该语句</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span>  EXPLAIN SELECT <span style="color:#f92672">*</span> FROM class LEFT JOIN book ON class.card<span style="color:#f92672">=</span>book.card\G
+<span style="color:#f92672">***************************</span> <span style="color:#ae81ff">1</span>. row <span style="color:#f92672">***************************</span>
+id<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+select_type<span style="color:#f92672">:</span> SIMPLE
+table<span style="color:#f92672">:</span> class
+partitions<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+type<span style="color:#f92672">:</span> ALL
+possible_keys<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+key<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+key_len<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+ref<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+rows<span style="color:#f92672">:</span> <span style="color:#ae81ff">10</span>
+filtered<span style="color:#f92672">:</span> <span style="color:#ae81ff">100.00</span>
+Extra<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+<span style="color:#f92672">***************************</span> <span style="color:#ae81ff">2</span>. row <span style="color:#f92672">***************************</span>
+id<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+select_type<span style="color:#f92672">:</span> SIMPLE
+table<span style="color:#f92672">:</span> book
+partitions<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+type<span style="color:#f92672">:</span> ALL
+possible_keys<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+key<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+key_len<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+ref<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+rows<span style="color:#f92672">:</span> <span style="color:#ae81ff">20</span>
+filtered<span style="color:#f92672">:</span> <span style="color:#ae81ff">100.00</span>
+Extra<span style="color:#f92672">:</span> Using where; Using join <span style="color:#a6e22e">buffer </span>(hash join)
+<span style="color:#ae81ff">2</span> rows in set, <span style="color:#ae81ff">1</span> <span style="color:#a6e22e">warning </span>(<span style="color:#ae81ff">0.00</span> sec)
+</code></pre></div><p>发现type值为ALL，考虑创建索引优化。但有一个问题，<strong>索引是创建在class表的card列还是book表的card列</strong>？若是创建在class表上</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> ALTER TABLE class ADD INDEX <span style="color:#a6e22e">Y</span>(card);
+mysql<span style="color:#f92672">&gt;</span>  EXPLAIN SELECT <span style="color:#f92672">*</span> FROM class LEFT JOIN book ON class.card<span style="color:#f92672">=</span>book.card\G
+<span style="color:#f92672">***************************</span> <span style="color:#ae81ff">1</span>. row <span style="color:#f92672">***************************</span>
+id<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+select_type<span style="color:#f92672">:</span> SIMPLE
+table<span style="color:#f92672">:</span> class
+partitions<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+type<span style="color:#f92672">:</span> index
+possible_keys<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+key<span style="color:#f92672">:</span> Y
+key_len<span style="color:#f92672">:</span> <span style="color:#ae81ff">4</span>
+ref<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+rows<span style="color:#f92672">:</span> <span style="color:#ae81ff">10</span>
+filtered<span style="color:#f92672">:</span> <span style="color:#ae81ff">100.00</span>
+Extra<span style="color:#f92672">:</span> Using index
+<span style="color:#f92672">***************************</span> <span style="color:#ae81ff">2</span>. row <span style="color:#f92672">***************************</span>
+id<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+select_type<span style="color:#f92672">:</span> SIMPLE
+table<span style="color:#f92672">:</span> book
+partitions<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+type<span style="color:#f92672">:</span> ALL
+possible_keys<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+key<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+key_len<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+ref<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+rows<span style="color:#f92672">:</span> <span style="color:#ae81ff">20</span>
+filtered<span style="color:#f92672">:</span> <span style="color:#ae81ff">100.00</span>
+Extra<span style="color:#f92672">:</span> Using where; Using join <span style="color:#a6e22e">buffer </span>(hash join)
+<span style="color:#ae81ff">2</span> rows in set, <span style="color:#ae81ff">1</span> <span style="color:#a6e22e">warning </span>(<span style="color:#ae81ff">0.00</span> sec)
+</code></pre></div><p>其中一个type为index，全索引扫描，且观察rows可知，查询匹配记录所要读取的行数为30行，没有减少。进一步，若要在book表创建索引</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> DROP INDEX Y ON class;
+mysql<span style="color:#f92672">&gt;</span> ALTER TABLE book ADD INDEX <span style="color:#a6e22e">Y</span>(card);
+mysql<span style="color:#f92672">&gt;</span>  EXPLAIN SELECT <span style="color:#f92672">*</span> FROM class LEFT JOIN book ON class.card<span style="color:#f92672">=</span>book.card\G
+<span style="color:#f92672">***************************</span> <span style="color:#ae81ff">1</span>. row <span style="color:#f92672">***************************</span>
+id<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+select_type<span style="color:#f92672">:</span> SIMPLE
+table<span style="color:#f92672">:</span> class
+partitions<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+type<span style="color:#f92672">:</span> ALL
+possible_keys<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+key<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+key_len<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+ref<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+rows<span style="color:#f92672">:</span> <span style="color:#ae81ff">10</span>
+filtered<span style="color:#f92672">:</span> <span style="color:#ae81ff">100.00</span>
+Extra<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+<span style="color:#f92672">***************************</span> <span style="color:#ae81ff">2</span>. row <span style="color:#f92672">***************************</span>
+id<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+select_type<span style="color:#f92672">:</span> SIMPLE
+table<span style="color:#f92672">:</span> book
+partitions<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+type<span style="color:#f92672">:</span> ref
+possible_keys<span style="color:#f92672">:</span> Y
+key<span style="color:#f92672">:</span> Y
+key_len<span style="color:#f92672">:</span> <span style="color:#ae81ff">4</span>
+ref<span style="color:#f92672">:</span> test2.class.card
+rows<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+filtered<span style="color:#f92672">:</span> <span style="color:#ae81ff">100.00</span>
+Extra<span style="color:#f92672">:</span> Using index
+<span style="color:#ae81ff">2</span> rows in set, <span style="color:#ae81ff">1</span> <span style="color:#a6e22e">warning </span>(<span style="color:#ae81ff">0.00</span> sec)
+</code></pre></div><p>其中一个type变为ref，rows值缩减为11。显然，索引创建在右表上优化效果明显。这是由左连接特性决定的，<code>LEFT JION</code>本质上是先将两表进行笛卡尔积，再根据<code>JION</code>后的条件删选满足要求的记录，即条件是用于确定如何从右表搜索行的，左边不管是否满足条件记录都会至少补NULL后出现一次。因此，<strong>对于<code>LEFT JOIN</code>左外连接，应在右表创建索引</strong>。同样<strong>对于<code>RIGHT JOIN</code>，应在左表创建索引</strong>，能达到同样优化效果。</p>
+<p>注意若在<code>book</code>上创建索引，<code>class LEFT JOIN book</code><strong>等价于</strong><code>book RIGHT JOIN class</code>，优化效果是一样的且检索结果相同。</p>
+<h4 id="案例三三表优化"><strong>案例三：三表优化</strong></h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> SELECT <span style="color:#f92672">*</span> FROM painting;
+</code></pre></div><table>
+<thead>
+<tr>
+<th>paintingid</th>
+<th>card</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>19</td>
+</tr>
+<tr>
+<td>2</td>
+<td>8</td>
+</tr>
+<tr>
+<td>3</td>
+<td>5</td>
+</tr>
+<tr>
+<td>4</td>
+<td>19</td>
+</tr>
+<tr>
+<td>5</td>
+<td>19</td>
+</tr>
+<tr>
+<td>6</td>
+<td>19</td>
+</tr>
+<tr>
+<td>7</td>
+<td>17</td>
+</tr>
+<tr>
+<td>8</td>
+<td>7</td>
+</tr>
+<tr>
+<td>9</td>
+<td>3</td>
+</tr>
+<tr>
+<td>10</td>
+<td>12</td>
+</tr>
+<tr>
+<td>11</td>
+<td>12</td>
+</tr>
+<tr>
+<td>12</td>
+<td>5</td>
+</tr>
+<tr>
+<td>13</td>
+<td>7</td>
+</tr>
+<tr>
+<td>14</td>
+<td>1</td>
+</tr>
+<tr>
+<td>15</td>
+<td>4</td>
+</tr>
+<tr>
+<td>16</td>
+<td>16</td>
+</tr>
+<tr>
+<td>17</td>
+<td>7</td>
+</tr>
+<tr>
+<td>18</td>
+<td>8</td>
+</tr>
+<tr>
+<td>19</td>
+<td>16</td>
+</tr>
+<tr>
+<td>20</td>
+<td>15</td>
+</tr>
+</tbody>
+</table>
+<p>向MySQL中再插入一张画册分类表，包含20张画册及其每张画册在哪本图书上（即对应bookid）。则本案例重点在于，<strong>对于三表连接，索引应建立在哪些字段上</strong>？若不建任何索引，三表连接的效果及诊断如下所示</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> SELECT <span style="color:#f92672">*</span> FROM class LEFT JOIN book ON class.card<span style="color:#f92672">=</span>book.card LEFT JOIN painting ON book.card<span style="color:#f92672">=</span>painting.card;
+</code></pre></div><table>
+<thead>
+<tr>
+<th>id</th>
+<th>card</th>
+<th>bookid</th>
+<th>card</th>
+<th>paintingid</th>
+<th>card</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>12</td>
+<td>12</td>
+<td>12</td>
+<td>10</td>
+<td>12</td>
+</tr>
+<tr>
+<td>1</td>
+<td>12</td>
+<td>12</td>
+<td>12</td>
+<td>11</td>
+<td>12</td>
+</tr>
+<tr>
+<td>2</td>
+<td>3</td>
+<td>8</td>
+<td>3</td>
+<td>9</td>
+<td>3</td>
+</tr>
+<tr>
+<td>3</td>
+<td>5</td>
+<td>6</td>
+<td>5</td>
+<td>3</td>
+<td>5</td>
+</tr>
+<tr>
+<td>3</td>
+<td>5</td>
+<td>6</td>
+<td>5</td>
+<td>12</td>
+<td>5</td>
+</tr>
+<tr>
+<td>4</td>
+<td>11</td>
+<td>16</td>
+<td>11</td>
+<td>NULL</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>5</td>
+<td>15</td>
+<td>NULL</td>
+<td>NULL</td>
+<td>NULL</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>6</td>
+<td>8</td>
+<td>NULL</td>
+<td>NULL</td>
+<td>NULL</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>7</td>
+<td>6</td>
+<td>1</td>
+<td>6</td>
+<td>NULL</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>8</td>
+<td>2</td>
+<td>19</td>
+<td>2</td>
+<td>NULL</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>9</td>
+<td>19</td>
+<td>NULL</td>
+<td>NULL</td>
+<td>NULL</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>10</td>
+<td>17</td>
+<td>14</td>
+<td>17</td>
+<td>7</td>
+<td>17</td>
+</tr>
+<tr>
+<td>10</td>
+<td>17</td>
+<td>18</td>
+<td>17</td>
+<td>7</td>
+<td>17</td>
+</tr>
+<tr>
+<td>10</td>
+<td>17</td>
+<td>20</td>
+<td>17</td>
+<td>7</td>
+<td>17</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> EXPLAIN SELECT <span style="color:#f92672">*</span> FROM class LEFT JOIN book ON class.card<span style="color:#f92672">=</span>book.card LEFT JOIN painting ON book.card<span style="color:#f92672">=</span>painting.card\G
+<span style="color:#f92672">***************************</span> <span style="color:#ae81ff">1</span>. row <span style="color:#f92672">***************************</span>
+id<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+select_type<span style="color:#f92672">:</span> SIMPLE
+table<span style="color:#f92672">:</span> class
+partitions<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+type<span style="color:#f92672">:</span> ALL
+possible_keys<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+key<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+key_len<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+ref<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+rows<span style="color:#f92672">:</span> <span style="color:#ae81ff">10</span>
+filtered<span style="color:#f92672">:</span> <span style="color:#ae81ff">100.00</span>
+Extra<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+<span style="color:#f92672">***************************</span> <span style="color:#ae81ff">2</span>. row <span style="color:#f92672">***************************</span>
+id<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+select_type<span style="color:#f92672">:</span> SIMPLE
+table<span style="color:#f92672">:</span> book
+partitions<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+type<span style="color:#f92672">:</span> ALL
+possible_keys<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+key<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+key_len<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+ref<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+rows<span style="color:#f92672">:</span> <span style="color:#ae81ff">20</span>
+filtered<span style="color:#f92672">:</span> <span style="color:#ae81ff">100.00</span>
+Extra<span style="color:#f92672">:</span> Using where; Using join <span style="color:#a6e22e">buffer </span>(hash join)
+<span style="color:#f92672">***************************</span> <span style="color:#ae81ff">3</span>. row <span style="color:#f92672">***************************</span>
+id<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+select_type<span style="color:#f92672">:</span> SIMPLE
+table<span style="color:#f92672">:</span> painting
+partitions<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+type<span style="color:#f92672">:</span> ALL
+possible_keys<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+key<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+key_len<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+ref<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+rows<span style="color:#f92672">:</span> <span style="color:#ae81ff">20</span>
+filtered<span style="color:#f92672">:</span> <span style="color:#ae81ff">100.00</span>
+Extra<span style="color:#f92672">:</span> Using where; Using join <span style="color:#a6e22e">buffer </span>(hash join)
+<span style="color:#ae81ff">3</span> rows in set, <span style="color:#ae81ff">1</span> <span style="color:#a6e22e">warning </span>(<span style="color:#ae81ff">0.00</span> sec)
+</code></pre></div><p>三条语句全部为全表扫描。根据案例二的结论，尝试在book和painting上分别建立索引</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> ALTER TABLE book ADD INDEX <span style="color:#a6e22e">Y</span>(card);
+mysql<span style="color:#f92672">&gt;</span> ALTER TABLE painting ADD INDEX <span style="color:#a6e22e">Z</span>(card);
+mysql<span style="color:#f92672">&gt;</span> EXPLAIN SELECT <span style="color:#f92672">*</span> FROM class LEFT JOIN book ON class.card<span style="color:#f92672">=</span>book.card LEFT JOIN painting ON book.card<span style="color:#f92672">=</span>painting.card\G
+<span style="color:#f92672">***************************</span> <span style="color:#ae81ff">1</span>. row <span style="color:#f92672">***************************</span>
+id<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+select_type<span style="color:#f92672">:</span> SIMPLE
+table<span style="color:#f92672">:</span> class
+partitions<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+type<span style="color:#f92672">:</span> ALL
+possible_keys<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+key<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+key_len<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+ref<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+rows<span style="color:#f92672">:</span> <span style="color:#ae81ff">10</span>
+filtered<span style="color:#f92672">:</span> <span style="color:#ae81ff">100.00</span>
+Extra<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+<span style="color:#f92672">***************************</span> <span style="color:#ae81ff">2</span>. row <span style="color:#f92672">***************************</span>
+id<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+select_type<span style="color:#f92672">:</span> SIMPLE
+table<span style="color:#f92672">:</span> book
+partitions<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+type<span style="color:#f92672">:</span> ref
+possible_keys<span style="color:#f92672">:</span> Y
+key<span style="color:#f92672">:</span> Y
+key_len<span style="color:#f92672">:</span> <span style="color:#ae81ff">4</span>
+ref<span style="color:#f92672">:</span> test2.class.card
+rows<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+filtered<span style="color:#f92672">:</span> <span style="color:#ae81ff">100.00</span>
+Extra<span style="color:#f92672">:</span> Using index
+<span style="color:#f92672">***************************</span> <span style="color:#ae81ff">3</span>. row <span style="color:#f92672">***************************</span>
+id<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+select_type<span style="color:#f92672">:</span> SIMPLE
+table<span style="color:#f92672">:</span> painting
+partitions<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+type<span style="color:#f92672">:</span> ref
+possible_keys<span style="color:#f92672">:</span> Z
+key<span style="color:#f92672">:</span> Z
+key_len<span style="color:#f92672">:</span> <span style="color:#ae81ff">4</span>
+ref<span style="color:#f92672">:</span> test2.book.card
+rows<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+filtered<span style="color:#f92672">:</span> <span style="color:#ae81ff">100.00</span>
+Extra<span style="color:#f92672">:</span> Using index
+<span style="color:#ae81ff">3</span> rows in set, <span style="color:#ae81ff">1</span> <span style="color:#a6e22e">warning </span>(<span style="color:#ae81ff">0.00</span> sec)
+</code></pre></div><p>显然后两行的type变为ref且rows由50变为12，优化效果很好。因此索引需要设置在经常查询的字段中。</p>
+<hr>
+<p><strong>补充</strong></p>
+<p>JOIN语句的优化</p>
+<ul>
+<li>尽可能减少JOIN语句中NestedLoop的循环总次数，永远用小结果集驱动大结果集</li>
+<li>优先优化NestedLoop的内层循环</li>
+<li>保证JOIN语句中被驱动表上JOIN条件字段已经被索引</li>
+<li>当无法保证被驱动表的JOIN字段被索引且内存资源充足的前提下，不要太吝啬JoinBuffer的设置</li>
+</ul>
+<hr>
+<h4 id="案例四索引失效"><strong>案例四：索引失效</strong></h4>
+<p>常见的索引失效情况有如下10种</p>
+<p>1、全值匹配</p>
+<p>2、违背最佳左前缀法则</p>
+<p>3、不在索引列上做任何操作，如计算、函数、自动或手动的类型转换，否则会造成全表扫描</p>
+<p>4、存储引擎不能使用索引范围条件右边的列</p>
+<p>5、尽量使用覆盖索引，即只访问索引包含的查询，且索引列与查询列一致，减少<code>SELECT</code></p>
+<p>6、MySQL在使用不等于（'!='或者'&lt;&gt;&rsquo;）的时候无法使用索引导致全表扫描（注意新版本MySQL对其做了修正，可以使用索引）</p>
+<p>7、<code>IS NULL</code>，<code>IS NOT NULL</code>也无法使用索引</p>
+<p>8、<code>LIKE</code>后的模糊查询以通配符<code>%abc...</code>开头，MySQL索引失效会变成全表扫描</p>
+<p>9、字符串不加单引号会导致索引失效（实际业务中决不能犯！）</p>
+<p>10、少用<code>OR</code>，用它连接会导致索引失效（注意新版本MySQL对其做了修正，可以使用索引）</p>
+<p>首先创建一张员工记录表，分别包含员工ID、姓名、年龄、职位和入职时间。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> select <span style="color:#f92672">*</span> from staffs;
+</code></pre></div><table>
+<thead>
+<tr>
+<th>id</th>
+<th>NAME</th>
+<th>age</th>
+<th>pos</th>
+<th>add_time</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>z3</td>
+<td>22</td>
+<td>manager</td>
+<td>2021-03-12 10:13:09</td>
+</tr>
+<tr>
+<td>2</td>
+<td>July</td>
+<td>23</td>
+<td>dev</td>
+<td>2021-03-12 10:13:31</td>
+</tr>
+<tr>
+<td>3</td>
+<td>2000</td>
+<td>23</td>
+<td>dev</td>
+<td>2021-03-12 10:13:43</td>
+</tr>
+</tbody>
+</table>
+<p>创建一个复合索引</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> ALTER TABLE staffs ADD INDEX <span style="color:#a6e22e">idx_staffs_nameAgePos</span>(NAME, age, pos);
+</code></pre></div><p>&mdash;&mdash;&mdash;&mdash; 情况2</p>
+<p>依次诊断如下语句</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> EXPLAIN SELECT <span style="color:#f92672">*</span> FROM staffs WHERE NAME<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;July&#39;</span>\G
+<span style="color:#f92672">***************************</span> <span style="color:#ae81ff">1</span>. row <span style="color:#f92672">***************************</span>
+id<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+select_type<span style="color:#f92672">:</span> SIMPLE
+table<span style="color:#f92672">:</span> staffs
+partitions<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+type<span style="color:#f92672">:</span> ref
+possible_keys<span style="color:#f92672">:</span> idx_staffs_nameAgePos
+key<span style="color:#f92672">:</span> idx_staffs_nameAgePos
+key_len<span style="color:#f92672">:</span> <span style="color:#ae81ff">74</span>
+ref<span style="color:#f92672">:</span> const
+rows<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+filtered<span style="color:#f92672">:</span> <span style="color:#ae81ff">100.00</span>
+Extra<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+<span style="color:#ae81ff">1</span> row in set, <span style="color:#ae81ff">1</span> <span style="color:#a6e22e">warning </span>(<span style="color:#ae81ff">0.00</span> sec)
+mysql<span style="color:#f92672">&gt;</span> EXPLAIN SELECT <span style="color:#f92672">*</span> FROM staffs WHERE NAME<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;July&#39;</span> AND age<span style="color:#f92672">=</span><span style="color:#ae81ff">25</span>\G
+<span style="color:#f92672">***************************</span> <span style="color:#ae81ff">1</span>. row <span style="color:#f92672">***************************</span>
+id<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+select_type<span style="color:#f92672">:</span> SIMPLE
+table<span style="color:#f92672">:</span> staffs
+partitions<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+type<span style="color:#f92672">:</span> ref
+possible_keys<span style="color:#f92672">:</span> idx_staffs_nameAgePos
+key<span style="color:#f92672">:</span> idx_staffs_nameAgePos
+key_len<span style="color:#f92672">:</span> <span style="color:#ae81ff">78</span>
+ref<span style="color:#f92672">:</span> const,const
+rows<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+filtered<span style="color:#f92672">:</span> <span style="color:#ae81ff">100.00</span>
+Extra<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+<span style="color:#ae81ff">1</span> row in set, <span style="color:#ae81ff">1</span> <span style="color:#a6e22e">warning </span>(<span style="color:#ae81ff">0.00</span> sec)
+mysql<span style="color:#f92672">&gt;</span> EXPLAIN SELECT <span style="color:#f92672">*</span> FROM staffs WHERE NAME<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;July&#39;</span> AND age<span style="color:#f92672">=</span><span style="color:#ae81ff">25</span> AND pos<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;dev&#39;</span>\G
+<span style="color:#f92672">***************************</span> <span style="color:#ae81ff">1</span>. row <span style="color:#f92672">***************************</span>
+id<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+select_type<span style="color:#f92672">:</span> SIMPLE
+table<span style="color:#f92672">:</span> staffs
+partitions<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+type<span style="color:#f92672">:</span> ref
+possible_keys<span style="color:#f92672">:</span> idx_staffs_nameAgePos
+key<span style="color:#f92672">:</span> idx_staffs_nameAgePos
+key_len<span style="color:#f92672">:</span> <span style="color:#ae81ff">140</span>
+ref<span style="color:#f92672">:</span> const,const,const
+rows<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+filtered<span style="color:#f92672">:</span> <span style="color:#ae81ff">100.00</span>
+Extra<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+<span style="color:#ae81ff">1</span> row in set, <span style="color:#ae81ff">1</span> <span style="color:#a6e22e">warning </span>(<span style="color:#ae81ff">0.00</span> sec)
+</code></pre></div><p>首先可以观察到，<code>WHERE</code>条件使用了索引的部分列或全部列，但只要被复合索引覆盖且与复合索引的顺序相同，key都返回idx_staffs_nameAgePos，且随着条件的增加，key_len由74变为78再变为140，表示索引没有失效。</p>
+<p>但如果使用如下语句查询</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> SELECT <span style="color:#f92672">*</span> FROM staffs WHERE age<span style="color:#f92672">=</span><span style="color:#ae81ff">23</span> AND pos<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;dev&#39;</span>;
+</code></pre></div><table>
+<thead>
+<tr>
+<th>id</th>
+<th>NAME</th>
+<th>age</th>
+<th>pos</th>
+<th>add_time</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2</td>
+<td>July</td>
+<td>23</td>
+<td>dev</td>
+<td>2021-03-12 10:13:31</td>
+</tr>
+<tr>
+<td>3</td>
+<td>2000</td>
+<td>23</td>
+<td>dev</td>
+<td>2021-03-12 10:13:43</td>
+</tr>
+</tbody>
+</table>
+<p>即<code>WHERE</code>条件不包含复合索引的第一列，则诊断结果为</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> EXPLAIN SELECT <span style="color:#f92672">*</span> FROM staffs WHERE age<span style="color:#f92672">=</span><span style="color:#ae81ff">23</span> AND pos<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;dev&#39;</span>\G
+<span style="color:#f92672">***************************</span> <span style="color:#ae81ff">1</span>. row <span style="color:#f92672">***************************</span>
+id<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+select_type<span style="color:#f92672">:</span> SIMPLE
+table<span style="color:#f92672">:</span> staffs
+partitions<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+type<span style="color:#f92672">:</span> ALL
+possible_keys<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+key<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+key_len<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+ref<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+rows<span style="color:#f92672">:</span> <span style="color:#ae81ff">3</span>
+filtered<span style="color:#f92672">:</span> <span style="color:#ae81ff">33.33</span>
+Extra<span style="color:#f92672">:</span> Using where
+<span style="color:#ae81ff">1</span> row in set, <span style="color:#ae81ff">1</span> <span style="color:#a6e22e">warning </span>(<span style="color:#ae81ff">0.00</span> sec)
+</code></pre></div><p>type为ALL，全表扫描；possible_keys和key都为NULL，建立了索引但没用上；<code>WHERE</code>后明明为等值查询，但ref不是const而是NULL。若进一步<code>WHERE</code>条件也不包含复合索引的第二列，诊断结果同上</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> EXPLAIN SELECT <span style="color:#f92672">*</span> FROM staffs WHERE pos<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;dev&#39;</span>\G
+<span style="color:#f92672">***************************</span> <span style="color:#ae81ff">1</span>. row <span style="color:#f92672">***************************</span>
+id<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+select_type<span style="color:#f92672">:</span> SIMPLE
+table<span style="color:#f92672">:</span> staffs
+partitions<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+type<span style="color:#f92672">:</span> ALL
+possible_keys<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+key<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+key_len<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+ref<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+rows<span style="color:#f92672">:</span> <span style="color:#ae81ff">3</span>
+filtered<span style="color:#f92672">:</span> <span style="color:#ae81ff">33.33</span>
+Extra<span style="color:#f92672">:</span> Using where
+<span style="color:#ae81ff">1</span> row in set, <span style="color:#ae81ff">1</span> <span style="color:#a6e22e">warning </span>(<span style="color:#ae81ff">0.00</span> sec)
+</code></pre></div><p>综上，上述两条语句都违背了<strong>最佳左前缀法则</strong>，即如果索引了多列，查询要从索引的最左列开始并且不跳过索引中的任何列。</p>
+<p>若查询结果不对age有要求，即没有索引中的中间列</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> EXPLAIN SELECT <span style="color:#f92672">*</span> FROM staffs WHERE NAME<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;July&#39;</span> AND pos<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;dev&#39;</span>\G
+<span style="color:#f92672">***************************</span> <span style="color:#ae81ff">1</span>. row <span style="color:#f92672">***************************</span>
+id<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+select_type<span style="color:#f92672">:</span> SIMPLE
+table<span style="color:#f92672">:</span> staffs
+partitions<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+type<span style="color:#f92672">:</span> ref
+possible_keys<span style="color:#f92672">:</span> idx_staffs_nameAgePos
+key<span style="color:#f92672">:</span> idx_staffs_nameAgePos
+key_len<span style="color:#f92672">:</span> <span style="color:#ae81ff">74</span>
+ref<span style="color:#f92672">:</span> const
+rows<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+filtered<span style="color:#f92672">:</span> <span style="color:#ae81ff">33.33</span>
+Extra<span style="color:#f92672">:</span> Using index condition
+<span style="color:#ae81ff">1</span> row in set, <span style="color:#ae81ff">1</span> <span style="color:#a6e22e">warning </span>(<span style="color:#ae81ff">0.00</span> sec)
+</code></pre></div><p>虽然索引没有失效，但只有<code>NAME='July'</code>使用到了索引，即索引部分被使用，对于此条SQL语句，本索引也不是最优的。</p>
+<p>&mdash;&mdash;&mdash;&mdash; 情况3</p>
+<p>查询NAME字段的前4位为&rsquo;July&rsquo;的员工，使用如下SQL语句</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> SELECT <span style="color:#f92672">*</span> FROM staffs WHERE <span style="color:#a6e22e">left</span>(NAME,<span style="color:#ae81ff">4</span>)<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;July&#39;</span>;
+</code></pre></div><table>
+<thead>
+<tr>
+<th>id</th>
+<th>NAME</th>
+<th>age</th>
+<th>pos</th>
+<th>add_time</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2</td>
+<td>July</td>
+<td>23</td>
+<td>dev</td>
+<td>2021-03-12 10:13:31</td>
+</tr>
+</tbody>
+</table>
+<p>诊断该语句</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> EXPLAIN SELECT <span style="color:#f92672">*</span> FROM staffs WHERE <span style="color:#a6e22e">left</span>(NAME,<span style="color:#ae81ff">4</span>)<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;July&#39;</span>\G
+<span style="color:#f92672">***************************</span> <span style="color:#ae81ff">1</span>. row <span style="color:#f92672">***************************</span>
+id<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+select_type<span style="color:#f92672">:</span> SIMPLE
+table<span style="color:#f92672">:</span> staffs
+partitions<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+type<span style="color:#f92672">:</span> ALL
+possible_keys<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+key<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+key_len<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+ref<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+rows<span style="color:#f92672">:</span> <span style="color:#ae81ff">3</span>
+filtered<span style="color:#f92672">:</span> <span style="color:#ae81ff">100.00</span>
+Extra<span style="color:#f92672">:</span> Using where
+<span style="color:#ae81ff">1</span> row in set, <span style="color:#ae81ff">1</span> <span style="color:#a6e22e">warning </span>(<span style="color:#ae81ff">0.00</span> sec)
+</code></pre></div><p>即使NAME是复合索引的首列，索引也同样失效。因此不能在索引列上做任何操作，否则造成全表扫描。</p>
+<p>&mdash;&mdash;&mdash;&mdash; 情况4</p>
+<p>诊断如下语句</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> EXPLAIN SELECT <span style="color:#f92672">*</span> FROM staffs WHERE NAME<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;July&#39;</span> AND age<span style="color:#f92672">&gt;</span><span style="color:#ae81ff">20</span> AND pos<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;manager&#39;</span>\G
+<span style="color:#f92672">***************************</span> <span style="color:#ae81ff">1</span>. row <span style="color:#f92672">***************************</span>
+id<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+select_type<span style="color:#f92672">:</span> SIMPLE
+table<span style="color:#f92672">:</span> staffs
+partitions<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+type<span style="color:#f92672">:</span> range
+possible_keys<span style="color:#f92672">:</span> idx_staffs_nameAgePos
+key<span style="color:#f92672">:</span> idx_staffs_nameAgePos
+key_len<span style="color:#f92672">:</span> <span style="color:#ae81ff">78</span>
+ref<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+rows<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+filtered<span style="color:#f92672">:</span> <span style="color:#ae81ff">33.33</span>
+Extra<span style="color:#f92672">:</span> Using index condition
+<span style="color:#ae81ff">1</span> row in set, <span style="color:#ae81ff">1</span> <span style="color:#a6e22e">warning </span>(<span style="color:#ae81ff">0.01</span> sec)
+</code></pre></div><p>发现pos条件的查询没有使用索引，且type值为range，这是由<code>WHERE</code>条件中<code>age&gt;20</code>造成的，本质上索引中的NAME列用于查找，age列用于排序。因此范围条件后边的列索引失效。</p>
+<p>&mdash;&mdash;&mdash;&mdash; 情况5</p>
+<p>对比如下两条查询语句</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> EXPLAIN SELECT <span style="color:#f92672">*</span> FROM staffs WHERE NAME<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;July&#39;</span> AND age<span style="color:#f92672">=</span><span style="color:#ae81ff">23</span> AND pos<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;manager&#39;</span>\G
+<span style="color:#f92672">***************************</span> <span style="color:#ae81ff">1</span>. row <span style="color:#f92672">***************************</span>
+id<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+select_type<span style="color:#f92672">:</span> SIMPLE
+table<span style="color:#f92672">:</span> staffs
+partitions<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+type<span style="color:#f92672">:</span> ref
+possible_keys<span style="color:#f92672">:</span> idx_staffs_nameAgePos
+key<span style="color:#f92672">:</span> idx_staffs_nameAgePos
+key_len<span style="color:#f92672">:</span> <span style="color:#ae81ff">140</span>
+ref<span style="color:#f92672">:</span> const,const,const
+rows<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+filtered<span style="color:#f92672">:</span> <span style="color:#ae81ff">100.00</span>
+Extra<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+<span style="color:#ae81ff">1</span> row in set, <span style="color:#ae81ff">1</span> <span style="color:#a6e22e">warning </span>(<span style="color:#ae81ff">0.00</span> sec)
+mysql<span style="color:#f92672">&gt;</span> EXPLAIN SELECT NAME, age, pos FROM staffs WHERE NAME<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;July&#39;</span> AND age<span style="color:#f92672">=</span><span style="color:#ae81ff">23</span> AND pos<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;manager&#39;</span>\G
+<span style="color:#f92672">***************************</span> <span style="color:#ae81ff">1</span>. row <span style="color:#f92672">***************************</span>
+id<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+select_type<span style="color:#f92672">:</span> SIMPLE
+table<span style="color:#f92672">:</span> staffs
+partitions<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+type<span style="color:#f92672">:</span> ref
+possible_keys<span style="color:#f92672">:</span> idx_staffs_nameAgePos
+key<span style="color:#f92672">:</span> idx_staffs_nameAgePos
+key_len<span style="color:#f92672">:</span> <span style="color:#ae81ff">140</span>
+ref<span style="color:#f92672">:</span> const,const,const
+rows<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+filtered<span style="color:#f92672">:</span> <span style="color:#ae81ff">100.00</span>
+Extra<span style="color:#f92672">:</span> Using index
+<span style="color:#ae81ff">1</span> row in set, <span style="color:#ae81ff">1</span> <span style="color:#a6e22e">warning </span>(<span style="color:#ae81ff">0.00</span> sec)
+</code></pre></div><p>第一条是查询全部列<code>SELECT *</code>，第二条查询复合索引包含的列，则Extra由NULL变为Using index。因此要尽量减少多余列的查询。</p>
+<p>注意与课程讲解不同，若将age条件变为范围，<code>SELECT</code>全部列或者索引列诊断结果相同，且都用到了索引中的age列。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> EXPLAIN SELECT <span style="color:#f92672">*</span> FROM staffs WHERE NAME<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;July&#39;</span> AND age<span style="color:#f92672">&gt;</span><span style="color:#ae81ff">20</span> AND pos<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;manager&#39;</span>\G
+<span style="color:#f92672">***************************</span> <span style="color:#ae81ff">1</span>. row <span style="color:#f92672">***************************</span>
+id<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+select_type<span style="color:#f92672">:</span> SIMPLE
+table<span style="color:#f92672">:</span> staffs
+partitions<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+type<span style="color:#f92672">:</span> range
+possible_keys<span style="color:#f92672">:</span> idx_staffs_nameAgePos
+key<span style="color:#f92672">:</span> idx_staffs_nameAgePos
+key_len<span style="color:#f92672">:</span> <span style="color:#ae81ff">78</span>
+ref<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+rows<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+filtered<span style="color:#f92672">:</span> <span style="color:#ae81ff">33.33</span>
+Extra<span style="color:#f92672">:</span> Using index condition
+<span style="color:#ae81ff">1</span> row in set, <span style="color:#ae81ff">1</span> <span style="color:#a6e22e">warning </span>(<span style="color:#ae81ff">0.00</span> sec)
+mysql<span style="color:#f92672">&gt;</span> EXPLAIN SELECT NAME, age, pos FROM staffs WHERE NAME<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;July&#39;</span> AND age<span style="color:#f92672">&gt;</span><span style="color:#ae81ff">20</span> AND pos<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;manager&#39;</span>\G
+<span style="color:#f92672">***************************</span> <span style="color:#ae81ff">1</span>. row <span style="color:#f92672">***************************</span>
+id<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+select_type<span style="color:#f92672">:</span> SIMPLE
+table<span style="color:#f92672">:</span> staffs
+partitions<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+type<span style="color:#f92672">:</span> range
+possible_keys<span style="color:#f92672">:</span> idx_staffs_nameAgePos
+key<span style="color:#f92672">:</span> idx_staffs_nameAgePos
+key_len<span style="color:#f92672">:</span> <span style="color:#ae81ff">78</span>
+ref<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+rows<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+filtered<span style="color:#f92672">:</span> <span style="color:#ae81ff">33.33</span>
+Extra<span style="color:#f92672">:</span> Using where; Using index
+<span style="color:#ae81ff">1</span> row in set, <span style="color:#ae81ff">1</span> <span style="color:#a6e22e">warning </span>(<span style="color:#ae81ff">0.00</span> sec)
+</code></pre></div><p>&mdash;&mdash;&mdash;&mdash; 情况6</p>
+<p>诊断如下语句</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> EXPLAIN SELECT <span style="color:#f92672">*</span> FROM staffs WHERE NAME<span style="color:#f92672">!=</span><span style="color:#e6db74">&#39;July&#39;</span>\G
+<span style="color:#f92672">***************************</span> <span style="color:#ae81ff">1</span>. row <span style="color:#f92672">***************************</span>
+id<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+select_type<span style="color:#f92672">:</span> SIMPLE
+table<span style="color:#f92672">:</span> staffs
+partitions<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+type<span style="color:#f92672">:</span> range
+possible_keys<span style="color:#f92672">:</span> idx_staffs_nameAgePos
+key<span style="color:#f92672">:</span> idx_staffs_nameAgePos
+key_len<span style="color:#f92672">:</span> <span style="color:#ae81ff">74</span>
+ref<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+rows<span style="color:#f92672">:</span> <span style="color:#ae81ff">2</span>
+filtered<span style="color:#f92672">:</span> <span style="color:#ae81ff">100.00</span>
+Extra<span style="color:#f92672">:</span> Using index condition
+<span style="color:#ae81ff">1</span> row in set, <span style="color:#ae81ff">1</span> <span style="color:#a6e22e">warning </span>(<span style="color:#ae81ff">0.00</span> sec)
+</code></pre></div><p>注意与课程结果不同，本条语句在课程中type为ALL，possible_keys有值但key未NULL，Extra为Using where，即没有利用索引。但此SQL版本下该语句使用了索引，<strong>注意Extra返回值为Using index condition，这是前面没有提到过的</strong>。下语句同上</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> EXPLAIN SELECT <span style="color:#f92672">*</span> FROM staffs WHERE NAME<span style="color:#f92672">&lt;&gt;</span><span style="color:#e6db74">&#39;July&#39;</span>\G
+<span style="color:#f92672">***************************</span> <span style="color:#ae81ff">1</span>. row <span style="color:#f92672">***************************</span>
+id<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+select_type<span style="color:#f92672">:</span> SIMPLE
+table<span style="color:#f92672">:</span> staffs
+partitions<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+type<span style="color:#f92672">:</span> range
+possible_keys<span style="color:#f92672">:</span> idx_staffs_nameAgePos
+key<span style="color:#f92672">:</span> idx_staffs_nameAgePos
+key_len<span style="color:#f92672">:</span> <span style="color:#ae81ff">74</span>
+ref<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+rows<span style="color:#f92672">:</span> <span style="color:#ae81ff">2</span>
+filtered<span style="color:#f92672">:</span> <span style="color:#ae81ff">100.00</span>
+Extra<span style="color:#f92672">:</span> Using index condition
+<span style="color:#ae81ff">1</span> row in set, <span style="color:#ae81ff">1</span> <span style="color:#a6e22e">warning </span>(<span style="color:#ae81ff">0.01</span> sec)
+</code></pre></div><p>&mdash;&mdash;&mdash;&mdash; 情况7</p>
+<p>诊断如下语句，索引失效</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> EXPLAIN SELECT <span style="color:#f92672">*</span> FROM staffs WHERE NAME IS <span style="color:#66d9ef">NULL</span>\G
+<span style="color:#f92672">***************************</span> <span style="color:#ae81ff">1</span>. row <span style="color:#f92672">***************************</span>
+id<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+select_type<span style="color:#f92672">:</span> SIMPLE
+table<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+partitions<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+type<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+possible_keys<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+key<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+key_len<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+ref<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+rows<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+filtered<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+Extra<span style="color:#f92672">:</span> Impossible WHERE
+<span style="color:#ae81ff">1</span> row in set, <span style="color:#ae81ff">1</span> <span style="color:#a6e22e">warning </span>(<span style="color:#ae81ff">0.00</span> sec)
+mysql<span style="color:#f92672">&gt;</span> EXPLAIN SELECT <span style="color:#f92672">*</span> FROM staffs WHERE NAME IS NOT <span style="color:#66d9ef">NULL</span>\G
+<span style="color:#f92672">***************************</span> <span style="color:#ae81ff">1</span>. row <span style="color:#f92672">***************************</span>
+id<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+select_type<span style="color:#f92672">:</span> SIMPLE
+table<span style="color:#f92672">:</span> staffs
+partitions<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+type<span style="color:#f92672">:</span> ALL
+possible_keys<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+key<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+key_len<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+ref<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+rows<span style="color:#f92672">:</span> <span style="color:#ae81ff">3</span>
+filtered<span style="color:#f92672">:</span> <span style="color:#ae81ff">100.00</span>
+Extra<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+<span style="color:#ae81ff">1</span> row in set, <span style="color:#ae81ff">1</span> <span style="color:#a6e22e">warning </span>(<span style="color:#ae81ff">0.00</span> sec)
+</code></pre></div><p>&mdash;&mdash;&mdash;&mdash; 情况8</p>
+<p>对比如下三条语句</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> EXPLAIN SELECT <span style="color:#f92672">*</span> FROM staffs WHERE NAME LIKE <span style="color:#e6db74">&#39;%July%&#39;</span>\G
+<span style="color:#f92672">***************************</span> <span style="color:#ae81ff">1</span>. row <span style="color:#f92672">***************************</span>
+id<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+select_type<span style="color:#f92672">:</span> SIMPLE
+table<span style="color:#f92672">:</span> staffs
+partitions<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+type<span style="color:#f92672">:</span> ALL
+possible_keys<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+key<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+key_len<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+ref<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+rows<span style="color:#f92672">:</span> <span style="color:#ae81ff">3</span>
+filtered<span style="color:#f92672">:</span> <span style="color:#ae81ff">33.33</span>
+Extra<span style="color:#f92672">:</span> Using where
+<span style="color:#ae81ff">1</span> row in set, <span style="color:#ae81ff">1</span> <span style="color:#a6e22e">warning </span>(<span style="color:#ae81ff">0.00</span> sec)
+
+mysql<span style="color:#f92672">&gt;</span> EXPLAIN SELECT <span style="color:#f92672">*</span> FROM staffs WHERE NAME LIKE <span style="color:#e6db74">&#39;%July&#39;</span>\G
+<span style="color:#f92672">***************************</span> <span style="color:#ae81ff">1</span>. row <span style="color:#f92672">***************************</span>
+id<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+select_type<span style="color:#f92672">:</span> SIMPLE
+table<span style="color:#f92672">:</span> staffs
+partitions<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+type<span style="color:#f92672">:</span> ALL
+possible_keys<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+key<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+key_len<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+ref<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+rows<span style="color:#f92672">:</span> <span style="color:#ae81ff">3</span>
+filtered<span style="color:#f92672">:</span> <span style="color:#ae81ff">33.33</span>
+Extra<span style="color:#f92672">:</span> Using where
+<span style="color:#ae81ff">1</span> row in set, <span style="color:#ae81ff">1</span> <span style="color:#a6e22e">warning </span>(<span style="color:#ae81ff">0.00</span> sec)
+
+mysql<span style="color:#f92672">&gt;</span> EXPLAIN SELECT <span style="color:#f92672">*</span> FROM staffs WHERE NAME LIKE <span style="color:#e6db74">&#39;July%&#39;</span>\G
+<span style="color:#f92672">***************************</span> <span style="color:#ae81ff">1</span>. row <span style="color:#f92672">***************************</span>
+id<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+select_type<span style="color:#f92672">:</span> SIMPLE
+table<span style="color:#f92672">:</span> staffs
+partitions<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+type<span style="color:#f92672">:</span> range
+possible_keys<span style="color:#f92672">:</span> idx_staffs_nameAgePos
+key<span style="color:#f92672">:</span> idx_staffs_nameAgePos
+key_len<span style="color:#f92672">:</span> <span style="color:#ae81ff">74</span>
+ref<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+rows<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+filtered<span style="color:#f92672">:</span> <span style="color:#ae81ff">100.00</span>
+Extra<span style="color:#f92672">:</span> Using index condition
+<span style="color:#ae81ff">1</span> row in set, <span style="color:#ae81ff">1</span> <span style="color:#a6e22e">warning </span>(<span style="color:#ae81ff">0.00</span> sec)
+</code></pre></div><p>上述语句只有模糊查询的<code>%</code>位置不同，但只有最后一条使用了索引，当<code>%</code>在前索引失效。但若查询诉求的确需要两个<code>%</code>该如何改进语句，即</p>
+<p><strong>问题：解决<code>LIKE %字符串%</code>时索引失效的方法？</strong></p>
+<p><strong>建议用覆盖索引！</strong></p>
+<p>假设有一张人员信息表</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> select <span style="color:#f92672">*</span> from tbl_user;
+</code></pre></div><table>
+<thead>
+<tr>
+<th>id</th>
+<th>NAME</th>
+<th>age</th>
+<th>email</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>1aa1</td>
+<td>21</td>
+<td><a href="mailto:b@163.com">b@163.com</a></td>
+</tr>
+<tr>
+<td>2</td>
+<td>2aa2</td>
+<td>222</td>
+<td><a href="mailto:a@163.com">a@163.com</a></td>
+</tr>
+<tr>
+<td>3</td>
+<td>3aa3</td>
+<td>265</td>
+<td><a href="mailto:c@163.com">c@163.com</a></td>
+</tr>
+<tr>
+<td>4</td>
+<td>4aa4</td>
+<td>21</td>
+<td><a href="mailto:d@163.com">d@163.com</a></td>
+</tr>
+</tbody>
+</table>
+<p>使用如下语句查询NAME中带有&rsquo;aa&rsquo;的人员</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> SELECT <span style="color:#f92672">*</span> FROM tbl_user WHERE NAME LIKE <span style="color:#e6db74">&#39;%aa%&#39;</span>;
+</code></pre></div><table>
+<thead>
+<tr>
+<th>id</th>
+<th>NAME</th>
+<th>age</th>
+<th>email</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>1aa1</td>
+<td>21</td>
+<td><a href="mailto:b@163.com">b@163.com</a></td>
+</tr>
+<tr>
+<td>2</td>
+<td>2aa2</td>
+<td>222</td>
+<td><a href="mailto:a@163.com">a@163.com</a></td>
+</tr>
+<tr>
+<td>3</td>
+<td>3aa3</td>
+<td>265</td>
+<td><a href="mailto:c@163.com">c@163.com</a></td>
+</tr>
+<tr>
+<td>4</td>
+<td>4aa4</td>
+<td>21</td>
+<td><a href="mailto:d@163.com">d@163.com</a></td>
+</tr>
+</tbody>
+</table>
+<p>诊断如上语句</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> EXPLAIN SELECT <span style="color:#f92672">*</span> FROM tbl_user WHERE NAME LIKE <span style="color:#e6db74">&#39;%aa%&#39;</span>\G
+<span style="color:#f92672">***************************</span> <span style="color:#ae81ff">1</span>. row <span style="color:#f92672">***************************</span>
+id<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+select_type<span style="color:#f92672">:</span> SIMPLE
+table<span style="color:#f92672">:</span> tbl_user
+partitions<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+type<span style="color:#f92672">:</span> ALL
+possible_keys<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+key<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+key_len<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+ref<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+rows<span style="color:#f92672">:</span> <span style="color:#ae81ff">4</span>
+filtered<span style="color:#f92672">:</span> <span style="color:#ae81ff">25.00</span>
+Extra<span style="color:#f92672">:</span> Using where
+<span style="color:#ae81ff">1</span> row in set, <span style="color:#ae81ff">1</span> <span style="color:#a6e22e">warning </span>(<span style="color:#ae81ff">0.00</span> sec)
+</code></pre></div><p>type为ALL，全表扫描。如果此时利用NAME和age列创建复合索引&rsquo;idx_user_nameAge&rsquo;，则<code>SELECT</code>后包含 { id, NAME, age } 的任意组合都能使用该索引。注意id因为是主键列，也可利用索引。但只要包含了索引列以外的列，如email，就会出现索引失效。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> EXPLAIN SELECT id FROM tbl_user WHERE NAME LIKE <span style="color:#e6db74">&#39;%aa%&#39;</span>\G
+<span style="color:#f92672">***************************</span> <span style="color:#ae81ff">1</span>. row <span style="color:#f92672">***************************</span>
+id<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+select_type<span style="color:#f92672">:</span> SIMPLE
+table<span style="color:#f92672">:</span> tbl_user
+partitions<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+type<span style="color:#f92672">:</span> index
+possible_keys<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+key<span style="color:#f92672">:</span> idx_user_nameAge
+key_len<span style="color:#f92672">:</span> <span style="color:#ae81ff">88</span>
+ref<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+rows<span style="color:#f92672">:</span> <span style="color:#ae81ff">4</span>
+filtered<span style="color:#f92672">:</span> <span style="color:#ae81ff">25.00</span>
+Extra<span style="color:#f92672">:</span> Using where; Using index
+<span style="color:#ae81ff">1</span> row in set, <span style="color:#ae81ff">1</span> <span style="color:#a6e22e">warning </span>(<span style="color:#ae81ff">0.00</span> sec)
+
+mysql<span style="color:#f92672">&gt;</span> EXPLAIN SELECT id, email FROM tbl_user WHERE NAME LIKE <span style="color:#e6db74">&#39;%aa%&#39;</span>\G
+<span style="color:#f92672">***************************</span> <span style="color:#ae81ff">1</span>. row <span style="color:#f92672">***************************</span>
+id<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+select_type<span style="color:#f92672">:</span> SIMPLE
+table<span style="color:#f92672">:</span> tbl_user
+partitions<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+type<span style="color:#f92672">:</span> ALL
+possible_keys<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+key<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+key_len<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+ref<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+rows<span style="color:#f92672">:</span> <span style="color:#ae81ff">4</span>
+filtered<span style="color:#f92672">:</span> <span style="color:#ae81ff">25.00</span>
+Extra<span style="color:#f92672">:</span> Using where
+<span style="color:#ae81ff">1</span> row in set, <span style="color:#ae81ff">1</span> <span style="color:#a6e22e">warning </span>(<span style="color:#ae81ff">0.00</span> sec)
+</code></pre></div><p>&mdash;&mdash;&mdash;&mdash; 情况9</p>
+<p>如下两条语句都可将NAME为2000的记录查询出来</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> SELECT <span style="color:#f92672">*</span> FROM staffs WHERE NAME<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;2000&#39;</span>;
+mysql<span style="color:#f92672">&gt;</span> SELECT <span style="color:#f92672">*</span> FROM staffs WHERE NAME<span style="color:#f92672">=</span><span style="color:#ae81ff">2000</span>;
+</code></pre></div><p>但是诊断两条语句发现，字符串不带引号会导致索引失效</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> EXPLAIN SELECT <span style="color:#f92672">*</span> FROM staffs WHERE NAME<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;2000&#39;</span>\G
+<span style="color:#f92672">***************************</span> <span style="color:#ae81ff">1</span>. row <span style="color:#f92672">***************************</span>
+id<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+select_type<span style="color:#f92672">:</span> SIMPLE
+table<span style="color:#f92672">:</span> staffs
+partitions<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+type<span style="color:#f92672">:</span> ref
+possible_keys<span style="color:#f92672">:</span> idx_staffs_nameAgePos
+key<span style="color:#f92672">:</span> idx_staffs_nameAgePos
+key_len<span style="color:#f92672">:</span> <span style="color:#ae81ff">74</span>
+ref<span style="color:#f92672">:</span> const
+rows<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+filtered<span style="color:#f92672">:</span> <span style="color:#ae81ff">100.00</span>
+Extra<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+<span style="color:#ae81ff">1</span> row in set, <span style="color:#ae81ff">1</span> <span style="color:#a6e22e">warning </span>(<span style="color:#ae81ff">0.00</span> sec)
+
+mysql<span style="color:#f92672">&gt;</span> EXPLAIN SELECT <span style="color:#f92672">*</span> FROM staffs WHERE NAME<span style="color:#f92672">=</span><span style="color:#ae81ff">2000</span>\G
+<span style="color:#f92672">***************************</span> <span style="color:#ae81ff">1</span>. row <span style="color:#f92672">***************************</span>
+id<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+select_type<span style="color:#f92672">:</span> SIMPLE
+table<span style="color:#f92672">:</span> staffs
+partitions<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+type<span style="color:#f92672">:</span> ALL
+possible_keys<span style="color:#f92672">:</span> idx_staffs_nameAgePos
+key<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+key_len<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+ref<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+rows<span style="color:#f92672">:</span> <span style="color:#ae81ff">3</span>
+filtered<span style="color:#f92672">:</span> <span style="color:#ae81ff">33.33</span>
+Extra<span style="color:#f92672">:</span> Using where
+<span style="color:#ae81ff">1</span> row in set, <span style="color:#ae81ff">3</span> <span style="color:#a6e22e">warnings </span>(<span style="color:#ae81ff">0.00</span> sec)
+</code></pre></div><p>这是由于MySQL中自动进行了一次将整型2000转换为字符串2000的操作，而在索引列中做类型转换操作，根据情况3，会出现索引失效。因此此语句虽仍可查询出正确结果，但若数据量增大，该语句性能显著下降，是一定要规避的错误。</p>
+<p>&mdash;&mdash;&mdash;&mdash; 情况10</p>
+<p>对于如下语句，旧版本索引失效，但在新版本上<code>OR</code>条件可以利用索引</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> EXPLAIN SELECT <span style="color:#f92672">*</span> FROM staffs WHERE NAME<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;July&#39;</span> OR NAME<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;z3&#39;</span>\G
+<span style="color:#f92672">***************************</span> <span style="color:#ae81ff">1</span>. row <span style="color:#f92672">***************************</span>
+id<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+select_type<span style="color:#f92672">:</span> SIMPLE
+table<span style="color:#f92672">:</span> staffs
+partitions<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+type<span style="color:#f92672">:</span> range
+possible_keys<span style="color:#f92672">:</span> idx_staffs_nameAgePos
+key<span style="color:#f92672">:</span> idx_staffs_nameAgePos
+key_len<span style="color:#f92672">:</span> <span style="color:#ae81ff">74</span>
+ref<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+rows<span style="color:#f92672">:</span> <span style="color:#ae81ff">2</span>
+filtered<span style="color:#f92672">:</span> <span style="color:#ae81ff">100.00</span>
+Extra<span style="color:#f92672">:</span> Using index condition
+<span style="color:#ae81ff">1</span> row in set, <span style="color:#ae81ff">1</span> <span style="color:#a6e22e">warning </span>(<span style="color:#ae81ff">0.00</span> sec)
+</code></pre></div><hr>
+<p><strong>小口诀</strong></p>
+<p>最佳左前缀法则，索引列上不计算。</p>
+<p>范围之后全失效，尽量访问索引列。</p>
+<p>最好不要查空值，LIKE百分加右边。</p>
+<p>字符串里有引号，索引失效不出现。</p>
+<hr>
+<p><strong>小总结</strong></p>
+<p>假设创建索引index(a,b,c)</p>
+<table>
+<thead>
+<tr>
+<th>Where语句</th>
+<th>索引是否被使用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>where a=3</td>
+<td>Y, 使用到a</td>
+</tr>
+<tr>
+<td>where a=3 and b=5</td>
+<td>Y, 使用到a, b</td>
+</tr>
+<tr>
+<td>where a=3 and b=5 and c=4</td>
+<td>Y, 使用到a, b, c</td>
+</tr>
+<tr>
+<td>where b=3 或者 where b=3 and c=4 或者 where c=4</td>
+<td>N, 违背最佳左前缀法则</td>
+</tr>
+<tr>
+<td>where a=3 and c=5</td>
+<td>使用到a, 未用到c, 违背最佳左前缀法则</td>
+</tr>
+<tr>
+<td>where a=3 and b&gt;4 and c=5</td>
+<td>使用到a, b, 未用到c, 范围之后索引失效</td>
+</tr>
+<tr>
+<td>where a=3 and b like &lsquo;kk%&rsquo; and c=5</td>
+<td>Y, 使用到a, b, c</td>
+</tr>
+<tr>
+<td>where a=3 and b like &lsquo;%kk&rsquo; and c=5</td>
+<td>Y, 使用到a</td>
+</tr>
+<tr>
+<td>where a=3 and b like &lsquo;%kk%&rsquo; and c=5</td>
+<td>Y, 使用到a</td>
+</tr>
+<tr>
+<td>where a=3 and b like &lsquo;k%kk%&rsquo; and c=5</td>
+<td>Y, 使用到a, b, c</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="索引试题分析">索引试题分析</h2>
+<p>题目一：</p>
+<p>创建test03表</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> SELECT <span style="color:#f92672">*</span> FROM test03;
+</code></pre></div><table>
+<thead>
+<tr>
+<th>id</th>
+<th>c1</th>
+<th>c2</th>
+<th>c3</th>
+<th>c4</th>
+<th>c5</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>a1</td>
+<td>a2</td>
+<td>a3</td>
+<td>a4</td>
+<td>a5</td>
+</tr>
+<tr>
+<td>2</td>
+<td>b1</td>
+<td>b2</td>
+<td>b3</td>
+<td>b4</td>
+<td>b5</td>
+</tr>
+<tr>
+<td>3</td>
+<td>c1</td>
+<td>c2</td>
+<td>c3</td>
+<td>c4</td>
+<td>c5</td>
+</tr>
+<tr>
+<td>4</td>
+<td>d1</td>
+<td>d2</td>
+<td>d3</td>
+<td>d4</td>
+<td>d5</td>
+</tr>
+<tr>
+<td>5</td>
+<td>e1</td>
+<td>e2</td>
+<td>e3</td>
+<td>e4</td>
+<td>e5</td>
+</tr>
+</tbody>
+</table>
+<p>创建复合索引&rsquo;idx_test03_c1234&rsquo;</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> CREATE INDEX idx_test03_c1234 ON <span style="color:#a6e22e">test03</span>(c1, c2, c3, c4);
+</code></pre></div><p>问题：分析如下SQL语句的索引使用情况？</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> EXPLAIN SELECT <span style="color:#f92672">*</span> FROM test03 WHERE c1<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;a1&#39;</span> AND c2<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;a2&#39;</span> AND c3<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;a3&#39;</span> AND c4<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;a4&#39;</span>\G
+<span style="color:#f92672">***************************</span> <span style="color:#ae81ff">1</span>. row <span style="color:#f92672">***************************</span>
+id<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+select_type<span style="color:#f92672">:</span> SIMPLE
+table<span style="color:#f92672">:</span> test03
+partitions<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+type<span style="color:#f92672">:</span> ref
+possible_keys<span style="color:#f92672">:</span> idx_test03_c1234
+key<span style="color:#f92672">:</span> idx_test03_c1234
+key_len<span style="color:#f92672">:</span> <span style="color:#ae81ff">164</span>
+ref<span style="color:#f92672">:</span> const,const,const,const
+rows<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+filtered<span style="color:#f92672">:</span> <span style="color:#ae81ff">100.00</span>
+Extra<span style="color:#f92672">:</span> Using index condition
+<span style="color:#ae81ff">1</span> row in set, <span style="color:#ae81ff">1</span> <span style="color:#a6e22e">warning </span>(<span style="color:#ae81ff">0.00</span> sec)
+mysql<span style="color:#f92672">&gt;</span> EXPLAIN SELECT <span style="color:#f92672">*</span> FROM test03 WHERE c1<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;a1&#39;</span> AND c2<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;a2&#39;</span> AND c4<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;a4&#39;</span> AND c3<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;a3&#39;</span>\G
+<span style="color:#f92672">***************************</span> <span style="color:#ae81ff">1</span>. row <span style="color:#f92672">***************************</span>
+id<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+select_type<span style="color:#f92672">:</span> SIMPLE
+table<span style="color:#f92672">:</span> test03
+partitions<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+type<span style="color:#f92672">:</span> ref
+possible_keys<span style="color:#f92672">:</span> idx_test03_c1234
+key<span style="color:#f92672">:</span> idx_test03_c1234
+key_len<span style="color:#f92672">:</span> <span style="color:#ae81ff">164</span>
+ref<span style="color:#f92672">:</span> const,const,const,const
+rows<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+filtered<span style="color:#f92672">:</span> <span style="color:#ae81ff">100.00</span>
+Extra<span style="color:#f92672">:</span> Using index condition
+<span style="color:#ae81ff">1</span> row in set, <span style="color:#ae81ff">1</span> <span style="color:#a6e22e">warning </span>(<span style="color:#ae81ff">0.00</span> sec)
+mysql<span style="color:#f92672">&gt;</span> EXPLAIN SELECT <span style="color:#f92672">*</span> FROM test03 WHERE c4<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;a4&#39;</span> AND c3<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;a3&#39;</span> AND c2<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;a2&#39;</span> AND c1<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;a1&#39;</span>\G
+<span style="color:#f92672">***************************</span> <span style="color:#ae81ff">1</span>. row <span style="color:#f92672">***************************</span>
+id<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+select_type<span style="color:#f92672">:</span> SIMPLE
+table<span style="color:#f92672">:</span> test03
+partitions<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+type<span style="color:#f92672">:</span> ref
+possible_keys<span style="color:#f92672">:</span> idx_test03_c1234
+key<span style="color:#f92672">:</span> idx_test03_c1234
+key_len<span style="color:#f92672">:</span> <span style="color:#ae81ff">164</span>
+ref<span style="color:#f92672">:</span> const,const,const,const
+rows<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+filtered<span style="color:#f92672">:</span> <span style="color:#ae81ff">100.00</span>
+Extra<span style="color:#f92672">:</span> Using index condition
+<span style="color:#ae81ff">1</span> row in set, <span style="color:#ae81ff">1</span> <span style="color:#a6e22e">warning </span>(<span style="color:#ae81ff">0.00</span> sec)
+</code></pre></div><p>以上三条语句都为全值匹配，但不同之处在于<code>WHERE</code>条件的顺序。由诊断结果可知，所有语句都用到了全部的索引列，因此对于<code>WHERE</code>中的<code>AND</code>并列条件，若都为等值查询，则MySQL会根据索引自动调整顺序以达到最优查询效果，即三个语句等价。但实际业务中，最好还是保证<code>SELECT</code>后的查询列与索引列顺序一致。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> EXPLAIN SELECT <span style="color:#f92672">*</span> FROM test03 WHERE c1<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;a1&#39;</span> AND c2<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;a2&#39;</span> AND c3<span style="color:#f92672">&gt;</span><span style="color:#e6db74">&#39;a3&#39;</span> AND c4<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;a4&#39;</span>\G
+<span style="color:#f92672">***************************</span> <span style="color:#ae81ff">1</span>. row <span style="color:#f92672">***************************</span>
+id<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+select_type<span style="color:#f92672">:</span> SIMPLE
+table<span style="color:#f92672">:</span> test03
+partitions<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+type<span style="color:#f92672">:</span> range
+possible_keys<span style="color:#f92672">:</span> idx_test03_c1234
+key<span style="color:#f92672">:</span> idx_test03_c1234
+key_len<span style="color:#f92672">:</span> <span style="color:#ae81ff">123</span>
+ref<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+rows<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+filtered<span style="color:#f92672">:</span> <span style="color:#ae81ff">20.00</span>
+Extra<span style="color:#f92672">:</span> Using index condition
+<span style="color:#ae81ff">1</span> row in set, <span style="color:#ae81ff">1</span> <span style="color:#a6e22e">warning </span>(<span style="color:#ae81ff">0.00</span> sec)
+</code></pre></div><p>以上语句c1和c2列用于查找，c3列用于排序，c4没有用上。因此key_len为123且部分使用索引。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> EXPLAIN SELECT <span style="color:#f92672">*</span> FROM test03 WHERE c1<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;a1&#39;</span> AND c2<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;a2&#39;</span> AND c4<span style="color:#f92672">&gt;</span><span style="color:#e6db74">&#39;a4&#39;</span> AND c3<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;c3&#39;</span>\G
+<span style="color:#f92672">***************************</span> <span style="color:#ae81ff">1</span>. row <span style="color:#f92672">***************************</span>
+id<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+select_type<span style="color:#f92672">:</span> SIMPLE
+table<span style="color:#f92672">:</span> test03
+partitions<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+type<span style="color:#f92672">:</span> range
+possible_keys<span style="color:#f92672">:</span> idx_test03_c1234
+key<span style="color:#f92672">:</span> idx_test03_c1234
+key_len<span style="color:#f92672">:</span> <span style="color:#ae81ff">164</span>
+ref<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+rows<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+filtered<span style="color:#f92672">:</span> <span style="color:#ae81ff">100.00</span>
+Extra<span style="color:#f92672">:</span> Using index condition
+<span style="color:#ae81ff">1</span> row in set, <span style="color:#ae81ff">1</span> <span style="color:#a6e22e">warning </span>(<span style="color:#ae81ff">0.00</span> sec)
+</code></pre></div><p>以上语句c1、c2、c3列用于查找，c4列用于排序，因此key_len为164且全部使用索引。这是因为MySQL会先底层调优，按索引列创建顺序将<code>c4&gt;'a4'</code>和<code>c3='a3'</code>交换顺序，再根据条件判断是否使用索引。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> EXPLAIN SELECT <span style="color:#f92672">*</span> FROM test03 WHERE c1<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;a1&#39;</span> AND c2<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;a2&#39;</span> AND c4<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;a4&#39;</span> ORDER BY c3\G
+<span style="color:#f92672">***************************</span> <span style="color:#ae81ff">1</span>. row <span style="color:#f92672">***************************</span>
+id<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+select_type<span style="color:#f92672">:</span> SIMPLE
+table<span style="color:#f92672">:</span> test03
+partitions<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+type<span style="color:#f92672">:</span> ref
+possible_keys<span style="color:#f92672">:</span> idx_test03_c1234
+key<span style="color:#f92672">:</span> idx_test03_c1234
+key_len<span style="color:#f92672">:</span> <span style="color:#ae81ff">82</span>
+ref<span style="color:#f92672">:</span> const,const
+rows<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+filtered<span style="color:#f92672">:</span> <span style="color:#ae81ff">20.00</span>
+Extra<span style="color:#f92672">:</span> Using index condition
+<span style="color:#ae81ff">1</span> row in set, <span style="color:#ae81ff">1</span> <span style="color:#a6e22e">warning </span>(<span style="color:#ae81ff">0.01</span> sec)
+</code></pre></div><p>以上语句c1和c2列用于查找，c4列没有用上，c3列也用于排序了，但并没有统计在key_len中。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> EXPLAIN SELECT <span style="color:#f92672">*</span> FROM test03 WHERE c1<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;a1&#39;</span> AND c2<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;a2&#39;</span> ORDER BY c3\G
+<span style="color:#f92672">***************************</span> <span style="color:#ae81ff">1</span>. row <span style="color:#f92672">***************************</span>
+id<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+select_type<span style="color:#f92672">:</span> SIMPLE
+table<span style="color:#f92672">:</span> test03
+partitions<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+type<span style="color:#f92672">:</span> ref
+possible_keys<span style="color:#f92672">:</span> idx_test03_c1234
+key<span style="color:#f92672">:</span> idx_test03_c1234
+key_len<span style="color:#f92672">:</span> <span style="color:#ae81ff">82</span>
+ref<span style="color:#f92672">:</span> const,const
+rows<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+filtered<span style="color:#f92672">:</span> <span style="color:#ae81ff">100.00</span>
+Extra<span style="color:#f92672">:</span> Using index condition
+<span style="color:#ae81ff">1</span> row in set, <span style="color:#ae81ff">1</span> <span style="color:#a6e22e">warning </span>(<span style="color:#ae81ff">0.00</span> sec)
+</code></pre></div><p>以上语句c1和c2列用于查找，c3列也用于排序了，但并没有统计在key_len中。结合再上一条语句发现，和c4条件无关。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> EXPLAIN SELECT <span style="color:#f92672">*</span> FROM test03 WHERE c1<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;a1&#39;</span> AND c2<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;a2&#39;</span> ORDER BY c4\G
+<span style="color:#f92672">***************************</span> <span style="color:#ae81ff">1</span>. row <span style="color:#f92672">***************************</span>
+id<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+select_type<span style="color:#f92672">:</span> SIMPLE
+table<span style="color:#f92672">:</span> test03
+partitions<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+type<span style="color:#f92672">:</span> ref
+possible_keys<span style="color:#f92672">:</span> idx_test03_c1234
+key<span style="color:#f92672">:</span> idx_test03_c1234
+key_len<span style="color:#f92672">:</span> <span style="color:#ae81ff">82</span>
+ref<span style="color:#f92672">:</span> const,const
+rows<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+filtered<span style="color:#f92672">:</span> <span style="color:#ae81ff">100.00</span>
+Extra<span style="color:#f92672">:</span> Using index condition; Using filesort
+<span style="color:#ae81ff">1</span> row in set, <span style="color:#ae81ff">1</span> <span style="color:#a6e22e">warning </span>(<span style="color:#ae81ff">0.00</span> sec)
+</code></pre></div><p>以上语句c1和c2列用于查找，c3和c4列没用上，但是Extra返回值包含Using filesort，MySQL内部对c4列产生一个内排序并把结果显示出来。因此对于此条语句，应按c1、c2、c4创建索引。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> EXPLAIN SELECT <span style="color:#f92672">*</span> FROM test03 WHERE c1<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;a1&#39;</span> AND c5<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;a5&#39;</span> ORDER BY c2,c3\G
+<span style="color:#f92672">***************************</span> <span style="color:#ae81ff">1</span>. row <span style="color:#f92672">***************************</span>
+id<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+select_type<span style="color:#f92672">:</span> SIMPLE
+table<span style="color:#f92672">:</span> test03
+partitions<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+type<span style="color:#f92672">:</span> ref
+possible_keys<span style="color:#f92672">:</span> idx_test03_c1234
+key<span style="color:#f92672">:</span> idx_test03_c1234
+key_len<span style="color:#f92672">:</span> <span style="color:#ae81ff">41</span>
+ref<span style="color:#f92672">:</span> const
+rows<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+filtered<span style="color:#f92672">:</span> <span style="color:#ae81ff">20.00</span>
+Extra<span style="color:#f92672">:</span> Using index condition; Using where
+<span style="color:#ae81ff">1</span> row in set, <span style="color:#ae81ff">1</span> <span style="color:#a6e22e">warning </span>(<span style="color:#ae81ff">0.00</span> sec)
+</code></pre></div><p>以上语句c1用于查找，c2和c3用于排序，无filesort。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> EXPLAIN SELECT <span style="color:#f92672">*</span> FROM test03 WHERE c1<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;a1&#39;</span> AND c5<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;a5&#39;</span> ORDER BY c3,c2\G
+<span style="color:#f92672">***************************</span> <span style="color:#ae81ff">1</span>. row <span style="color:#f92672">***************************</span>
+id<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+select_type<span style="color:#f92672">:</span> SIMPLE
+table<span style="color:#f92672">:</span> test03
+partitions<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+type<span style="color:#f92672">:</span> ref
+possible_keys<span style="color:#f92672">:</span> idx_test03_c1234
+key<span style="color:#f92672">:</span> idx_test03_c1234
+key_len<span style="color:#f92672">:</span> <span style="color:#ae81ff">41</span>
+ref<span style="color:#f92672">:</span> const
+rows<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+filtered<span style="color:#f92672">:</span> <span style="color:#ae81ff">20.00</span>
+Extra<span style="color:#f92672">:</span> Using index condition; Using where; Using filesort
+<span style="color:#ae81ff">1</span> row in set, <span style="color:#ae81ff">1</span> <span style="color:#a6e22e">warning </span>(<span style="color:#ae81ff">0.00</span> sec)
+</code></pre></div><p>以上语句c1用于查找，由于MySQL内部按c3、c2顺序产生内排序，Extra返回Using filesort。因此对于此条语句，应按c1、c3、c2创建索引。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> EXPLAIN SELECT <span style="color:#f92672">*</span> FROM test03 WHERE c1<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;a1&#39;</span> AND c2<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;a2&#39;</span> ORDER BY c2,c3\G
+<span style="color:#f92672">***************************</span> <span style="color:#ae81ff">1</span>. row <span style="color:#f92672">***************************</span>
+id<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+select_type<span style="color:#f92672">:</span> SIMPLE
+table<span style="color:#f92672">:</span> test03
+partitions<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+type<span style="color:#f92672">:</span> ref
+possible_keys<span style="color:#f92672">:</span> idx_test03_c1234
+key<span style="color:#f92672">:</span> idx_test03_c1234
+key_len<span style="color:#f92672">:</span> <span style="color:#ae81ff">82</span>
+ref<span style="color:#f92672">:</span> const,const
+rows<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+filtered<span style="color:#f92672">:</span> <span style="color:#ae81ff">100.00</span>
+Extra<span style="color:#f92672">:</span> Using index condition
+<span style="color:#ae81ff">1</span> row in set, <span style="color:#ae81ff">1</span> <span style="color:#a6e22e">warning </span>(<span style="color:#ae81ff">0.00</span> sec)
+</code></pre></div><p>以上语句c1和c2用于查找，c2和c3用于排序，无filesort。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> EXPLAIN SELECT <span style="color:#f92672">*</span> FROM test03 WHERE c1<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;a1&#39;</span> AND c2<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;a2&#39;</span> AND c5<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;a5&#39;</span> ORDER BY c2,c3\G
+<span style="color:#f92672">***************************</span> <span style="color:#ae81ff">1</span>. row <span style="color:#f92672">***************************</span>
+id<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+select_type<span style="color:#f92672">:</span> SIMPLE
+table<span style="color:#f92672">:</span> test03
+partitions<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+type<span style="color:#f92672">:</span> ref
+possible_keys<span style="color:#f92672">:</span> idx_test03_c1234
+key<span style="color:#f92672">:</span> idx_test03_c1234
+key_len<span style="color:#f92672">:</span> <span style="color:#ae81ff">82</span>
+ref<span style="color:#f92672">:</span> const,const
+rows<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+filtered<span style="color:#f92672">:</span> <span style="color:#ae81ff">20.00</span>
+Extra<span style="color:#f92672">:</span> Using index condition; Using where
+<span style="color:#ae81ff">1</span> row in set, <span style="color:#ae81ff">1</span> <span style="color:#a6e22e">warning </span>(<span style="color:#ae81ff">0.00</span> sec)
+</code></pre></div><p>上述语句与上上条语句性能相同。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> EXPLAIN SELECT <span style="color:#f92672">*</span> FROM test03 WHERE c1<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;a1&#39;</span> AND c2<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;a2&#39;</span> AND c5<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;a5&#39;</span> ORDER BY c3,c2\G
+<span style="color:#f92672">***************************</span> <span style="color:#ae81ff">1</span>. row <span style="color:#f92672">***************************</span>
+id<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+select_type<span style="color:#f92672">:</span> SIMPLE
+table<span style="color:#f92672">:</span> test03
+partitions<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+type<span style="color:#f92672">:</span> ref
+possible_keys<span style="color:#f92672">:</span> idx_test03_c1234
+key<span style="color:#f92672">:</span> idx_test03_c1234
+key_len<span style="color:#f92672">:</span> <span style="color:#ae81ff">82</span>
+ref<span style="color:#f92672">:</span> const,const
+rows<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+filtered<span style="color:#f92672">:</span> <span style="color:#ae81ff">20.00</span>
+Extra<span style="color:#f92672">:</span> Using index condition; Using where
+<span style="color:#ae81ff">1</span> row in set, <span style="color:#ae81ff">1</span> <span style="color:#a6e22e">warning </span>(<span style="color:#ae81ff">0.00</span> sec)
+</code></pre></div><p>以上语句c1和c2用于查找，c3和c2用于排序，但因为<code>c2='a2'</code>为等值查询，因此<code>ORDER BY c3,c2</code>等价于<code>ORDER BY c3</code>，因此无filesort。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> EXPLAIN SELECT <span style="color:#f92672">*</span> FROM test03 WHERE c1<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;a1&#39;</span> AND c4<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;a4&#39;</span> GROUP BY c2,c3\G
+ERROR <span style="color:#ae81ff">1055</span> (<span style="color:#ae81ff">42000</span>)<span style="color:#f92672">:</span> Expression <span style="color:#75715e">#1 of SELECT list is not in GROUP BY clause and contains nonaggregated column &#39;test2.test03.id&#39; which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by</span>
+mysql<span style="color:#f92672">&gt;</span> EXPLAIN SELECT <span style="color:#f92672">*</span> FROM test03 WHERE c1<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;a1&#39;</span> AND c4<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;a4&#39;</span> GROUP BY c3,c2\G
+ERROR <span style="color:#ae81ff">1055</span> (<span style="color:#ae81ff">42000</span>)<span style="color:#f92672">:</span> Expression <span style="color:#75715e">#1 of SELECT list is not in GROUP BY clause and contains nonaggregated column &#39;test2.test03.id&#39; which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by</span>
+</code></pre></div><p>以上两条语句，新版本MySQL报错。但注意<code>GROUP BY</code>基本上都需要进行排序，会有临时表产生。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> EXPLAIN SELECT <span style="color:#f92672">*</span> FROM test03 WHERE c1<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;a1&#39;</span> AND c2 LIKE <span style="color:#e6db74">&#39;kk%&#39;</span> AND c3<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;a3&#39;</span>\G
+<span style="color:#f92672">***************************</span> <span style="color:#ae81ff">1</span>. row <span style="color:#f92672">***************************</span>
+id<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+select_type<span style="color:#f92672">:</span> SIMPLE
+table<span style="color:#f92672">:</span> test03
+partitions<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+type<span style="color:#f92672">:</span> range
+possible_keys<span style="color:#f92672">:</span> idx_test03_c1234
+key<span style="color:#f92672">:</span> idx_test03_c1234
+key_len<span style="color:#f92672">:</span> <span style="color:#ae81ff">123</span>
+ref<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+rows<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+filtered<span style="color:#f92672">:</span> <span style="color:#ae81ff">20.00</span>
+Extra<span style="color:#f92672">:</span> Using index condition
+<span style="color:#ae81ff">1</span> row in set, <span style="color:#ae81ff">1</span> <span style="color:#a6e22e">warning </span>(<span style="color:#ae81ff">0.00</span> sec)
+</code></pre></div><p>以上语句虽然type为range，是由<code>LIKE</code>查询导致，但是由于条件为&rsquo;kk%'，等值开头，因此和普通的<code>&gt;</code>或<code>&lt;</code>造成的range不同，本语句依旧用到c1、c2、c3索引列。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> EXPLAIN SELECT <span style="color:#f92672">*</span> FROM test03 WHERE c1<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;a1&#39;</span> AND c2 LIKE <span style="color:#e6db74">&#39;%kk&#39;</span> AND c3<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;a3&#39;</span>\G
+<span style="color:#f92672">***************************</span> <span style="color:#ae81ff">1</span>. row <span style="color:#f92672">***************************</span>
+id<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+select_type<span style="color:#f92672">:</span> SIMPLE
+table<span style="color:#f92672">:</span> test03
+partitions<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+type<span style="color:#f92672">:</span> ref
+possible_keys<span style="color:#f92672">:</span> idx_test03_c1234
+key<span style="color:#f92672">:</span> idx_test03_c1234
+key_len<span style="color:#f92672">:</span> <span style="color:#ae81ff">41</span>
+ref<span style="color:#f92672">:</span> const
+rows<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+filtered<span style="color:#f92672">:</span> <span style="color:#ae81ff">20.00</span>
+Extra<span style="color:#f92672">:</span> Using index condition
+<span style="color:#ae81ff">1</span> row in set, <span style="color:#ae81ff">1</span> <span style="color:#a6e22e">warning </span>(<span style="color:#ae81ff">0.00</span> sec)
+</code></pre></div><p>以上语句<code>LIKE</code>模糊查询没用到索引。<code>LIKE '%kk%'</code>结果同上。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> EXPLAIN SELECT <span style="color:#f92672">*</span> FROM test03 WHERE c1<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;a1&#39;</span> AND c2 LIKE <span style="color:#e6db74">&#39;k%kk%&#39;</span> AND c3<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;a3&#39;</span>\G
+<span style="color:#f92672">***************************</span> <span style="color:#ae81ff">1</span>. row <span style="color:#f92672">***************************</span>
+id<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+select_type<span style="color:#f92672">:</span> SIMPLE
+table<span style="color:#f92672">:</span> test03
+partitions<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+type<span style="color:#f92672">:</span> range
+possible_keys<span style="color:#f92672">:</span> idx_test03_c1234
+key<span style="color:#f92672">:</span> idx_test03_c1234
+key_len<span style="color:#f92672">:</span> <span style="color:#ae81ff">123</span>
+ref<span style="color:#f92672">:</span> <span style="color:#66d9ef">NULL</span>
+rows<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+filtered<span style="color:#f92672">:</span> <span style="color:#ae81ff">20.00</span>
+Extra<span style="color:#f92672">:</span> Using index condition
+<span style="color:#ae81ff">1</span> row in set, <span style="color:#ae81ff">1</span> <span style="color:#a6e22e">warning </span>(<span style="color:#ae81ff">0.00</span> sec)
+</code></pre></div><p>以上语句<code>LIKE</code>模糊查询用到了索引。</p>
+<hr>
+<p><strong>索引优化的一般性建议</strong></p>
+<p>1、对于单值索引，尽量选择针对当前查询过滤性更好的索引；</p>
+<p>2、在选择组合索引时，当前查询中过滤性最好的字段在索引字段顺序中，位置越靠前越好；</p>
+<p>3、在选择组合索引时，尽量选择可以能够包含当前查询中的<code>WHERE</code>字段中更多字段的索引；</p>
+<p>4、尽可能通过分析统计信息和调整查询的写法来达到选择合适索引的目的。</p>
+<hr>
+
+    </div>
+
+    <div class="post-copyright">
+            
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>Yiming </span>
+                </p>
+            
+
+            
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://ymingliu.github.io/2021/sql-index-optimization-case/>https://ymingliu.github.io/2021/sql-index-optimization-case/</span>
+            </p>
+            
+            
+    </div>
+
+
+    <div class="post-tags">
+        
+            <section>
+            <i class="iconfont icon-tag"></i>Tag(s):
+            
+            <span class="tag"><a href="https://ymingliu.github.io/tags/mysql/">
+                    #MySQL</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> ·
+                <span><a href="https://ymingliu.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://ymingliu.github.io/2021/sql-advanced-application/" class="prev" rel="prev" title="MySQL Advanced Application"><i class="iconfont icon-left"></i>&nbsp;MySQL Advanced Application</a>
+        
+        
+        <a href="https://ymingliu.github.io/2021/sql-query-optimization/" class="next" rel="next" title="MySQL Query Optimization">MySQL Query Optimization&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+        
+            
+                <div id="gitalk-container"></div>
+<link rel="stylesheet" href="https://cdn.bootcss.com/gitalk/1.5.2/gitalk.css">
+<script src="https://cdn.bootcss.com/gitalk/1.5.2/gitalk.min.js"></script>
+<script>
+    const gitalk = new Gitalk({
+
+        clientID: '',
+        clientSecret: '',
+        repo: '',
+        owner: 'ymingliu',
+        admin: ['ymingliu'],
+        id: location.pathname, 
+        distractionFreeMode: false 
+    });
+    (function () {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('gitalk-container').innerHTML = 'Gitalk comments not available by default when the website is previewed locally.';
+            return;
+        }
+        gitalk.render('gitalk-container');
+    })();
+</script>
+
+            
+        
+    </div>
+</article>
+                </div>
+            </main>
+            <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span itemprop="copyrightYear">2021 - 2021</span>
+        
+        <span class="with-love">
+    	 <i class="iconfont icon-love"></i>
+         </span>
+         
+            <span class="author" itemprop="copyrightHolder"><a href="https://ymingliu.github.io">Yiming</a> | </span>
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/Mogeko/Mogege" target="_blank" rel="external nofollow">Mogege</a></span>
+    </div>
+</footer>
+
+
+
+
+
+
+<script defer src="/js/vendor_main.min.js"></script>
+
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script> pangu.spacingPage();</script>
+
+
+
+
+
+        </div>
+    </body>
+</html>

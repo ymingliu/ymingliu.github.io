@@ -6,10 +6,28 @@
     <description>Recent content in Posts on Yiming`s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Tue, 30 Mar 2021 21:08:43 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 01 Apr 2021 14:28:56 +0800</lastBuildDate>
     
 	<atom:link href="https://ymingliu.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Machine Learning Materials</title>
+      <link>https://ymingliu.github.io/2021/machine-learning-materials/</link>
+      <pubDate>Thu, 01 Apr 2021 14:28:56 +0800</pubDate>
+      
+      <guid>https://ymingliu.github.io/2021/machine-learning-materials/</guid>
+      <description>机器学习资源 南瓜书PumpkinBook python实现统计学习方法</description>
+    </item>
+    
+    <item>
+      <title>Retrospective——Python Web Spider</title>
+      <link>https://ymingliu.github.io/2021/python-web-spider/</link>
+      <pubDate>Thu, 01 Apr 2021 06:45:51 +0800</pubDate>
+      
+      <guid>https://ymingliu.github.io/2021/python-web-spider/</guid>
+      <description>课程参考 北京理工大学公开课：Python网络爬虫和信息提取 回顾——Python网络爬虫 依赖库：Requests，Re，BeautifulSo</description>
+    </item>
     
     <item>
       <title>MySQL Exercises, Practice and Solution 2</title>

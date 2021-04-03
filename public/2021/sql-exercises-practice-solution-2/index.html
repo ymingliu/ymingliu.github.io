@@ -10,7 +10,7 @@
     
     
     <link rel="prev" href="https://ymingliu.github.io/2021/big-data-analytics-industry/" />
-    
+    <link rel="next" href="https://ymingliu.github.io/2021/python-web-spider/" />
     <link rel="canonical" href="https://ymingliu.github.io/2021/sql-exercises-practice-solution-2/" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -56,7 +56,7 @@
     "datePublished": "2021-03-30 21:08:43 \x2b0800 CST",
     "dateModified" : "2021-03-30 21:08:43 \x2b0800 CST",
     "url" : "https:\/\/ymingliu.github.io\/2021\/sql-exercises-practice-solution-2\/",
-    "wordCount" : "632",
+    "wordCount" : "726",
     "keywords" : [ "MySQL", "Yiming`s Blog"]
 }
 </script>
@@ -163,7 +163,7 @@
                         
                         
                 </span>
-                <span class="post-word-count">632 words</span>
+                <span class="post-word-count">726 words</span>
         </div>
     </header>
 
@@ -362,6 +362,11 @@ FROM
 </code></pre></div><p>下述正确</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">select DepartmentId from testEmployee group by DepartmentId;
 </code></pre></div><p>下述正确</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">select DepartmentId from testEmployee group by DepartmentId having <span style="color:#a6e22e">max</span>(Salary);
+</code></pre></div><p>下述错误</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">select DepartmentId from testEmployee group by DepartmentId having Salary<span style="color:#f92672">=</span><span style="color:#a6e22e">max</span>(Salary);
+</code></pre></div><p>报错ERROR 1055 (42000): Expression #2 of SELECT list is not in GROUP BY clause and contains nonaggregated column &lsquo;test.testEmployee.Salary&rsquo; which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by</p>
+<p>因为HAVING后的Salary列没有出现在GROUP BY中！</p>
 
     </div>
 
@@ -403,6 +408,8 @@ FROM
         
         <a href="https://ymingliu.github.io/2021/big-data-analytics-industry/" class="prev" rel="prev" title="Big Data Analytics Industry"><i class="iconfont icon-left"></i>&nbsp;Big Data Analytics Industry</a>
         
+        
+        <a href="https://ymingliu.github.io/2021/python-web-spider/" class="next" rel="next" title="Retrospective——Python Web Spider">Retrospective——Python Web Spider&nbsp;<i class="iconfont icon-right"></i></a>
         
     </div>
 

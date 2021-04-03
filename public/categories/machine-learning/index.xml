@@ -6,10 +6,19 @@
     <description>Recent content in Machine Learning on Yiming`s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Tue, 16 Mar 2021 19:50:49 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 01 Apr 2021 14:28:56 +0800</lastBuildDate>
     
 	<atom:link href="https://ymingliu.github.io/categories/machine-learning/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Machine Learning Materials</title>
+      <link>https://ymingliu.github.io/2021/machine-learning-materials/</link>
+      <pubDate>Thu, 01 Apr 2021 14:28:56 +0800</pubDate>
+      
+      <guid>https://ymingliu.github.io/2021/machine-learning-materials/</guid>
+      <description>机器学习资源 南瓜书PumpkinBook python实现统计学习方法</description>
+    </item>
     
     <item>
       <title>Overview of Machine Learning</title>

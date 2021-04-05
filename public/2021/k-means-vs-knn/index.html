@@ -9,9 +9,9 @@
     <meta name="description" content="Yiming`s Blog">
     
     
-    <link rel="prev" href="https://ymingliu.github.io/2021/python-web-spider/" />
-    <link rel="next" href="https://ymingliu.github.io/2021/k-means-vs-knn/" />
-    <link rel="canonical" href="https://ymingliu.github.io/2021/machine-learning-materials/" />
+    <link rel="prev" href="https://ymingliu.github.io/2021/machine-learning-materials/" />
+    
+    <link rel="canonical" href="https://ymingliu.github.io/2021/k-means-vs-knn/" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -22,10 +22,10 @@
     <title>
         
         
-            Machine Learning Materials | Yiming`s Blog
+            K Means vs Knn | Yiming`s Blog
         
     </title>
-    <meta name="title" content="Machine Learning Materials | Yiming`s Blog">
+    <meta name="title" content="K Means vs Knn | Yiming`s Blog">
     
 <link rel="stylesheet" href="/css/main.min.css">
 
@@ -43,9 +43,9 @@
          "@id": "https:\/\/ymingliu.github.io"
     },
     "articleSection" : "posts",
-    "name" : "Machine Learning Materials",
-    "headline" : "Machine Learning Materials",
-    "description" : "机器学习资源 南瓜书PumpkinBook python实现统计学习方法",
+    "name" : "K Means vs Knn",
+    "headline" : "K Means vs Knn",
+    "description" : "K均值聚类与K近邻算法 K均值聚类（K-means） 聚类算法 无监督学习 目的：输入无标签的数据，将相同类型的样本聚集在一起，使得类内相似度高，类",
     "inLanguage" : "zh-cn",
     "author" : "Yiming",
     "creator" : "Yiming",
@@ -53,10 +53,10 @@
     "accountablePerson" : "Yiming",
     "copyrightHolder" : "Yiming",
     "copyrightYear" : "2021",
-    "datePublished": "2021-04-01 14:28:56 \x2b0800 CST",
-    "dateModified" : "2021-04-01 14:28:56 \x2b0800 CST",
-    "url" : "https:\/\/ymingliu.github.io\/2021\/machine-learning-materials\/",
-    "wordCount" : "34",
+    "datePublished": "2021-04-05 16:12:51 \x2b0800 CST",
+    "dateModified" : "2021-04-05 16:12:51 \x2b0800 CST",
+    "url" : "https:\/\/ymingliu.github.io\/2021\/k-means-vs-knn\/",
+    "wordCount" : "586",
     "keywords" : [ "Machine Learning", "Yiming`s Blog"]
 }
 </script>
@@ -146,11 +146,11 @@
                     
 <article class="post-warp" itemscope itemtype="http://schema.org/Article">
     <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">Machine Learning Materials</h1>
+        <h1 class="post-title" itemprop="name headline">K Means vs Knn</h1>
         <div class="post-meta">
                 Written by <a itemprop="name" href="https://ymingliu.github.io" rel="author">Yiming</a> with ♥
                 <span class="post-time">
-                on <time datetime=2021-04-01 itemprop="datePublished">April 1, 2021</time>
+                on <time datetime=2021-04-05 itemprop="datePublished">April 5, 2021</time>
                 </span>
                 in
                 
@@ -163,7 +163,7 @@
                         
                         
                 </span>
-                <span class="post-word-count">34 words</span>
+                <span class="post-word-count">586 words</span>
         </div>
     </header>
 
@@ -183,9 +183,29 @@
         
         
 
-        <h2 id="机器学习资源">机器学习资源</h2>
-<p><a href="https://github.com/datawhalechina/pumpkin-book">南瓜书PumpkinBook</a></p>
-<p><a href="https://github.com/fengdu78/lihang-code">python实现统计学习方法</a></p>
+        <h2 id="k均值聚类与k近邻算法">K均值聚类与K近邻算法</h2>
+<h3 id="k均值聚类k-means">K均值聚类（K-means）</h3>
+<ul>
+<li>聚类算法</li>
+<li>无监督学习</li>
+<li>目的：输入无标签的数据，将相同类型的样本聚集在一起，使得类内相似度高，类间相似度低。</li>
+<li>需要训练模型</li>
+<li>算法步骤：1）随机选择k个样本作为初始均值向量；2）计算样本到各均值向量的距离，把它划到距离最小的簇；3）计算新的均值向量；4）迭代，直至均值向量未更新或到达最大次数。</li>
+<li>优点：算法复杂度与样本量n线性相关</li>
+<li>缺点：K要预先给定，但实际中很难确定要将样本划分为几类；对初始聚类中心点敏感；对噪声和异常点敏感；样本不均衡时分类有偏误，即有些类别样本数量很多，有些类别很少；迭代的方法只得到局部最优。</li>
+<li>注意：K可以用交叉验证确定。</li>
+</ul>
+<h3 id="k近邻算法knn">K近邻算法（KNN）</h3>
+<ul>
+<li>分类算法</li>
+<li>有监督学习</li>
+<li>目的：输入有标签的数据，以周围K个样本的标签预测新来样本的标签。</li>
+<li>不需要训练模型，新来一个样本立刻可以进行标签预测，懒惰学习（lazy learning）。</li>
+<li>算法步骤：1）计算新样本和测试样本中每个样本点的距离；2）对上面所有的距离值进行排序；3）选前K个最小距离的样本；4）根据这K个样本的标签进行投票，得到最后的分类类别。</li>
+<li>优点：算法复杂度O(n)，对离群点相对不敏感，可做分类也可做回归。</li>
+<li>缺点：计算量大，因为需要计算与全样本的距离，还要排序；同样有样本不均衡问题。</li>
+<li>注意：K可以用交叉验证确定；所有特征需要标准化数量级；需要预处理数据，比如去除噪音和异常值。</li>
+</ul>
 
     </div>
 
@@ -200,7 +220,7 @@
             
             <p class="copyright-item">
                     <span>Link:</span>
-                    <a href=https://ymingliu.github.io/2021/machine-learning-materials/>https://ymingliu.github.io/2021/machine-learning-materials/</span>
+                    <a href=https://ymingliu.github.io/2021/k-means-vs-knn/>https://ymingliu.github.io/2021/k-means-vs-knn/</span>
             </p>
             
             
@@ -225,10 +245,8 @@
 
     <div class="post-nav">
         
-        <a href="https://ymingliu.github.io/2021/python-web-spider/" class="prev" rel="prev" title="Retrospective——Python Web Spider"><i class="iconfont icon-left"></i>&nbsp;Retrospective——Python Web Spider</a>
+        <a href="https://ymingliu.github.io/2021/machine-learning-materials/" class="prev" rel="prev" title="Machine Learning Materials"><i class="iconfont icon-left"></i>&nbsp;Machine Learning Materials</a>
         
-        
-        <a href="https://ymingliu.github.io/2021/k-means-vs-knn/" class="next" rel="next" title="K Means vs Knn">K Means vs Knn&nbsp;<i class="iconfont icon-right"></i></a>
         
     </div>
 

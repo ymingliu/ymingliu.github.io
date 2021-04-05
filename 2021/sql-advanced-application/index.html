@@ -56,7 +56,7 @@
     "datePublished": "2021-03-11 11:00:06 \x2b0800 CST",
     "dateModified" : "2021-03-11 11:00:06 \x2b0800 CST",
     "url" : "https:\/\/ymingliu.github.io\/2021\/sql-advanced-application\/",
-    "wordCount" : "6738",
+    "wordCount" : "6741",
     "keywords" : [ "MySQL", "Yiming`s Blog"]
 }
 </script>
@@ -163,7 +163,7 @@
                         
                         
                 </span>
-                <span class="post-word-count">6738 words</span>
+                <span class="post-word-count">6741 words</span>
         </div>
     </header>
 
@@ -353,7 +353,7 @@ ALTER TABLE tableName ADD FULLTEXT <span style="color:#a6e22e">indexName</span>(
 </ul>
 <p>检索原理：磁盘和内存读取方式参考课时17。注意两点即可，一是BTree索引由多个磁盘块构成，真实的数据存放在叶子节点磁盘块，非叶子节点磁盘块不存储真实数据，只存储指引搜索方向的数据项和指针；二是树高即为所需的查询次数，或者称进行I/O的次数，因此理论上增加树索引的宽度，降低树高，会提升检索性能。</p>
 <p><strong>哪些情况需要建索引？</strong></p>
-<p>1）主键自动建立唯一索引</p>
+<p>1）主键自动建立唯一且非空索引</p>
 <p>2）频繁作为查询条件的字段应该创建索引，如银行系统的银行账号，电信系统的手机号</p>
 <p>3）查询中与其他表关联的字段，外键关系建立索引，如员工表的deptno</p>
 <p>4）频繁更新的字段不适合创建索引，因为每次更新记录的同时还要更新索引</p>

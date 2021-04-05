@@ -6,10 +6,28 @@
     <description>Recent content in MySQL on Yiming`s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sat, 20 Mar 2021 21:40:24 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 30 Mar 2021 21:08:43 +0800</lastBuildDate>
     
 	<atom:link href="https://ymingliu.github.io/tags/mysql/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>MySQL Exercises, Practice and Solution 2</title>
+      <link>https://ymingliu.github.io/2021/sql-exercises-practice-solution-2/</link>
+      <pubDate>Tue, 30 Mar 2021 21:08:43 +0800</pubDate>
+      
+      <guid>https://ymingliu.github.io/2021/sql-exercises-practice-solution-2/</guid>
+      <description>题库参考 LeeCode 数据库题库 数据库SQL实战——牛客网 MySQL习题总结 6、从不订购的客户 某网站包含两个表，Customers 表和 Orders 表。编写一个 SQL 查</description>
+    </item>
+    
+    <item>
+      <title>MySQL Exercises, Practice and Solution 1</title>
+      <link>https://ymingliu.github.io/2021/sql-exercises-practice-solution-1/</link>
+      <pubDate>Mon, 22 Mar 2021 18:34:19 +0800</pubDate>
+      
+      <guid>https://ymingliu.github.io/2021/sql-exercises-practice-solution-1/</guid>
+      <description>题库参考 LeeCode 数据库题库 数据库SQL实战——牛客网 MySQL习题总结 1、输出第二高的薪水，若没有第二高，返回NULL 解法一：使用两次聚合函数，先</description>
+    </item>
     
     <item>
       <title>MySQL Quick Guide</title>
@@ -17,7 +35,7 @@
       <pubDate>Sat, 20 Mar 2021 21:40:24 +0800</pubDate>
       
       <guid>https://ymingliu.github.io/2021/sql-quick-guide/</guid>
-      <description>MySQL速查手册 创建表 CREATE TABLE 表名( 列名1 NOT NULL PRIMARY KEY AUTO_INCREMENT, 列名2 &amp;lt;INT | &amp;gt; &amp;hellip; )COMENT</description>
+      <description>MySQL速查手册 DDL 查看数据库 SHOW DATABASES; 切换数据库 USE 数据库名; 创建数据库 CREATE DATABASE 数据库名; 删除数据库 DROP DATABASE 数据库名; 查看数据库中的表 SHOW TABLES; 创建表 CREATE TABLE 表名(</description>
     </item>
     
     <item>

@@ -6,10 +6,28 @@
     <description>Recent content in Machine Learning on Yiming`s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Tue, 16 Mar 2021 19:50:49 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 05 Apr 2021 16:12:51 +0800</lastBuildDate>
     
 	<atom:link href="https://ymingliu.github.io/categories/machine-learning/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>K Means vs Knn</title>
+      <link>https://ymingliu.github.io/2021/k-means-vs-knn/</link>
+      <pubDate>Mon, 05 Apr 2021 16:12:51 +0800</pubDate>
+      
+      <guid>https://ymingliu.github.io/2021/k-means-vs-knn/</guid>
+      <description>K均值聚类与K近邻算法 K均值聚类（K-means） 聚类算法 无监督学习 目的：输入无标签的数据，将相同类型的样本聚集在一起，使得类内相似度高，类</description>
+    </item>
+    
+    <item>
+      <title>Machine Learning Materials</title>
+      <link>https://ymingliu.github.io/2021/machine-learning-materials/</link>
+      <pubDate>Thu, 01 Apr 2021 14:28:56 +0800</pubDate>
+      
+      <guid>https://ymingliu.github.io/2021/machine-learning-materials/</guid>
+      <description>机器学习资源 南瓜书PumpkinBook python实现统计学习方法</description>
+    </item>
     
     <item>
       <title>Overview of Machine Learning</title>

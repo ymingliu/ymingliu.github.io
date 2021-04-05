@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Python on Yiming`s Blog</title>
+    <link>https://ymingliu.github.io/categories/python/</link>
+    <description>Recent content in Python on Yiming`s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 01 Apr 2021 06:45:51 +0800</lastBuildDate>
+    
+	<atom:link href="https://ymingliu.github.io/categories/python/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Retrospective——Python Web Spider</title>
+      <link>https://ymingliu.github.io/2021/python-web-spider/</link>
+      <pubDate>Thu, 01 Apr 2021 06:45:51 +0800</pubDate>
+      
+      <guid>https://ymingliu.github.io/2021/python-web-spider/</guid>
+      <description>课程参考 北京理工大学公开课：Python网络爬虫和信息提取 回顾——Python网络爬虫 依赖库：Requests，Re，BeautifulSo</description>
+    </item>
+    
+  </channel>
+</rss>

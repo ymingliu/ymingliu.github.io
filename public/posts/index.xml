@@ -57,6 +57,15 @@
     </item>
     
     <item>
+      <title>Basic Statistics Concepts for Data Analyst</title>
+      <link>https://ymingliu.github.io/2021/basic-statistics-concepts/</link>
+      <pubDate>Mon, 22 Mar 2021 19:12:37 +0800</pubDate>
+      
+      <guid>https://ymingliu.github.io/2021/basic-statistics-concepts/</guid>
+      <description>一、统计推断 置信区间、假设检验、几种检验方法的差异及适用条件、P值、检验样本选取、统计量 统计推断分为参数估计与假设检验，而参数估计又分为点估</description>
+    </item>
+    
+    <item>
       <title>MySQL Exercises, Practice and Solution 1</title>
       <link>https://ymingliu.github.io/2021/sql-exercises-practice-solution-1/</link>
       <pubDate>Mon, 22 Mar 2021 18:34:19 +0800</pubDate>

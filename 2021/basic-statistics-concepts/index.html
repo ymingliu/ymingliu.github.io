@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noodp"/>
+    <meta name="author" content="Yiming">
+    <meta name="description" content="Yiming`s Blog">
+    
+    
+    <link rel="prev" href="https://ymingliu.github.io/2021/sql-exercises-practice-solution-1/" />
+    <link rel="next" href="https://ymingliu.github.io/2021/sql-exercises-practice-solution-2/" />
+    <link rel="canonical" href="https://ymingliu.github.io/2021/basic-statistics-concepts/" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+    <title>
+        
+        
+            Basic Statistics Concepts for Data Analyst | Yiming`s Blog
+        
+    </title>
+    <meta name="title" content="Basic Statistics Concepts for Data Analyst | Yiming`s Blog">
+    
+<link rel="stylesheet" href="/css/main.min.css">
+
+
+    
+    
+ 
+
+<script type="application/ld+json">
+{
+    "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/ymingliu.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "Basic Statistics Concepts for Data Analyst",
+    "headline" : "Basic Statistics Concepts for Data Analyst",
+    "description" : "一、统计推断 置信区间、假设检验、几种检验方法的差异及适用条件、P值、检验样本选取、统计量 统计推断分为参数估计与假设检验，而参数估计又分为点估",
+    "inLanguage" : "zh-cn",
+    "author" : "Yiming",
+    "creator" : "Yiming",
+    "publisher": "Yiming",
+    "accountablePerson" : "Yiming",
+    "copyrightHolder" : "Yiming",
+    "copyrightYear" : "2021",
+    "datePublished": "2021-03-22 19:12:37 \x2b0800 CST",
+    "dateModified" : "2021-03-22 19:12:37 \x2b0800 CST",
+    "url" : "https:\/\/ymingliu.github.io\/2021\/basic-statistics-concepts\/",
+    "wordCount" : "7929",
+    "keywords" : [ "Statistics", "Yiming`s Blog"]
+}
+</script>
+
+  </head>
+    <body class="">
+        <div class="wrapper">
+            <nav class="navbar">
+    
+        <progress class="content_progress" max="0" value="0"></progress>
+    
+    <div class="container">
+        
+            <div class="navbar-header header-back2home-logo">
+                <span class="logo_mark" >>$</span>
+                <a href="https://ymingliu.github.io">
+                    <span class="logo_text" >cd /home/</span>
+                    <span class="logo_cursor" ></span>
+                </a>
+            </div>
+        
+        <div class="navbar-right">
+                
+                <span class="menu">
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+                <span class="divide"></span>
+                <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-dark-mode"></i></a>
+                </span>
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+    
+        <progress class="content_progress" max="0" value="0"></progress>
+    
+     <div class="container">
+        <div class="navbar">
+            <div class="navbar-header header-logo">
+                    <a href="https://ymingliu.github.io">Yiming`s Blog</a>
+            </div>
+            <div class="navbar-right">
+                <div><a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-dark-mode"></i></a></div>
+                <div class="menu-toggle">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                <nav class="mb-md">
+                    
+                    
+                        <a class="menu-item" href="/posts/" title="">
+                            <h3>Blog</h3>
+                            <div class="menu-active"></div>
+                        </a>
+                    
+                        <a class="menu-item" href="/categories/" title="">
+                            <h3>Categories</h3>
+                            <div class="menu-active"></div>
+                        </a>
+                    
+                        <a class="menu-item" href="/tags/" title="">
+                            <h3>Tags</h3>
+                            <div class="menu-active"></div>
+                        </a>
+                    
+                        <a class="menu-item" href="/about/" title="">
+                            <h3>About</h3>
+                            <div class="menu-active"></div>
+                        </a>
+                    
+                </nav>
+        </div>
+    </div>
+</nav>
+            <main class="main">
+                <div class="container">
+                    
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">Basic Statistics Concepts for Data Analyst</h1>
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://ymingliu.github.io" rel="author">Yiming</a> with ♥
+                <span class="post-time">
+                on <time datetime=2021-03-22 itemprop="datePublished">March 22, 2021</time>
+                </span>
+                in
+                
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        
+                        
+                        
+                          <a href="https://ymingliu.github.io/categories/statistics/"> Statistics, </a>
+                        
+                        
+                </span>
+                <span class="post-word-count">7929 words</span>
+        </div>
+    </header>
+
+    <div class="post-content">
+        
+
+        
+        
+
+        
+        
+        
+        
+        
+
+        
+        
+        
+
+        <h2 id="一统计推断">一、统计推断</h2>
+<p>置信区间、假设检验、几种检验方法的差异及适用条件、P值、检验样本选取、统计量</p>
+<ul>
+<li>统计推断分为参数估计与假设检验，而参数估计又分为点估计与区间估计。</li>
+<li>参数估计与假设检验的区别在于，前者根据样本信息估计总体参数，后者先对总体参数提出一个假设值，再利用样本信息判断该假设是否成立。</li>
+<li>想要拒绝的放在原假设，常识放在原假设，等号放在原假设。也可以由问题的极端情况先确定备择假设，再给出原假设。</li>
+<li>第I类错误，拒真，犯这个错误的概率即为显著性水平。第II类错误，取伪。因此把想要拒绝的放在原假设，因为拒绝错的概率能被显著性水平控制。</li>
+<li>(1-犯第II类错误概率) 是成功拒绝错误的原假设的概率，因此又称为检验功效power。</li>
+<li>置信水平=1-显著性水平</li>
+<li>P值，原假设为真时出现观测样本以及更极端情况的概率。又称拒绝原假设的最小显著性水平，观测到的实际的显著性水平。若P值很小，则表示小概率事件发生了，拒绝原假设。具体地，双侧检验是P值&lt;0.025拒绝，单侧检验是P值&lt;0.05拒绝。</li>
+<li>左侧检验，下限检验，拒绝域在左侧；右侧检验，上限检验，拒绝域在右侧。</li>
+<li>确定检验统计量时主要考虑两个因素：样本量是否足够大，总体标准差是否已知。</li>
+<li>单个总体参数的检验主要有三个：总体均值、总体比例、总体方差。对于均值检验，只要样本量足够大，无论总体方差是否已知，都可用z统计量；若样本量小但方差已知，用z统计量；若样本量小且方差未知，用t统计量。对于比例检验，用z统计量。对于方差检验，用卡方统计量。</li>
+<li>两个总体参数的检验主要有三个：总体均值之差、总体比例之差、总体方差之比。对于均值之差检验，同上。对于总体比例之差检验，同上。对于总体方差之比检验，用F统计量。注意使用t统计量对总体均值之差进行检验时，假设两未知方差相等与不等，对应的统计量的自由度是不同的。</li>
+<li>评价估计量的标准：无偏性、有效性、一致性。</li>
+<li>对两总体均值之差的估计还可用匹配样本。样本均值为差的均值，样本方差为差的方差。</li>
+<li>给出置信水平，给出希望的估计误差，还可确定达到该置信水平所需的样本量。</li>
+</ul>
+<h2 id="二常用概率分布">二、常用概率分布</h2>
+<p>二项分布、泊松分布、正态分布、指数分布、卡方分布、t分布、F分布、柯西分布</p>
+<ul>
+<li>
+<p>t分布自由度越大，越接近正态分布，也即厚尾情况越来越弱。</p>
+</li>
+<li>
+<p>柯西分布是自由度为1的t分布，正态分布是自由度为无穷的t分布。柯西分布任意阶矩都不存在。</p>
+</li>
+</ul>
+<h2 id="三数据的概括性度量">三、数据的概括性度量</h2>
+<h3 id="集中趋势的度量">集中趋势的度量</h3>
+<p>众数、中位数和分位数、平均数、几何平均数（计算平均增长率）</p>
+<ul>
+<li>
+<p>众数不一定唯一，且在数据量较小时不适用；中位数在数据偏斜程度较大时使用；平均数易受极端值影响。</p>
+</li>
+<li>
+<p>概率分布右偏，则均值&gt;中位数&gt;众数；左偏，则均值&lt;中位数&lt;众数</p>
+</li>
+</ul>
+<h3 id="离散程度的度量">离散程度的度量</h3>
+<ul>
+<li>
+<p>异众比率，非众数组的频数占总频数的比例，用于衡量众数在一组数据中的代表程度。适用于分类数据。</p>
+</li>
+<li>
+<p>四分位差，上四分位数与下四分位数之差，用于反映中间50%的数据的离散程度。不适用于分类数据。</p>
+</li>
+<li>
+<p>极差，最大值与最小值之差。不能反映中间数据的分散状况，且易受极端值影响。</p>
+</li>
+<li>
+<p>平均差，数据与其平均数的平均离差绝对值，反映每个数据与平均数的平均差异程度。</p>
+</li>
+<li>
+<p>方差，略。</p>
+</li>
+<li>
+<p>标准差，略。</p>
+</li>
+<li>
+<p>离散系数，又称变异系数，是标准差与均值之比，反映随机变量在单位均值取值范围内数据的离散程度。主要用于比较期望不同的两个样本的离中趋势。</p>
+</li>
+<li>
+<p>样本峰度，四阶样本中心矩与二阶样本中心矩的平方之比，用于度量概率密度曲线在峰值附近的尖峭程度。正态分布的峰度为3，若峰度&gt;3，称数据呈现尖峰厚尾分布。</p>
+</li>
+<li>
+<p>样本偏度，三阶样本中心矩与二阶样本中心矩的1.5次方之比，用于度量随机变量概率分布的不对称性。当偏度&lt;0，概率分布图左偏（左侧尾部长）；当偏度&gt;0，概率分布图右偏（右侧尾部长）；当偏度=0，概率分布图对称，但不一定是正态分布。</p>
+</li>
+</ul>
+<h2 id="四大数定律和中心极限定理">四、大数定律和中心极限定理</h2>
+<ul>
+<li>
+<p>大数定律：样本均值收敛到总体均值</p>
+</li>
+<li>
+<p>中心极限定理：样本均值的分布收敛到正态分布</p>
+</li>
+</ul>
+<h2 id="五常见统计分析模型">五、常见统计分析模型</h2>
+<p>相关分析、回归分析、方差分析、因子分析</p>
+<h3 id="方差分析">方差分析</h3>
+<ul>
+<li>
+<p>研究分类型变量与数值型变量之间的关系。</p>
+</li>
+<li>
+<p>方差分析，本质是检验不同总体均值是否相等，用于判断分类型自变量（因素，其取值称为水平）对数值型因变量是否有显著影响。分为单因素方差分析和双因素方差分析。基本假定有两个，一是假设各总体都服从正态分布且方差相同，二是样本观测值是独立的。</p>
+</li>
+<li>
+<p>在单因素方差分析中，SST总平方和（自由度n-1）、SSA组间平方和（自由度k-1）、SSE组内平方和（自由度n-k）。SSA包含随机误差和系统误差，SSE只包含随机误差，因此若总体均值相等，两者之间的差异应该很小，即比值接近1，若比值显著大于1，则表明总体均值不全相等。MSA=SSA/(k-1)，MSE=SSE/(n-k)，因此可构造统计量F=MSA/MSE，服从分子自由度为k-1分母自由度为n-k的F分布。R方=1-SSE/SST，表示分类型自变量对总体均值差异的解释程度。R方的平方根，表示分类型自变量与数值型因变量之间的关系强度。</p>
+</li>
+<li>
+<p>在双因素方差分析中，假设有行因素A和列因素B，分别有k和r个水平，则SST表示总平方和（自由度kr-1），SSR行误差平方和（自由度k-1），SSC列误差平方和（自由度r-1），SSE随机误差平方和（自由度(k-1)(r-1)），且关系为SST=SSR+SSC+SSE。在不考虑交互作用的影响下，分别构建两个假设，检验两因素对因变量是否有显著影响。对于行因素，构建F=MSR/MSE，对于列因素，构建F=MSC/MSE。R方为1-SSE/SST，表明两个自变量合起来对因变量的解释程度。若因素AB对因变量的影响不是独立的，即进行存在交互效应的双因素方差分析，则SSRC表示交互作用平方和，SST=SSR+SSC+SSRC+SSE。</p>
+</li>
+</ul>
+<h3 id="相关与回归分析">相关与回归分析</h3>
+<ul>
+<li>
+<p>研究两个数值型变量之间的关系。</p>
+</li>
+<li>
+<p>两个数值型变量之间的关系分为相关关系和函数关系。相关关系，是变量y不能由变量x唯一确定，变量x取某个值时，变量y的取值可能有几个。函数关系，是一一对应的确定关系。</p>
+</li>
+<li>
+<p>在相关分析中，分析两个变量的相关关系流程：1）绘制散点图，确定变量之间的关系形态，包括线性相关、非线性相关、完全相关、不相关等；2）如果是线性关系，计算样本相关系数度量变量之间的关系强度；3）进行样本相关系数的显著性检验。注意相关系数为0，表示两变量间不是线性相关，但不能说明是不相关还是曲线相关。</p>
+</li>
+<li>
+<p>在回归分析中，在一元回归模型框架下，分析两个变量的函数关系流程：1）利用最小二乘法对估计参数，即确定一条回归直线使得求得的数据与观测数据间的误差平方和最小。2）判断回归直线的拟合优度，包括判定系数（R方）、均方误差（MSE）、估计标准误差；3）进行显著性检验，包括线性关系的显著性检验（F检验）、回归系数的显著性检验（t检验）；4）误差的正态性检验；5）预测。</p>
+</li>
+<li>
+<p>总平方和SST，是观测值与平均值间的离差平方和；回归平方和SSR，是预测值和平均值间的离差平方和；残差平方和SSE，是预测值和观测值间的离差平方和。三者关系为SST=SSR+SSE。</p>
+</li>
+<li>
+<p>判定系数R方=SSR/SST，表示回归直线对观测数据的拟合程度，又可理解为在本回归模型下自变量变异对因变量变异的解释程度。</p>
+</li>
+<li>
+<p>估计标准误差，SSE/(n-k-1)的平方根，k表示自变量的个数，是对误差项的标准差的估计，反映排除线性影响后，因变量的随机波动程度。</p>
+</li>
+<li>
+<p>检验两个变量之间的线性关系是否显著，首先构建平均回归平方和以及平均残差平方和，即MSR=SSR/k，MSE=SSE/(n-k-1)，再构建统计量F=MSR/MSE，是服从分子自由度为k，分母自由度为n-k-1的F分布。F越大，表明线性关系越显著。</p>
+</li>
+<li>
+<p>在进行F检验和t检验时还要求误差项服从正态分布，因此还需要有误差的正态性检验，如绘制残差直方图或正态概率图。</p>
+</li>
+<li>
+<p><a href="https://www.cnblogs.com/HuZihu/p/10142737.html">最小二乘线性回归模型的5个基本假设</a>，概括起来为LINE，即线性Linearity、独立性Independence、正态性Normality、等方差Equal-variance。独立性包括自变量与自变量、误差项与误差项、自变量与误差项间的独立，若违背会出现多重共线性、自相关性、内生性。正态性只是为了便于在小样本下能够进行假设检验。若违背等方差，称为异方差性。检验基本假设是否违背叫做残差分析，具体R语言方法参考 <a href="https://blog.csdn.net/Noob_daniel/article/details/76087829">回归分析的五个基本假设</a></p>
+</li>
+<li>
+<p>预测，包括点估计与区间估计，在进行区间估计时，需给出标准差的估计值，并利用t分布构造置信区间。</p>
+</li>
+<li>
+<p>在多元线性回归中，R方又称为多重判定系数</p>
+</li>
+<li>
+<p>R方并不是越高越好（越接近1越好），因为增加自变量的个数，即使自变量在模型中并不显著，也会使SSE减小，SSR增加，从而使得R方增加。因此会出现调整的R方，里面考虑了样本量n和自变量个数k的影响。对于两个模型，对比调整的R方是比较公平的，调整的R方越大的，模型越好。</p>
+</li>
+<li>
+<p>当出现多重共线性，对回归系数的解释可能是错误的，甚至正负号都与预期相反。可能出现多重共线性的情况：1）对模型中各自变量进行相关分析，发现显著相关；2）模型的F检验显著，但t检验几乎都不显著；3）回归系数符号与预期的相反；4）容忍度很小（&lt;0.1）或者方差扩大因子VIF很大（&gt;10）。解决多重共线性：1）将一个或多个相关的自变量从模型中剔除，使得保留的自变量尽可能不相关；2）利用变量选择中的逐步回归法挑选模型。其实多重共线性主要是影响单个回归系数的解释和检验，对因变量的预测和置信区间求解不受影响，因此若只是为了估计后预测，可以将所有自变量都保存在模型中。</p>
+</li>
+<li>
+<p>向前选择，添加使得F统计量最大的自变量；向后选择，剔除使得SSE减小最少的自变量；逐步回归，添加并剔除，直至增加变量不会导致SSE显著减小。</p>
+</li>
+</ul>
+<h2 id="六异常值监测归一化标准化">六、异常值监测、归一化标准化</h2>
+<p>常见的四种异常值监测思想</p>
+<ul>
+<li>
+<p>箱线图，记上四分位数为Q3，下四分位数为Q1，极差IQR=Q3-Q1，则异常值为小于Q1-1.5<em>IQR和大于Q3+1.5</em>IQR的，即在箱线图中最小观测值和最大观测值之外的。</p>
+</li>
+<li>
+<p>Z-score，若假定数据是高斯分布，则异常值就是分布尾部的数据点，具体可以用标准化的Z-score与某个阈值之间的关系来确定，比如3西格玛。</p>
+</li>
+<li>
+<p>基于近邻度，KNN思想，计算点到其周围最近的K个点的平均距离，越大，越易是离群因子。</p>
+</li>
+<li>
+<p>基于聚类，K-means思想，给定划分的类别数量K后聚类得到中心点，计算每个点与其相应的中心点之间的距离，距离越大，越易是离群因子。</p>
+</li>
+</ul>
+<p>为什么需要归一化标准化</p>
+<ul>
+<li>
+<p>有些模型在各个维度进行不均匀伸缩后，最优解与原来不等价，例如SVM。对于这样的模型，除非本来各维数据的分布范围就比较接近，否则必须进行标准化，以免模型参数被分布范围较大或较小的数据影响。简言之，提高模型的精度。</p>
+</li>
+<li>
+<p>有些模型在各个维度进行不均匀伸缩后，最优解与原来等价，例如logistic regression。对于这样的模型，是否标准化理论上不会改变最优解。但是，由于实际求解往往使用迭代算法，如果目标函数的形状太“扁”，迭代算法可能收敛得很慢甚至不收敛。所以对于具有伸缩不变性的模型，最好也进行数据标准化。简言之，提高模型的求解速度。</p>
+</li>
+<li>
+<p>凡是以距离作为决策度量的都需要标准化，比如KNN、K-means，因为对于数量级大的特征，微小的改变都会对结果产生很大影响。需要使用梯度下降的也需要标准化，否则收敛很慢，比如逻辑回归、adaboost、xgboost、GBDT、SVM、NeuralNetwork等。PCA降维也需要，否则数量级大的特征会占主导。对特征取值大小不敏感的不需要，比如决策树等集成学习方法。使用正则化时也需要标准化，因为数量级大的特征会被惩罚的更多。</p>
+</li>
+<li>
+<p>线性回归不做标准化与做标准化得到的估计只差一个常数倍，因此如果只看预测，数据是否标准化都可以。但要解释系数，判断哪个自变量对因变量的影响程度更大，需要统一量纲，需要标准化。</p>
+</li>
+<li>
+<p>一般而言，归一化指min-max变换，标准化指Z-score变换。</p>
+</li>
+</ul>
+<h2 id="七概率与抽样">七、概率与抽样</h2>
+<p>独立，不相关，协方差，相关系数，条件期望，条件概率，全概率公式，贝叶斯定理</p>
+<h2 id="八ab测试">八、AB测试</h2>
+<ul>
+<li>
+<p>基本原理是假设检验，但对于效果的分析应分为两部分：1）实验有效性的判断；2）比较实验结果是否有显著差异。</p>
+</li>
+<li>
+<p>想要进行成功的AB测试，需要有：1）可衡量的实验目标；2）随机且均衡的实验样本；3）实验过程尽量排除其他因素干扰；4）对实验结果正确解读。</p>
+</li>
+<li>
+<p>辛普森悖论：对于两组数据，分别讨论时都会具有某种性质，但合并在一起讨论却会得到相反的结论。若在进行AB测试时出现，本质原因是在划分两组数据时样本分配不合理，两组样本不仅数量上有较大差异，内部属性也有较大差异。因此为避免悖论出现，第一，保证两组样本的内部属性差异不大，即要有随机的分组；第二，考虑分组的权重，消除分组基数差异带来的影响，即要有均衡的分组；第三，某些受外界因素影响较大的指标，看总体的指标没有意义，要细化到小的分组中对比是否有显著差异才有价值，也即固定这些强影响因素不变，分析测试结果。</p>
+</li>
+<li>
+<p>在样本量给定条件下，假设检验中的两类错误为什么不能同时减小？首先由定义可知，第一类错误alpha为拒真，显著性水平，即H0正确时样本落入拒绝域的概率，第二类错误beta为取伪，即H1正确时样本没落入拒绝域的概率。理论上，在H0和H1假设成立下，统计量分别有两个分布，两个分布有重叠的部分，因此当统计量在一次观测的取值不断改变时，对于两个分布而言，观测到本次观测甚至是更极端情况的概率是一个此消彼长的关系。直观理解上，若让犯第一类错误很低，即显著性水平很小，则两组样本的结果要有很大的差异才会拒绝原假设，但这样就会忽略真实有差异但是样本结果没太大差异的情况，即这个观测是一个想要蒙混过关的观测，第二类错误增加。反之同理。</p>
+</li>
+<li>
+<p>AB测试两组数据的样本量如何确定？</p>
+</li>
+<li>
+<p>若测试统计结果显著，但实际中不显著，会是什么问题？样本分配不够随机，样本量也不够均衡。</p>
+</li>
+<li>
+<p>若测试统计结果不显著，如何评判此次测试的收益？整体上不显著，可以细化到每一天，或者某个影响因素下再分析。</p>
+</li>
+<li>
+<p>若测试统计结果有显著提升，一定能够上线吗？不一定，要综合评估若发生变动会对其他指标造成的影响，对于变化后的可能受益和风险做评估后，才能优化上线。</p>
+</li>
+</ul>
+<h2 id="九结构数据与非结构数据">九、结构数据与非结构数据</h2>
+<ul>
+<li>
+<p>结构化数据，是指由二维表结构来逻辑表达和实现的数据，严格地遵循数据格式与长度规范，主要通过关系型数据库进行存储和管理。</p>
+</li>
+<li>
+<p>非结构化数据，是数据结构不规则或不完整，没有预定义的数据模型，不方便用数据库二维逻辑表来表现的数据。包括所有格式的办公文档、文本、图片、HTML、各类报表、图像和音频/视频信息等。主要具有以下特点：数据存储占比高、数据格式多样、结构不标准且复杂、信息量丰富、处理门槛高。</p>
+</li>
+</ul>
+<h2 id="十随机采样技术">十、随机采样技术</h2>
+<blockquote>
+<p>高维数据求积分：蒙特卡洛思想+Gibbs采样</p>
+<p>详细参见<a href="https://www.cnblogs.com/pinard/p/6625739.html">马尔科夫链蒙特卡罗（Markov Chain Monte Carlo，MCMC）原理总结</a></p>
+</blockquote>
+<p>蒙特卡洛思想：用<strong>拒绝-接受采样</strong>得到复杂概率分布的样本，并实现数值计算积分的一种方法。但对于一些二维分布，很难用拒绝-接受采样得到样本，且对于一些高维的复杂分布，找到一个合适的概率分布函数和常量覆盖真实的概率分布很难。</p>
+<p><em><strong>马尔科夫链采样</strong></em>：马尔科夫链是某一时刻的状态转移概率只依赖于上一时刻的状态。由于马尔科夫链模型的状态转移矩阵收敛到的稳定概率分布，与我们的初始状态概率分布无关。因此，可以用任意的概率分布样本开始，带入马尔科夫链模型的状态转移矩阵，这样经过一些序列的转换，最终就可以得到符合对应稳定概率分布的样本。但对于任意一个平稳分布，如何得到它所对应的马尔科夫链状态转移矩阵？</p>
+<p><em><strong>MCMC采样</strong></em>：以一个常见的马尔科夫链状态转移矩阵Q通过一定的接受-拒绝概率得到目标转移矩阵P，即将拒绝-接受采样和马尔科夫链采样合二为一。但接受率过低QQ，马尔科夫链很难收敛。</p>
+<p><em><strong>M-H采样</strong></em>：修正MCMC采样的接受率，不会使大部分的采样值被拒绝，提升采样效率。但一是需要计算接受率，在高维时计算量大，并且由于接受率的原因导致算法收敛时间变长。二是有些高维数据，特征的条件概率分布好求，但是特征的联合分布不好求。</p>
+<p><em><strong>Gibbs采样</strong></em>：用条件概率分布作为马尔科夫链的状态转移概率，并构造转移矩阵P。注意Gibbs采样要求数据至少有两个维度，一维概率分布的采样依然使用M-H采样。</p>
+<h2 id="十一回归诊断">十一、回归诊断</h2>
+<ul>
+<li>
+<p>残差图：横坐标为拟合值，纵坐标为残差。若散点大致以0为中心，随机落在[-2,2]区域内，且不呈现任何趋势，说明对误差0均值，同方差假设合理。若散点非线性或曲线形式，说明残差中还有信息没有被模型解释，可能是误差自相关存在比如时间序列数据，或者考虑向模型中加入高次项。若散点波动随拟合值的变化而变化，说明异方差性存在，考虑方差的稳定性转化或加权最小二乘。（残差图本身应绘制某个自变量x与残差的散点图，观察x与残差间是否有非线性或者二次曲线趋势，说明线性模型的假定不合理，应在模型中添加二次项，但是对于一元回归可以，对于多元回归模型，不便于将每个自变量与残差图都绘制出来，因此用拟合值代替自变量，绘制所有的自变量与残差的一个散点关系，若非线性，则至少其中一个自变量与残差有非线性关系，只不过如此绘制，和尺寸位置图的作用类似了，还能顺便通过残差的波动，即喇叭状或者中间小两边大状，看出异方差性假设是否正确。）</p>
+</li>
+<li>
+<p>QQ图：横坐标为正态分布分位数，纵坐标为标准化残差分位数。若残差散点不在一条直线上，说明对误差的正态性假设不合理。</p>
+</li>
+<li>
+<p>尺寸位置图（Scale-Location）：横坐标为拟合值，纵坐标为标准化残差的平方根。若残差水平分布在某一常数附近，说明等方差假设成立。若残差随横坐标增长或下降（注意因为scale化了，所以波动不变，但是均值大小有变），说明异方差性存在，考虑方差的稳定性转化或加权最小二乘。作用与残差图类似。</p>
+</li>
+<li>
+<p>库克距离（Cook&rsquo;s distance）：鉴别强影响点，一般而言，距离大于0.5的需要注意。</p>
+</li>
+<li>
+<p>离群点Outlier：残差很大的点，即极端的因变量观测值</p>
+</li>
+<li>
+<p>高杠杆值点：远离样本空间中心的点，即极端的自变量观测值</p>
+</li>
+<li>
+<p>强影响点：对模型有较大影响的点，删除该点能改变拟合回归方程</p>
+</li>
+</ul>
+<p>如果发现异常点，首先检查其是否是错误导致的，比如输入错误，测量错误等等，如果是，那么直接删除。但是有时候异常点会提示重要的信息，因此如果异常点不是由错误导致的，则需要进一步的调查，不可简单删除了事。</p>
+<p>为什么进行方差稳定性转化，即将因变量y取做变换后回归？为了保证线性回归分析中常数方差假设成立。特别地，做对数变换适用于随着自变量的增加，因变量的方差增大的数据。（具体理论推导为，假设随机变量X的方差与其均值线性相关，则利用泰勒级数性质log(1+X)~X，随机变量log(X)的方差与其均值无关，为常数）</p>
+<p>在对数转化模型中，若只有因变量取对数，估计参数b表示自变量每增加一个单位，因变量增加的百分比，百分比为exp(b)-1。若因变量与自变量都取对数，则估计参数b表示百分比的变化，即弹性，解释为自变量增加1%，因变量增加b/100%。</p>
+<p>解决异方差存在问题，还可用加权回归。方差较小的观测值附上相对较大的权重，方差较大的观测值附上相对较小的权重，这样加权后的观测值具有常量方差。在加权回归中，若依旧保证估计量是最优线性无偏估计（BLUE），则需要权重等于误差的平方的倒数。但实际中误差不是已知的，因此用残差代替。</p>
+<p>注意如果是由于省略的参数导致了异方差性，则加权回归不是合适的解决方案，因为为回归模型加权重去除异方差性应放在修正模型的最后一步。</p>
+
+    </div>
+
+    <div class="post-copyright">
+            
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>Yiming </span>
+                </p>
+            
+
+            
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://ymingliu.github.io/2021/basic-statistics-concepts/>https://ymingliu.github.io/2021/basic-statistics-concepts/</span>
+            </p>
+            
+            
+    </div>
+
+
+    <div class="post-tags">
+        
+            <section>
+            <i class="iconfont icon-tag"></i>Tag(s):
+            
+            <span class="tag"><a href="https://ymingliu.github.io/tags/statistics/">
+                    #Statistics</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> ·
+                <span><a href="https://ymingliu.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://ymingliu.github.io/2021/sql-exercises-practice-solution-1/" class="prev" rel="prev" title="MySQL Exercises, Practice and Solution 1"><i class="iconfont icon-left"></i>&nbsp;MySQL Exercises, Practice and Solution 1</a>
+        
+        
+        <a href="https://ymingliu.github.io/2021/sql-exercises-practice-solution-2/" class="next" rel="next" title="MySQL Exercises, Practice and Solution 2">MySQL Exercises, Practice and Solution 2&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+        
+            
+                <div id="gitalk-container"></div>
+<link rel="stylesheet" href="https://cdn.bootcss.com/gitalk/1.5.2/gitalk.css">
+<script src="https://cdn.bootcss.com/gitalk/1.5.2/gitalk.min.js"></script>
+<script>
+    const gitalk = new Gitalk({
+
+        clientID: '',
+        clientSecret: '',
+        repo: '',
+        owner: 'ymingliu',
+        admin: ['ymingliu'],
+        id: location.pathname, 
+        distractionFreeMode: false 
+    });
+    (function () {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('gitalk-container').innerHTML = 'Gitalk comments not available by default when the website is previewed locally.';
+            return;
+        }
+        gitalk.render('gitalk-container');
+    })();
+</script>
+
+            
+        
+    </div>
+</article>
+                </div>
+            </main>
+            <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span itemprop="copyrightYear">2021 - 2021</span>
+        
+        <span class="with-love">
+    	 <i class="iconfont icon-love"></i>
+         </span>
+         
+            <span class="author" itemprop="copyrightHolder"><a href="https://ymingliu.github.io">Yiming</a> | </span>
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/Mogeko/Mogege" target="_blank" rel="external nofollow">Mogege</a></span>
+    </div>
+</footer>
+
+
+
+
+
+
+<script defer src="/js/vendor_main.min.js"></script>
+
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script> pangu.spacingPage();</script>
+
+
+
+
+
+        </div>
+    </body>
+</html>

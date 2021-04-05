@@ -507,8 +507,8 @@ BEGIN
    UPDATE goods SET gnum <span style="color:#f92672">=</span> gnum <span style="color:#f92672">-</span> NEW.onum WHERE gid <span style="color:#f92672">=</span> NEW.gid;
 END <span style="color:#f92672">$$</span>
 DELIMITER ;
-</code></pre></div><p>2）DELECT触发器</p>
-<p>在DELECT触发器代码内，可以引用一个名为OLD的虚拟表，访问被删除的行。此外，OLD中的值是只读的，不能被更新。</p>
+</code></pre></div><p>2）DELETE触发器</p>
+<p>在DELETE触发器代码内，可以引用一个名为OLD的虚拟表，访问被删除的行。此外，OLD中的值是只读的，不能被更新。</p>
 <p>举例，BEFORE DELECT触发器，当顾客删除订单时，将删除数据保存在备份订单表backupOrders中。注意backupOrders的表结构要和orders的一致。</p>
 <p>创建备份订单表</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mysql<span style="color:#f92672">&gt;</span> CREATE TABLE <span style="color:#a6e22e">backupOrders</span>(oid INT PRIMARY KEY, gid INT, onum INT);

@@ -6,10 +6,64 @@
     <description>Recent content in Posts on Yiming`s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sat, 20 Mar 2021 21:40:24 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 05 Apr 2021 16:12:51 +0800</lastBuildDate>
     
 	<atom:link href="https://ymingliu.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>K Means vs Knn</title>
+      <link>https://ymingliu.github.io/2021/k-means-vs-knn/</link>
+      <pubDate>Mon, 05 Apr 2021 16:12:51 +0800</pubDate>
+      
+      <guid>https://ymingliu.github.io/2021/k-means-vs-knn/</guid>
+      <description>K均值聚类与K近邻算法 K均值聚类（K-means） 聚类算法 无监督学习 目的：输入无标签的数据，将相同类型的样本聚集在一起，使得类内相似度高，类</description>
+    </item>
+    
+    <item>
+      <title>Machine Learning Materials</title>
+      <link>https://ymingliu.github.io/2021/machine-learning-materials/</link>
+      <pubDate>Thu, 01 Apr 2021 14:28:56 +0800</pubDate>
+      
+      <guid>https://ymingliu.github.io/2021/machine-learning-materials/</guid>
+      <description>机器学习资源 南瓜书PumpkinBook python实现统计学习方法</description>
+    </item>
+    
+    <item>
+      <title>Retrospective——Python Web Spider</title>
+      <link>https://ymingliu.github.io/2021/python-web-spider/</link>
+      <pubDate>Thu, 01 Apr 2021 06:45:51 +0800</pubDate>
+      
+      <guid>https://ymingliu.github.io/2021/python-web-spider/</guid>
+      <description>课程参考 北京理工大学公开课：Python网络爬虫和信息提取 回顾——Python网络爬虫 依赖库：Requests，Re，BeautifulSo</description>
+    </item>
+    
+    <item>
+      <title>MySQL Exercises, Practice and Solution 2</title>
+      <link>https://ymingliu.github.io/2021/sql-exercises-practice-solution-2/</link>
+      <pubDate>Tue, 30 Mar 2021 21:08:43 +0800</pubDate>
+      
+      <guid>https://ymingliu.github.io/2021/sql-exercises-practice-solution-2/</guid>
+      <description>题库参考 LeeCode 数据库题库 数据库SQL实战——牛客网 MySQL习题总结 6、从不订购的客户 某网站包含两个表，Customers 表和 Orders 表。编写一个 SQL 查</description>
+    </item>
+    
+    <item>
+      <title>Basic Statistics Concepts for Data Analyst</title>
+      <link>https://ymingliu.github.io/2021/basic-statistics-concepts/</link>
+      <pubDate>Mon, 22 Mar 2021 19:12:37 +0800</pubDate>
+      
+      <guid>https://ymingliu.github.io/2021/basic-statistics-concepts/</guid>
+      <description>一、统计推断 置信区间、假设检验、几种检验方法的差异及适用条件、P值、检验样本选取、统计量 统计推断分为参数估计与假设检验，而参数估计又分为点估</description>
+    </item>
+    
+    <item>
+      <title>MySQL Exercises, Practice and Solution 1</title>
+      <link>https://ymingliu.github.io/2021/sql-exercises-practice-solution-1/</link>
+      <pubDate>Mon, 22 Mar 2021 18:34:19 +0800</pubDate>
+      
+      <guid>https://ymingliu.github.io/2021/sql-exercises-practice-solution-1/</guid>
+      <description>题库参考 LeeCode 数据库题库 数据库SQL实战——牛客网 MySQL习题总结 1、输出第二高的薪水，若没有第二高，返回NULL 解法一：使用两次聚合函数，先</description>
+    </item>
     
     <item>
       <title>MySQL Quick Guide</title>
@@ -17,7 +71,7 @@
       <pubDate>Sat, 20 Mar 2021 21:40:24 +0800</pubDate>
       
       <guid>https://ymingliu.github.io/2021/sql-quick-guide/</guid>
-      <description>MySQL速查手册 创建表 CREATE TABLE 表名( 列名1 NOT NULL PRIMARY KEY AUTO_INCREMENT, 列名2 &amp;lt;INT | &amp;gt; &amp;hellip; )COMENT</description>
+      <description>MySQL速查手册 DDL 查看数据库 SHOW DATABASES; 切换数据库 USE 数据库名; 创建数据库 CREATE DATABASE 数据库名; 删除数据库 DROP DATABASE 数据库名; 查看数据库中的表 SHOW TABLES; 创建表 CREATE TABLE 表名(</description>
     </item>
     
     <item>

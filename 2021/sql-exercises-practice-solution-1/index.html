@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noodp"/>
+    <meta name="author" content="Yiming">
+    <meta name="description" content="Yiming`s Blog">
+    
+    
+    <link rel="prev" href="https://ymingliu.github.io/2021/sql-quick-guide/" />
+    <link rel="next" href="https://ymingliu.github.io/2021/basic-statistics-concepts/" />
+    <link rel="canonical" href="https://ymingliu.github.io/2021/sql-exercises-practice-solution-1/" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+    <title>
+        
+        
+            MySQL Exercises, Practice and Solution 1 | Yiming`s Blog
+        
+    </title>
+    <meta name="title" content="MySQL Exercises, Practice and Solution 1 | Yiming`s Blog">
+    
+<link rel="stylesheet" href="/css/main.min.css">
+
+
+    
+    
+ 
+
+<script type="application/ld+json">
+{
+    "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/ymingliu.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "MySQL Exercises, Practice and Solution 1",
+    "headline" : "MySQL Exercises, Practice and Solution 1",
+    "description" : "题库参考 LeeCode 数据库题库 数据库SQL实战——牛客网 MySQL习题总结 1、输出第二高的薪水，若没有第二高，返回NULL 解法一：使用两次聚合函数，先",
+    "inLanguage" : "zh-cn",
+    "author" : "Yiming",
+    "creator" : "Yiming",
+    "publisher": "Yiming",
+    "accountablePerson" : "Yiming",
+    "copyrightHolder" : "Yiming",
+    "copyrightYear" : "2021",
+    "datePublished": "2021-03-22 18:34:19 \x2b0800 CST",
+    "dateModified" : "2021-03-22 18:34:19 \x2b0800 CST",
+    "url" : "https:\/\/ymingliu.github.io\/2021\/sql-exercises-practice-solution-1\/",
+    "wordCount" : "2412",
+    "keywords" : [ "MySQL", "Yiming`s Blog"]
+}
+</script>
+
+  </head>
+    <body class="">
+        <div class="wrapper">
+            <nav class="navbar">
+    
+        <progress class="content_progress" max="0" value="0"></progress>
+    
+    <div class="container">
+        
+            <div class="navbar-header header-back2home-logo">
+                <span class="logo_mark" >>$</span>
+                <a href="https://ymingliu.github.io">
+                    <span class="logo_text" >cd /home/</span>
+                    <span class="logo_cursor" ></span>
+                </a>
+            </div>
+        
+        <div class="navbar-right">
+                
+                <span class="menu">
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+                <span class="divide"></span>
+                <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-dark-mode"></i></a>
+                </span>
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+    
+        <progress class="content_progress" max="0" value="0"></progress>
+    
+     <div class="container">
+        <div class="navbar">
+            <div class="navbar-header header-logo">
+                    <a href="https://ymingliu.github.io">Yiming`s Blog</a>
+            </div>
+            <div class="navbar-right">
+                <div><a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-dark-mode"></i></a></div>
+                <div class="menu-toggle">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                <nav class="mb-md">
+                    
+                    
+                        <a class="menu-item" href="/posts/" title="">
+                            <h3>Blog</h3>
+                            <div class="menu-active"></div>
+                        </a>
+                    
+                        <a class="menu-item" href="/categories/" title="">
+                            <h3>Categories</h3>
+                            <div class="menu-active"></div>
+                        </a>
+                    
+                        <a class="menu-item" href="/tags/" title="">
+                            <h3>Tags</h3>
+                            <div class="menu-active"></div>
+                        </a>
+                    
+                        <a class="menu-item" href="/about/" title="">
+                            <h3>About</h3>
+                            <div class="menu-active"></div>
+                        </a>
+                    
+                </nav>
+        </div>
+    </div>
+</nav>
+            <main class="main">
+                <div class="container">
+                    
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">MySQL Exercises, Practice and Solution 1</h1>
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://ymingliu.github.io" rel="author">Yiming</a> with ♥
+                <span class="post-time">
+                on <time datetime=2021-03-22 itemprop="datePublished">March 22, 2021</time>
+                </span>
+                in
+                
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        
+                        
+                        
+                          <a href="https://ymingliu.github.io/categories/mysql/"> MySQL, </a>
+                        
+                        
+                </span>
+                <span class="post-word-count">2412 words</span>
+        </div>
+    </header>
+
+    <div class="post-content">
+        
+
+        
+        
+
+        
+        
+        
+        
+        
+
+        
+        
+        
+
+        <h2 id="题库参考">题库参考</h2>
+<p><a href="https://leetcode-cn.com/">LeeCode 数据库题库</a></p>
+<p><a href="https://www.nowcoder.com/ta/sql">数据库SQL实战——牛客网</a></p>
+<h2 id="mysql习题总结">MySQL习题总结</h2>
+<h3 id="1输出第二高的薪水若没有第二高返回null">1、输出第二高的薪水，若没有第二高，返回NULL</h3>
+<p>解法一：使用两次聚合函数，先找到薪资最大的并去掉，再查找剩下的中最大的。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">select <span style="color:#a6e22e">max</span>(Salary) SecondHighestSalary from Employee WHERE Salary <span style="color:#f92672">&lt;&gt;</span> (Select <span style="color:#a6e22e">max</span>(Salary) FROM Employee);
+</code></pre></div><p>缺点是相当于两次排序，如果取第N高，这种思想无法解题。且若无第二高，无法返回NULL。</p>
+<p>解法二：将不同的薪资按降序排序，然后使用 LIMIT 子句获得第二高的薪资。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">select <span style="color:#a6e22e">distinct</span>(Salary) SecondHighestSalary from Employee order by Salary desc limit <span style="color:#ae81ff">1</span> offset <span style="color:#ae81ff">1</span>;
+</code></pre></div><p>缺点是如果没有第二高工资，这个解决方案将被判断为 “错误答案”，因为本表可能只有一项记录。因此可以将结果作为临时表。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#a6e22e">select </span>(select <span style="color:#a6e22e">distinct</span>(Salary) from Employee order by Salary desc limit <span style="color:#ae81ff">1</span> offset <span style="color:#ae81ff">1</span>) as SecondHighestSalary;
+</code></pre></div><p>或</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">select <span style="color:#a6e22e">ifnull</span>((select <span style="color:#a6e22e">distinct</span>(Salary) from Employee order by Salary desc limit <span style="color:#ae81ff">1</span> offset <span style="color:#ae81ff">1</span>), null) as SecondHighestSalary;
+</code></pre></div><hr>
+<p>1）本题考点：LIMIT OFFSET分页、IFNULL使用、DISTINCT去重使用</p>
+<blockquote>
+<p>SELECT * FROM EMP LIMIT 9, 4;</p>
+<p>SELECT * FROM EMP LIMIT 4 OFFSET 9;</p>
+<p>上述两条语句都显示第10-13行数据，前者语句为从第10行开始，显示后4行，后者语句为显示4行数据，从第9行开始。或者将OFFSET理解为跳过9条记录，也即从第10行开始，这样理解上述两语句等价。</p>
+<p>AS 表示用作、当成，作为，一般是重命名列名或者表名，可省略。</p>
+</blockquote>
+<p>2）拓展：返回第N高数据</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">select <span style="color:#a6e22e">ifnull</span>((select <span style="color:#a6e22e">distinct</span>(Salary) from Employee order by Salary desc limit <span style="color:#ae81ff">1</span> offset N<span style="color:#ae81ff">-1</span>), null) as SecondHighestSalary;
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">CREATE FUNCTION <span style="color:#a6e22e">getNthHighestSalary</span>(N INT) RETURNS INT
+BEGIN
+set N<span style="color:#f92672">=</span>N<span style="color:#ae81ff">-1</span>;
+<span style="color:#a6e22e">RETURN </span>(
+<span style="color:#75715e"># Write your MySQL query statement below.</span>
+select distinct Salary from Employee order by Salary desc limit <span style="color:#ae81ff">1</span> offset N
+);
+END
+</code></pre></div><p>注意函数中的语句不能解决NULL值，且RETURN中的语句不写结束符号&rdquo;;&quot;，且LIMIT语句后不能使用运算符，<code>LIMIT 1 OFFSET N-1</code>会报错，因此需使用<code>SET</code>语句提前赋值。</p>
+<blockquote>
+<p>SET语句可用于向系统变量或用户变量赋值。</p>
+<p>MySQL中用户变量以&rdquo;@&ldquo;开始，形式为&rdquo;@var_name&rdquo;，用以区分用户变量及列名。但在函数内部，变量不需要加&rdquo;@&quot;。</p>
+<p>SET语句可以使用=或:=来赋值，SELECT语句只能使用:=来赋值。</p>
+</blockquote>
+<h3 id="2编写一个-sql-查询来实现分数排名">2、编写一个 SQL 查询来实现分数排名。</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">select Score, (<span style="color:#a6e22e">dense_rank</span>() <span style="color:#a6e22e">over</span>(order by Score desc)) as `Rank` from Scores order by Score desc;
+</code></pre></div><p>注意MySQL中有rank函数，所以新列名需要转化为转义字符。</p>
+<hr>
+<p>1）本题考点：排序</p>
+<blockquote>
+<p>DENSE_RANK()用法为</p>
+<p>DENSE_RANK() OVER(PARTITION BY 划分列名 ORDER BY 排序列名) 新列名</p>
+<p>PARTITION BY表示按照划分列将生成的结果集划分分区，ORDER BY表示在每个分区中按排序列进行排序，OVER表示将DENSE_RANK函数应用在每个分区中。本语句可以放在SELECT语句的查询列中。</p>
+<p>MySQL中一共有两个排序函数，现给定五个成绩99，98，85，80，75，则DENSE_RANK()返回1，1，2，3，4，排名不间断；RANK()返回1，1，3，4，5，排名间断。ROW_NUMBER()会返回1，2，3，4，5。</p>
+</blockquote>
+<blockquote>
+<p>定义变量为可变长度的字符串时必须给出varchar的最大长度，比如varchar(10)。</p>
+</blockquote>
+<h3 id="3编写一个-sql-查询查找所有至少连续出现三次的数字">3、编写一个 SQL 查询，查找所有至少连续出现三次的数字。</h3>
+<p>首先观察Logs表</p>
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>num</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>2</td>
+<td>1</td>
+</tr>
+<tr>
+<td>3</td>
+<td>1</td>
+</tr>
+<tr>
+<td>4</td>
+<td>2</td>
+</tr>
+<tr>
+<td>5</td>
+<td>1</td>
+</tr>
+<tr>
+<td>6</td>
+<td>2</td>
+</tr>
+<tr>
+<td>7</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+<p>如果用row_number()函数用num作为分区，按id从小到大排序，可得如下结果</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">select id, num, <span style="color:#a6e22e">row_number</span>() <span style="color:#a6e22e">over</span>(partition by num order by id) a from myLogs;
+</code></pre></div><table>
+<thead>
+<tr>
+<th>id</th>
+<th>num</th>
+<th>a</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>2</td>
+<td>1</td>
+<td>2</td>
+</tr>
+<tr>
+<td>3</td>
+<td>1</td>
+<td>3</td>
+</tr>
+<tr>
+<td>5</td>
+<td>1</td>
+<td>4</td>
+</tr>
+<tr>
+<td>4</td>
+<td>2</td>
+<td>1</td>
+</tr>
+<tr>
+<td>6</td>
+<td>2</td>
+<td>2</td>
+</tr>
+<tr>
+<td>7</td>
+<td>2</td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+<p>如果num是连续的，则id列与a列相减后得到的数值是一样的</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">select id, num, id<span style="color:#f92672">-</span><span style="color:#a6e22e">row_number</span>() <span style="color:#a6e22e">over</span>(partition by num order by id) a from myLogs;
+</code></pre></div><table>
+<thead>
+<tr>
+<th>id</th>
+<th>num</th>
+<th>a</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>2</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>3</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>5</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>4</td>
+<td>2</td>
+<td>3</td>
+</tr>
+<tr>
+<td>6</td>
+<td>2</td>
+<td>4</td>
+</tr>
+<tr>
+<td>7</td>
+<td>2</td>
+<td>4</td>
+</tr>
+</tbody>
+</table>
+<p>按num和a分组，并统计个数，筛选出个数&gt;=3的num</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">select num, <span style="color:#a6e22e">count</span>(<span style="color:#f92672">*</span>) <span style="color:#a6e22e">from </span>(select id, num, id<span style="color:#f92672">-</span><span style="color:#a6e22e">row_number</span>() <span style="color:#a6e22e">over</span>(partition by num order by id) a from myLogs) b group by num, a having <span style="color:#a6e22e">count</span>(<span style="color:#f92672">*</span>)<span style="color:#f92672">&gt;=</span><span style="color:#ae81ff">3</span>;
+</code></pre></div><table>
+<thead>
+<tr>
+<th>num</th>
+<th>count(*)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+<p>把上述结果作为临时表，将num返回并命名为ConsecutiveNums</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">select distinct num as ConsecutiveNums <span style="color:#a6e22e">from </span>(select num, <span style="color:#a6e22e">count</span>(<span style="color:#f92672">*</span>) <span style="color:#a6e22e">from </span>(select id, num, id<span style="color:#f92672">-</span><span style="color:#a6e22e">row_number</span>() <span style="color:#a6e22e">over</span>(partition by num order by id) a from myLogs) b group by num, a having <span style="color:#a6e22e">count</span>(<span style="color:#f92672">*</span>)<span style="color:#f92672">&gt;=</span><span style="color:#ae81ff">3</span>) c;
+</code></pre></div><table>
+<thead>
+<tr>
+<th>ConsecutiveNums</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p>1）本题另外解法：</p>
+<p>首先观察三表连接后，把三个相邻的结果排列在一行</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">select <span style="color:#f92672">*</span> from myLogs l1, myLogs l2, myLogs l3 where l3.id<span style="color:#ae81ff">-1</span><span style="color:#f92672">=</span>l2.id and l2.id<span style="color:#ae81ff">-1</span><span style="color:#f92672">=</span>l1.id;
+</code></pre></div><table>
+<thead>
+<tr>
+<th>id</th>
+<th>num</th>
+<th>id</th>
+<th>num</th>
+<th>id</th>
+<th>num</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>1</td>
+<td>3</td>
+<td>1</td>
+</tr>
+<tr>
+<td>2</td>
+<td>1</td>
+<td>3</td>
+<td>1</td>
+<td>4</td>
+<td>2</td>
+</tr>
+<tr>
+<td>3</td>
+<td>1</td>
+<td>4</td>
+<td>2</td>
+<td>5</td>
+<td>1</td>
+</tr>
+<tr>
+<td>4</td>
+<td>2</td>
+<td>5</td>
+<td>1</td>
+<td>6</td>
+<td>2</td>
+</tr>
+<tr>
+<td>5</td>
+<td>1</td>
+<td>6</td>
+<td>2</td>
+<td>7</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+<p>挑选出那些所有num都相等的行，则该行对应的num值就是连续出现三次的数字</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">select l1.num as ConsecutiveNums from myLogs l1, myLogs l2, myLogs l3 where l3.id<span style="color:#ae81ff">-1</span><span style="color:#f92672">=</span>l2.id and l2.id<span style="color:#ae81ff">-1</span><span style="color:#f92672">=</span>l1.id and l1.num<span style="color:#f92672">=</span>l2.num and l2.num<span style="color:#f92672">=</span>l3.num;
+</code></pre></div><p>思路很好，利用id约束将相邻的两条记录放在一行，并进行后续相邻两条数据间的计算。缺点，如果是查询连续出现N次的数字，本语句过于繁琐和耗时。</p>
+<h3 id="4查找超过经理收入的员工">4、查找超过经理收入的员工</h3>
+<p>Employee表包含所有员工，他们的经理也属于员工。每个员工都有一个 Id，此外还有一列对应员工的经理的 Id。编写一个 SQL 查询，该查询可以获取收入超过他们经理的员工的姓名。在上面的表格中，Joe 是唯一一个收入超过他的经理的员工。</p>
+<table>
+<thead>
+<tr>
+<th>Id</th>
+<th>Name</th>
+<th>Salary</th>
+<th>ManagerId</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Joe</td>
+<td>70000</td>
+<td>3</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Henry</td>
+<td>80000</td>
+<td>4</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Sam</td>
+<td>60000</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Max</td>
+<td>90000</td>
+<td>NULL</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">select e1.`Name` as `Employee` from Employee e1 inner join Employee e2 on e1.ManagerId<span style="color:#f92672">=</span>e2.Id and e1.Salary<span style="color:#f92672">&gt;</span>e2.Salary
+</code></pre></div><hr>
+<p>1）本题考点：INNER JOIN</p>
+<blockquote>
+<p>回顾三种连接的区别，若为LEFT JOIN，则e1表中第1和2条记录一定会被匹配后出现，e1中的第3和4条由于ManagerId为NULL，无法匹配，但由于是左连接，必须出现，因此将e1中的3、4记录后面补NULL后保留；若为RIGHT JOIN，则e2表中第1和2条记录一定会被匹配后出现，e2的第3和4条由于ManagerId为NULL，但由于是右连接，必须出现，因此将e2中的3、4记录前面补NULL后保留；若为INNER JOIN，内连接，不符合匹配的都不出现，因此只有第1、2条记录。</p>
+</blockquote>
+<h3 id="5-查找重复的电子邮箱">5、 查找重复的电子邮箱</h3>
+<p>编写一个 SQL 查询，查找 Person 表中所有重复的电子邮箱。</p>
+<table>
+<thead>
+<tr>
+<th>Id</th>
+<th>Email</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><a href="mailto:a@b.com">a@b.com</a></td>
+</tr>
+<tr>
+<td>2</td>
+<td><a href="mailto:c@d.com">c@d.com</a></td>
+</tr>
+<tr>
+<td>3</td>
+<td><a href="mailto:a@b.com">a@b.com</a></td>
+</tr>
+</tbody>
+</table>
+<p>应返回</p>
+<table>
+<thead>
+<tr>
+<th>Email</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="mailto:a@b.com">a@b.com</a></td>
+</tr>
+</tbody>
+</table>
+<p>如下解法对HAVING的使用不熟练</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">select p.Email <span style="color:#a6e22e">from </span>(select Email, <span style="color:#a6e22e">count</span>(<span style="color:#f92672">*</span>) from Person group by Email having <span style="color:#a6e22e">count</span>(<span style="color:#f92672">*</span>)<span style="color:#f92672">&gt;</span><span style="color:#ae81ff">1</span>) p;
+</code></pre></div><p>注意，若不将FROM后的表另外命名，前面SLEECT Email会报错，&lsquo;ERROR 1248 (42000): Every derived table must have its own alias&rsquo;。</p>
+<p>HAVING可以如下使用</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">select Email from testPerson group by Email having <span style="color:#a6e22e">count</span>(<span style="color:#f92672">*</span>)<span style="color:#f92672">&gt;</span><span style="color:#ae81ff">1</span>;
+</code></pre></div><p>即分组列必须出现，但聚合函数可以不出现在SELECT中。本题返回的是分组列，因此刚好可以在SELECT中隐去聚合函数。</p>
+<hr>
+<p>1）本题扩展：如何查找重复数据？</p>
+<p>看到“找重复”的关键字眼，首先要用分组函数（group by），再用聚合函数中的计数函数count()给分组列计数。分组汇总后，加上条件选出计数大于1的分组列，就是重复的数据。</p>
+
+    </div>
+
+    <div class="post-copyright">
+            
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>Yiming </span>
+                </p>
+            
+
+            
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://ymingliu.github.io/2021/sql-exercises-practice-solution-1/>https://ymingliu.github.io/2021/sql-exercises-practice-solution-1/</span>
+            </p>
+            
+            
+    </div>
+
+
+    <div class="post-tags">
+        
+            <section>
+            <i class="iconfont icon-tag"></i>Tag(s):
+            
+            <span class="tag"><a href="https://ymingliu.github.io/tags/mysql/">
+                    #MySQL</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> ·
+                <span><a href="https://ymingliu.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://ymingliu.github.io/2021/sql-quick-guide/" class="prev" rel="prev" title="MySQL Quick Guide"><i class="iconfont icon-left"></i>&nbsp;MySQL Quick Guide</a>
+        
+        
+        <a href="https://ymingliu.github.io/2021/basic-statistics-concepts/" class="next" rel="next" title="Basic Statistics Concepts for Data Analyst">Basic Statistics Concepts for Data Analyst&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+        
+            
+                <div id="gitalk-container"></div>
+<link rel="stylesheet" href="https://cdn.bootcss.com/gitalk/1.5.2/gitalk.css">
+<script src="https://cdn.bootcss.com/gitalk/1.5.2/gitalk.min.js"></script>
+<script>
+    const gitalk = new Gitalk({
+
+        clientID: '',
+        clientSecret: '',
+        repo: '',
+        owner: 'ymingliu',
+        admin: ['ymingliu'],
+        id: location.pathname, 
+        distractionFreeMode: false 
+    });
+    (function () {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('gitalk-container').innerHTML = 'Gitalk comments not available by default when the website is previewed locally.';
+            return;
+        }
+        gitalk.render('gitalk-container');
+    })();
+</script>
+
+            
+        
+    </div>
+</article>
+                </div>
+            </main>
+            <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span itemprop="copyrightYear">2021 - 2021</span>
+        
+        <span class="with-love">
+    	 <i class="iconfont icon-love"></i>
+         </span>
+         
+            <span class="author" itemprop="copyrightHolder"><a href="https://ymingliu.github.io">Yiming</a> | </span>
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/Mogeko/Mogege" target="_blank" rel="external nofollow">Mogege</a></span>
+    </div>
+</footer>
+
+
+
+
+
+
+<script defer src="/js/vendor_main.min.js"></script>
+
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script> pangu.spacingPage();</script>
+
+
+
+
+
+        </div>
+    </body>
+</html>
